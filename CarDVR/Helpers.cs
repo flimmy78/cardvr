@@ -6,6 +6,7 @@ using System.Threading;
 using AForge.Video.VFW;
 using System.Reflection;
 using Microsoft.Win32;
+using System.Windows.Forms;
 
 namespace CarDVR
 {
@@ -17,6 +18,20 @@ namespace CarDVR
     class NoWebcamException : Exception
     {
     }
+
+    public class Reporter
+    {
+   	    static public void Error(string text)
+	    {
+		    MessageBox.Show(text, "Error", MessageBoxButtons.OK);
+	    }
+    }
+
+	enum ButtonState
+	{
+		Start,
+		Stop
+	}
 
 	class AutorunHelper
 	{
