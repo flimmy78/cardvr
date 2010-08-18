@@ -12,28 +12,21 @@ namespace CarDVR
 {
     public partial class MainForm : Form
     {
-		// frames per second in a grabbed video
 		private static readonly int fps = 25;
-		// video grabber
+		
         VideoCaptureDevice videoSource = null;
-		// Using gps to calc speed, coordinates
         GpsReciever gps;
-
 		VideoSplitter splitter;
 
 		private ButtonState buttonState = ButtonState.Start;
     
-
-        
-
         private void InitVideoSource()
         {
             bool running = false;
             if (videoSource != null && videoSource.IsRunning)
             {
                 running = true;
-                videoSource.Stop();
-                videoSource.WaitForStop();
+                buttonStartStop_Click(this, EventArgs.Empty);
             }
 
             if (videoSource != null)
@@ -43,8 +36,11 @@ namespace CarDVR
             videoSource.NewFrame += new NewFrameEventHandler(videoSource_NewFrame);
             videoSource.DesiredFrameRate = fps;
             videoSource.DesiredFrameSize = Program.settings.GetVideoSize();
+
+            splitter.VideoSize = Program.settings.GetVideoSize();
+
             if (running)
-                videoSource.Start();
+                buttonStartStop_Click(this, EventArgs.Empty);
         }
 
         public MainForm()
@@ -55,6 +51,8 @@ namespace CarDVR
 			splitter.Codec = "XVID";
 			splitter.FPS = 24;
 			splitter.VideoSize = Program.settings.GetVideoSize();
+            splitter.FileDuration = Program.settings.AviDuration;
+            splitter.NumberOfFiles = Program.settings.AmountOfFiles;
 
             gps = new GpsReciever();
 
@@ -63,7 +61,6 @@ namespace CarDVR
 
             // create first video source
             InitVideoSource();
-            //videoSource.NewFrame += new NewFrameEventHandler(videoSource_NewFrame);
 
             InitializeComponent();
 
@@ -105,6 +102,7 @@ namespace CarDVR
         void videoSource_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             Bitmap frame = (Bitmap)eventArgs.Frame.Clone();
+
             Graphics.FromImage(frame).DrawString(MakeFrameString(), new Font("Arial", 8, FontStyle.Bold), Brushes.White, new Point(5, 5));
 
 			splitter.AddFrame(ref frame);
@@ -140,7 +138,7 @@ namespace CarDVR
 					AutorunHelper.DisableAutorun();
 
                 // reinit video source
-                //InitVideoSource();
+                InitVideoSource();
 
                 // reinit gps
                 gps.Close();

@@ -10,13 +10,15 @@ using System.IO;
 
 namespace CarDVR
 {
+    // Pair of two AVIWriters, opening in own threads
 	class AVIWritersPair
 	{
 		private AVIWriter currentAvi = new AVIWriter();
 		private AVIWriter preparedAvi = new AVIWriter();
 		private object aviWatchDog = new object();
 
-		public AVIWriter GetCurrent()
+        #region Getters
+        public AVIWriter GetCurrent()
 		{
 			return currentAvi;
 		}
@@ -25,8 +27,10 @@ namespace CarDVR
 		{
 			return preparedAvi;
 		}
+        #endregion
 
-		public void AddToCurrent(ref Bitmap frame)
+        #region Operations
+        public void AddToCurrent(ref Bitmap frame)
 		{
 			lock (aviWatchDog)
 			{
@@ -43,26 +47,32 @@ namespace CarDVR
 				preparedAvi = tmp;
 			}
 		}
+        #endregion
 
-		private string codec;
+        #region Codec
 		public string Codec
 		{
 			set
 			{
-				codec = value;
+                currentAvi.Codec = value;
+                preparedAvi.Codec = value;
 			}
 		}
+        #endregion
 
-		private int frameRate;
+        #region FrameRate
 		public int FrameRate
 		{
 			set
 			{
-				frameRate = value;
+                currentAvi.FrameRate = value;
+                preparedAvi.FrameRate = value;
 			}
 		}
+        #endregion
 
-		public void CloseCurrent()
+        #region Closers
+        public void CloseCurrent()
 		{
 			lock (aviWatchDog)
 			{
@@ -85,8 +95,9 @@ namespace CarDVR
 				currentAvi.Close();
 				preparedAvi.Close();
 			}
-		}
-	}
+        }
+        #endregion
+    }
 
 	class VideoSplitter
 	{
@@ -109,7 +120,7 @@ namespace CarDVR
 		#endregion
 
 		#region FileDuration
-		private int fileDuration = 10;
+		private int fileDuration = 10*60;
 		public int FileDuration
 		{
 			get { return fileDuration / 60; }
