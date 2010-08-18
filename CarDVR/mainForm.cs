@@ -106,7 +106,9 @@ namespace CarDVR
             Graphics.FromImage(frame).DrawString(MakeFrameString(), new Font("Arial", 8, FontStyle.Bold), Brushes.White, new Point(5, 5));
 
 			splitter.AddFrame(ref frame);
-            camView.Image = frame;
+
+            if (Visible)
+                camView.Image = frame;
         }
 
         private bool IsWebCamAvaliable()
@@ -178,6 +180,7 @@ namespace CarDVR
                     videoSource.Stop();
                     videoSource.WaitForStop();
                     splitter.Stop();
+                    camView.Image = new Bitmap(Program.settings.VideoWidth, Program.settings.VideoHeight);
 
                     // check for opened Serial Port implemented inside Gps Reciever class
                     gps.Close();
