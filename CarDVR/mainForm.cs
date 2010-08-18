@@ -206,15 +206,15 @@ namespace CarDVR
 			this.Hide();
 		}
 
-		private void trayIcon_MouseDoubleClick(object sender, MouseEventArgs e)
-		{
-			this.Show();
-			trayIcon.Visible = false;
-		}
-
 		private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			Application.Exit();
+		}
+
+		private void trayIcon_MouseClick(object sender, MouseEventArgs e)
+		{
+			this.Show();
+			trayIcon.Visible = false;
 		}
     }
 }
