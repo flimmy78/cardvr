@@ -53,6 +53,7 @@ namespace CarDVR
 			splitter.VideoSize = Program.settings.GetVideoSize();
             splitter.FileDuration = Program.settings.AviDuration;
             splitter.NumberOfFiles = Program.settings.AmountOfFiles;
+            splitter.Path = Program.settings.PathForVideo;
 
             gps = new GpsReciever();
 
@@ -128,7 +129,8 @@ namespace CarDVR
                 settingsForm.LoadFromRegistry();
                 settingsForm.ApplySettingsToForm();
 
-                settingsForm.ShowDialog();
+                if (settingsForm.ShowDialog() == DialogResult.Cancel)
+                    return;
 
                 settingsForm.ApplyFormToSettings();
                 settingsForm.SaveToRegistry();
