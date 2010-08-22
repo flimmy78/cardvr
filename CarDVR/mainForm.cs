@@ -13,6 +13,9 @@ namespace CarDVR
     public partial class MainForm : Form
     {
 		private static readonly int fps = 25;
+        private static readonly Font framefont = new Font("Arial", 8, FontStyle.Bold);
+        private static readonly Point pointWhite = new Point(5, 5);
+        private static readonly Point pointBlack = new Point(6, 6);
 		
         VideoCaptureDevice videoSource = null;
         GpsReciever gps;
@@ -104,7 +107,10 @@ namespace CarDVR
         {
             Bitmap frame = (Bitmap)eventArgs.Frame.Clone();
 
-            Graphics.FromImage(frame).DrawString(MakeFrameString(), new Font("Arial", 8, FontStyle.Bold), Brushes.White, new Point(5, 5));
+            Graphics graphics = Graphics.FromImage(frame);
+            string frameString = MakeFrameString();
+            graphics.DrawString(frameString, framefont, Brushes.Black, pointBlack);
+            graphics.DrawString(frameString, framefont, Brushes.White, pointWhite);
 
 			splitter.AddFrame(ref frame);
 
