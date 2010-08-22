@@ -16,13 +16,12 @@ namespace CarDVR
         private static readonly Font framefont = new Font("Arial", 8, FontStyle.Bold);
         private static readonly Point pointWhite = new Point(5, 5);
         private static readonly Point pointBlack = new Point(6, 6);
+        private static ButtonState buttonState = ButtonState.Start;
 		
         VideoCaptureDevice videoSource = null;
         GpsReciever gps;
 		VideoSplitter splitter;
 
-		private ButtonState buttonState = ButtonState.Start;
-    
         private void InitVideoSource()
         {
             bool running = false;
@@ -67,6 +66,9 @@ namespace CarDVR
             InitVideoSource();
 
             InitializeComponent();
+
+            string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            Text += " v" + version.Substring(0, version.Length-4);
 
 			if (Program.settings.StartMinimized)
 				buttonMinimize_Click(this, EventArgs.Empty);

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Timers;
 using System.Drawing;
-using AForge.Video.VFW;
-using System.Threading;
 using System.IO;
+using System.Threading;
+using System.Timers;
+using AForge.Video.VFW;
 
 namespace CarDVR
 {

@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.IO.Ports;
-using Microsoft.Win32;
 using System.Reflection;
+using System.Windows.Forms;
 using AForge.Video.DirectShow;
-using System.IO;
+using Microsoft.Win32;
 
 namespace CarDVR
 {
