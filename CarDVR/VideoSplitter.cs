@@ -145,7 +145,7 @@ namespace CarDVR
 		#endregion
 
 		#region Frapes Per Second
-		private int fps = 25;
+		private int fps = 0;
 		public int FPS
 		{
 			get { return fps; }

@@ -38,7 +38,13 @@ namespace CarDVR
             videoSource.DesiredFrameRate = Program.settings.VideoFps;
             videoSource.DesiredFrameSize = Program.settings.GetVideoSize();
 
+            splitter.Codec = "XVID";
+            //splitter.Codec = "FFDS";
+            splitter.FPS = Program.settings.VideoFps;
             splitter.VideoSize = Program.settings.GetVideoSize();
+            splitter.FileDuration = Program.settings.AviDuration;
+            splitter.NumberOfFiles = Program.settings.AmountOfFiles;
+            splitter.Path = Program.settings.PathForVideo;
 
             if (running)
                 buttonStartStop_Click(this, EventArgs.Empty);
@@ -48,14 +54,8 @@ namespace CarDVR
         {
             Program.settings.Read();
 
+            // Create avi-splitter. It will be initialized in InitVideoSource()
 			splitter = new VideoSplitter();
-			splitter.Codec = "XVID";
-			splitter.FPS = Program.settings.VideoFps;
-			splitter.VideoSize = Program.settings.GetVideoSize();
-            splitter.FileDuration = Program.settings.AviDuration;
-            splitter.NumberOfFiles = Program.settings.AmountOfFiles;
-            splitter.Path = Program.settings.PathForVideo;
-
             gps = new GpsReciever();
 
 			if (Program.settings.GpsEnabled)
