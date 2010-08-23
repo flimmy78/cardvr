@@ -209,6 +209,8 @@ namespace CarDVR
 		public void Stop()
 		{
 			timerSplit.Stop();
+			CloseCurrentAvi();
+			ClosePreparedAvi();
 		}
 
 		private void PrepareNewMovie()

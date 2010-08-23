@@ -163,6 +163,7 @@ namespace CarDVR
                 CapInfo capinfo = comboResolution.SelectedItem as CapInfo;
                 Program.settings.VideoWidth = capinfo.Width;
                 Program.settings.VideoHeight = capinfo.Height;
+				Program.settings.VideoFps = capinfo.Frames;
             }
         }
 
@@ -276,6 +277,12 @@ namespace CarDVR
             get { return _VideoHeight; }
             set { _VideoHeight = value; }
         }
+		private int _VideoFps = 0;
+		public int VideoFps
+		{
+			get { return _VideoFps; }
+			set { _VideoFps = value; }
+		}
         private string _VideoResolutionString = string.Empty;
         public string VideoResolutionString
         {

@@ -12,7 +12,6 @@ namespace CarDVR
 {
     public partial class MainForm : Form
     {
-		private static readonly int fps = 25;
         private static readonly Font framefont = new Font("Arial", 8, FontStyle.Bold);
         private static readonly Point pointWhite = new Point(5, 5);
         private static readonly Point pointBlack = new Point(6, 6);
@@ -36,7 +35,7 @@ namespace CarDVR
 
             videoSource = new VideoCaptureDevice(Program.settings.VideoSourceId);
             videoSource.NewFrame += new NewFrameEventHandler(videoSource_NewFrame);
-            videoSource.DesiredFrameRate = fps;
+            videoSource.DesiredFrameRate = Program.settings.VideoFps;
             videoSource.DesiredFrameSize = Program.settings.GetVideoSize();
 
             splitter.VideoSize = Program.settings.GetVideoSize();
@@ -51,7 +50,7 @@ namespace CarDVR
 
 			splitter = new VideoSplitter();
 			splitter.Codec = "XVID";
-			splitter.FPS = 24;
+			splitter.FPS = Program.settings.VideoFps;
 			splitter.VideoSize = Program.settings.GetVideoSize();
             splitter.FileDuration = Program.settings.AviDuration;
             splitter.NumberOfFiles = Program.settings.AmountOfFiles;
