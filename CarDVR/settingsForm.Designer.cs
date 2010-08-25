@@ -50,9 +50,13 @@
             this.comboResolution = new System.Windows.Forms.ComboBox();
             this.labelResolution = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.groupRotate = new System.Windows.Forms.GroupBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBoxGps.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.aviDuration)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.amountOfFiles)).BeginInit();
+            this.groupRotate.SuspendLayout();
             this.SuspendLayout();
             // 
             // startWithWindows
@@ -78,7 +82,7 @@
             // labelVideosource
             // 
             this.labelVideosource.AutoSize = true;
-            this.labelVideosource.Location = new System.Drawing.Point(175, 7);
+            this.labelVideosource.Location = new System.Drawing.Point(175, 27);
             this.labelVideosource.Name = "labelVideosource";
             this.labelVideosource.Size = new System.Drawing.Size(68, 13);
             this.labelVideosource.TabIndex = 2;
@@ -88,9 +92,9 @@
             // 
             this.videoSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.videoSource.FormattingEnabled = true;
-            this.videoSource.Location = new System.Drawing.Point(178, 24);
+            this.videoSource.Location = new System.Drawing.Point(249, 24);
             this.videoSource.Name = "videoSource";
-            this.videoSource.Size = new System.Drawing.Size(140, 21);
+            this.videoSource.Size = new System.Drawing.Size(173, 21);
             this.videoSource.TabIndex = 3;
             // 
             // groupBoxGps
@@ -99,9 +103,9 @@
             this.groupBoxGps.Controls.Add(this.serialPortBaudRate);
             this.groupBoxGps.Controls.Add(this.serialPortName);
             this.groupBoxGps.Controls.Add(this.enableGps);
-            this.groupBoxGps.Location = new System.Drawing.Point(178, 105);
+            this.groupBoxGps.Location = new System.Drawing.Point(178, 152);
             this.groupBoxGps.Name = "groupBoxGps";
-            this.groupBoxGps.Size = new System.Drawing.Size(206, 96);
+            this.groupBoxGps.Size = new System.Drawing.Size(244, 81);
             this.groupBoxGps.TabIndex = 4;
             this.groupBoxGps.TabStop = false;
             this.groupBoxGps.Text = "gps";
@@ -109,7 +113,7 @@
             // labelBaudRate
             // 
             this.labelBaudRate.AutoSize = true;
-            this.labelBaudRate.Location = new System.Drawing.Point(7, 51);
+            this.labelBaudRate.Location = new System.Drawing.Point(133, 28);
             this.labelBaudRate.Name = "labelBaudRate";
             this.labelBaudRate.Size = new System.Drawing.Size(52, 13);
             this.labelBaudRate.TabIndex = 9;
@@ -119,7 +123,7 @@
             // 
             this.serialPortBaudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.serialPortBaudRate.FormattingEnabled = true;
-            this.serialPortBaudRate.Location = new System.Drawing.Point(10, 67);
+            this.serialPortBaudRate.Location = new System.Drawing.Point(136, 44);
             this.serialPortBaudRate.Name = "serialPortBaudRate";
             this.serialPortBaudRate.Size = new System.Drawing.Size(95, 21);
             this.serialPortBaudRate.TabIndex = 3;
@@ -128,7 +132,7 @@
             // 
             this.serialPortName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.serialPortName.FormattingEnabled = true;
-            this.serialPortName.Location = new System.Drawing.Point(10, 17);
+            this.serialPortName.Location = new System.Drawing.Point(10, 44);
             this.serialPortName.Name = "serialPortName";
             this.serialPortName.Size = new System.Drawing.Size(95, 21);
             this.serialPortName.TabIndex = 2;
@@ -136,7 +140,7 @@
             // enableGps
             // 
             this.enableGps.AutoSize = true;
-            this.enableGps.Location = new System.Drawing.Point(142, 19);
+            this.enableGps.Location = new System.Drawing.Point(10, 19);
             this.enableGps.Name = "enableGps";
             this.enableGps.Size = new System.Drawing.Size(58, 17);
             this.enableGps.TabIndex = 1;
@@ -147,7 +151,7 @@
             // 
             this.buttonOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOk.Location = new System.Drawing.Point(13, 271);
+            this.buttonOk.Location = new System.Drawing.Point(13, 378);
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(90, 62);
             this.buttonOk.TabIndex = 5;
@@ -158,7 +162,7 @@
             // labelMinutesOnEachFile
             // 
             this.labelMinutesOnEachFile.AutoSize = true;
-            this.labelMinutesOnEachFile.Location = new System.Drawing.Point(12, 105);
+            this.labelMinutesOnEachFile.Location = new System.Drawing.Point(12, 86);
             this.labelMinutesOnEachFile.Name = "labelMinutesOnEachFile";
             this.labelMinutesOnEachFile.Size = new System.Drawing.Size(125, 13);
             this.labelMinutesOnEachFile.TabIndex = 6;
@@ -166,7 +170,7 @@
             // 
             // aviDuration
             // 
-            this.aviDuration.Location = new System.Drawing.Point(15, 122);
+            this.aviDuration.Location = new System.Drawing.Point(15, 103);
             this.aviDuration.Name = "aviDuration";
             this.aviDuration.Size = new System.Drawing.Size(66, 20);
             this.aviDuration.TabIndex = 7;
@@ -178,7 +182,7 @@
             // 
             // amountOfFiles
             // 
-            this.amountOfFiles.Location = new System.Drawing.Point(13, 178);
+            this.amountOfFiles.Location = new System.Drawing.Point(13, 159);
             this.amountOfFiles.Name = "amountOfFiles";
             this.amountOfFiles.Size = new System.Drawing.Size(66, 20);
             this.amountOfFiles.TabIndex = 9;
@@ -191,7 +195,7 @@
             // labelStoreFiles
             // 
             this.labelStoreFiles.AutoSize = true;
-            this.labelStoreFiles.Location = new System.Drawing.Point(10, 161);
+            this.labelStoreFiles.Location = new System.Drawing.Point(10, 142);
             this.labelStoreFiles.Name = "labelStoreFiles";
             this.labelStoreFiles.Size = new System.Drawing.Size(112, 13);
             this.labelStoreFiles.TabIndex = 8;
@@ -200,7 +204,7 @@
             // labelPath
             // 
             this.labelPath.AutoSize = true;
-            this.labelPath.Location = new System.Drawing.Point(15, 223);
+            this.labelPath.Location = new System.Drawing.Point(15, 250);
             this.labelPath.Name = "labelPath";
             this.labelPath.Size = new System.Drawing.Size(128, 13);
             this.labelPath.TabIndex = 10;
@@ -210,15 +214,15 @@
             // 
             this.textBoxPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxPath.Location = new System.Drawing.Point(15, 239);
+            this.textBoxPath.Location = new System.Drawing.Point(15, 266);
             this.textBoxPath.Name = "textBoxPath";
-            this.textBoxPath.Size = new System.Drawing.Size(338, 20);
+            this.textBoxPath.Size = new System.Drawing.Size(380, 20);
             this.textBoxPath.TabIndex = 11;
             // 
             // buttonBrowse
             // 
             this.buttonBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonBrowse.Location = new System.Drawing.Point(359, 236);
+            this.buttonBrowse.Location = new System.Drawing.Point(401, 263);
             this.buttonBrowse.Name = "buttonBrowse";
             this.buttonBrowse.Size = new System.Drawing.Size(25, 23);
             this.buttonBrowse.TabIndex = 12;
@@ -240,16 +244,16 @@
             // 
             this.comboResolution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboResolution.FormattingEnabled = true;
-            this.comboResolution.Location = new System.Drawing.Point(178, 68);
+            this.comboResolution.Location = new System.Drawing.Point(249, 61);
             this.comboResolution.Name = "comboResolution";
-            this.comboResolution.Size = new System.Drawing.Size(140, 21);
+            this.comboResolution.Size = new System.Drawing.Size(173, 21);
             this.comboResolution.TabIndex = 15;
             this.comboResolution.DropDown += new System.EventHandler(this.comboResolution_DropDown);
             // 
             // labelResolution
             // 
             this.labelResolution.AutoSize = true;
-            this.labelResolution.Location = new System.Drawing.Point(175, 51);
+            this.labelResolution.Location = new System.Drawing.Point(191, 64);
             this.labelResolution.Name = "labelResolution";
             this.labelResolution.Size = new System.Drawing.Size(52, 13);
             this.labelResolution.TabIndex = 14;
@@ -259,19 +263,54 @@
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button1.Location = new System.Drawing.Point(294, 271);
+            this.button1.Location = new System.Drawing.Point(336, 378);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(90, 62);
             this.button1.TabIndex = 16;
             this.button1.Text = "Cancel";
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // groupRotate
+            // 
+            this.groupRotate.Controls.Add(this.comboBox1);
+            this.groupRotate.Controls.Add(this.checkBox1);
+            this.groupRotate.Location = new System.Drawing.Point(178, 98);
+            this.groupRotate.Name = "groupRotate";
+            this.groupRotate.Size = new System.Drawing.Size(244, 48);
+            this.groupRotate.TabIndex = 17;
+            this.groupRotate.TabStop = false;
+            this.groupRotate.Text = "rotate video";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "90",
+            "180",
+            "270"});
+            this.comboBox1.Location = new System.Drawing.Point(136, 15);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(95, 21);
+            this.comboBox1.TabIndex = 4;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(10, 19);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(58, 17);
+            this.checkBox1.TabIndex = 0;
+            this.checkBox1.Text = "enable";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // settingsForm
             // 
             this.AcceptButton = this.buttonOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(396, 345);
+            this.ClientSize = new System.Drawing.Size(438, 452);
+            this.Controls.Add(this.groupRotate);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.comboResolution);
             this.Controls.Add(this.labelResolution);
@@ -289,17 +328,20 @@
             this.Controls.Add(this.labelVideosource);
             this.Controls.Add(this.autostartRecording);
             this.Controls.Add(this.startWithWindows);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "settingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Settings";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.settingsForm_FormClosing);
             this.groupBoxGps.ResumeLayout(false);
             this.groupBoxGps.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.aviDuration)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.amountOfFiles)).EndInit();
+            this.groupRotate.ResumeLayout(false);
+            this.groupRotate.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -328,5 +370,8 @@
         private System.Windows.Forms.ComboBox comboResolution;
         private System.Windows.Forms.Label labelResolution;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.GroupBox groupRotate;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

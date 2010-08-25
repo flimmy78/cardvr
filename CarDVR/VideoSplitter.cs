@@ -239,16 +239,20 @@ namespace CarDVR
 			string filename = oneOfAvi == 1 ? DateTime.Now.AddSeconds(9).ToString() : DateTime.Now.ToString();
 
 			filename = path + "\\CarDVR_" +
-					   filename.Replace(':', '_').Replace(' ', '_').Replace('.', '_');
+                filename.Replace(':', '_').Replace(' ', '_').Replace('.', '_') + ".avi";
 
 			try
 			{
 				AVIWriter avi = oneOfAvi == 0 ? avipair.GetCurrent() : avipair.GetPrepared();
-				avi.Open(filename + ".avi", videoSize.Width, videoSize.Height);
+				avi.Open(filename, videoSize.Width, videoSize.Height);
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
-				Reporter.Error("Can't open source with resolution " + videoSize.Width.ToString() + "X" + videoSize.Height.ToString());
+				Reporter.Error
+                    (
+                        "Can't open output file " + filename + "\n" +
+                        e.Message
+                    );
 			}
 
 			DirectoryInfo dir = new DirectoryInfo(Program.settings.PathForVideo);

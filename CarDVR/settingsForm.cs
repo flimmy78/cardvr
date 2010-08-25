@@ -7,6 +7,9 @@ using System.Reflection;
 using System.Windows.Forms;
 using AForge.Video.DirectShow;
 using Microsoft.Win32;
+using System.IO;
+using System.Security.Permissions;
+using System.Security;
 
 namespace CarDVR
 {
@@ -197,12 +200,28 @@ namespace CarDVR
             }
         }
 
+        public bool CheckDirectoryForWrite(string dir)
+        {
+            if (!Directory.Exists(dir) || !DirectoryWriteChecker.Process(dir))
+            {
+                Reporter.Error("Can't write AVI file to directory " + dir);
+                return false;
+            }
+
+            return true;
+        }
+
         private void buttonBrowse_Click(object sender, EventArgs e)
         {
             using (FolderBrowserDialog dlg = new FolderBrowserDialog())
             {
                 if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    textBoxPath.Text = dlg.SelectedPath;
+                {
+                    string aviDirectory = dlg.SelectedPath;
+
+                    if (CheckDirectoryForWrite(aviDirectory))
+                        textBoxPath.Text = aviDirectory;                                            
+                }
             }
         }
 
@@ -219,6 +238,15 @@ namespace CarDVR
                     comboResolution.Items.Add(new CapInfo(cap.FrameSize.Width, cap.FrameSize.Height, cap.MaxFrameRate));
             }
             comboResolution.EndUpdate();
+        }
+
+        private void settingsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (DialogResult != System.Windows.Forms.DialogResult.OK)
+                return;
+
+            if (!CheckDirectoryForWrite(Program.settings.PathForVideo))
+                e.Cancel = true;
         }
     }
 

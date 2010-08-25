@@ -2,6 +2,8 @@
 using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using System.Security;
+using System.Security.Permissions;
 
 namespace CarDVR
 {
@@ -27,6 +29,14 @@ namespace CarDVR
 		Start,
 		Stop
 	}
+
+    class DirectoryWriteChecker
+    {
+        public static bool Process(string dir)
+        {
+            return SecurityManager.IsGranted(new FileIOPermission(FileIOPermissionAccess.Write, dir + "/filename.avi"));
+        }
+    }
 
 	class AutorunHelper
 	{
