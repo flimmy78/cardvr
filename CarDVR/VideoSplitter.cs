@@ -102,11 +102,14 @@ namespace CarDVR
 		private System.Timers.Timer timerSplit;
 		private int secondsElapsed = 0;
 		private bool nextAviPrepared = false;
-
 		private object secondsWatchDog = new object();
 		private object aviWatchDog = new object();
-
 		private AVIWritersPair avipair = new AVIWritersPair();
+
+#if DEBUG
+		private bool _IsRunning = false;
+#endif
+
 
 		#region Path
 		private string path = string.Empty;
@@ -176,6 +179,10 @@ namespace CarDVR
 		
 		public void AddFrame(ref Bitmap frame)
 		{
+#if DEBUG
+			if (!_IsRunning)
+				return;
+#endif
 			lock (secondsWatchDog)
 			{
 				// before 10 seconds, open new avi
@@ -196,11 +203,25 @@ namespace CarDVR
 			avipair.AddToCurrent(ref frame);
 		}
 
+#if DEBUG
+		public bool IsRunning
+		{
+			get
+			{
+				return _IsRunning;
+			}
+		}
+#endif
+
 		public void Start()
 		{
+#if DEBUG
+			_IsRunning = true;
+#endif
+
 			avipair.Codec = codec;
 			avipair.FrameRate = fps;
-
+			
 			nextAviPrepared = false;
 			StartNewMovie(0);
 			timerSplit.Start();
@@ -211,6 +232,10 @@ namespace CarDVR
 			timerSplit.Stop();
 			CloseCurrentAvi();
 			ClosePreparedAvi();
+
+#if DEBUG
+			_IsRunning = false;
+#endif
 		}
 
 		private void PrepareNewMovie()

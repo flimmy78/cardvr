@@ -56,6 +56,17 @@ namespace CarDVR
 			serialPortName.EndUpdate();
 			#endregion
 
+			#region Fill Rotate Angles
+			comboRotateAngle.BeginUpdate();
+
+			comboRotateAngle.Items.Clear();
+			comboRotateAngle.Items.Add(90);
+			comboRotateAngle.Items.Add(180);
+			comboRotateAngle.Items.Add(270);
+
+			comboRotateAngle.EndUpdate();
+			#endregion
+
             #region Fill Baud rate
             serialPortBaudRate.BeginUpdate();
             serialPortBaudRate.Items.Clear();
@@ -109,6 +120,17 @@ namespace CarDVR
             }
             #endregion
 
+			#region Set Rotate Angle
+			foreach (object obj in comboRotateAngle.Items)
+			{
+				if ((int)obj == Program.settings.RotateAngle)
+				{
+					comboRotateAngle.SelectedItem = obj;
+					break;
+				}
+			}
+			#endregion
+
             // Fill resolution
             comboResolution_DropDown(this, EventArgs.Empty);
 
@@ -131,11 +153,13 @@ namespace CarDVR
 			autostartRecording.Checked = Program.settings.AutostartRecording;
 			startMinimized.Checked = Program.settings.StartMinimized;
 			textBoxPath.Text = Program.settings.PathForVideo;
+			enableRotate.Checked = Program.settings.EnableRotate;
         }
 
         public void ApplyFormToSettings()
         {
 			Program.settings.GpsEnabled = enableGps.Checked;
+			Program.settings.EnableRotate = enableRotate.Checked;
 			Program.settings.GpsSerialPort = serialPortName.Text;
 
             int baud;
@@ -168,6 +192,9 @@ namespace CarDVR
                 Program.settings.VideoHeight = capinfo.Height;
 				Program.settings.VideoFps = capinfo.Frames;
             }
+
+			if (comboRotateAngle.SelectedItem != null)
+				Program.settings.RotateAngle = (int)comboRotateAngle.SelectedItem;
         }
 
         public settingsForm()
@@ -253,8 +280,8 @@ namespace CarDVR
 	public class SettingsImpl
 	{
 		// Registry path to our settings
-		private static readonly string REG_PATH = "Software\\CarDVR";
-        private static readonly string DEFAULT_PATH = "C:\\";
+		private static readonly string REG_PATH = @"Software\CarDVR";
+        private static readonly string DEFAULT_PATH = @"C:\";
 
 		#region SerialPort
 		private string _GpsSerialPort = string.Empty;
@@ -382,6 +409,24 @@ namespace CarDVR
         }
         #endregion
 
+		#region Enable Rotate
+		private bool _EnableRotate = false;
+		public bool EnableRotate
+		{
+			get { return _EnableRotate; }
+			set { _EnableRotate = value; }
+		}
+		#endregion
+
+		#region Rotate Value
+		private int _RotateAngle = 0;
+		public int RotateAngle
+		{
+			get { return _RotateAngle; }
+			set { _RotateAngle = value; }
+		}
+		#endregion
+
 		/// <summary>
 		/// Read settings from the registry and applies to this class
 		/// </summary>
@@ -456,7 +501,10 @@ namespace CarDVR
 
         public Size GetVideoSize()
         {
-            return new Size(VideoWidth, VideoHeight);
+			if (EnableRotate && (RotateAngle == 90 || RotateAngle == 270))
+				return new Size(VideoHeight, VideoWidth);
+			else
+				return new Size(VideoWidth, VideoHeight);
         }
 	}
 

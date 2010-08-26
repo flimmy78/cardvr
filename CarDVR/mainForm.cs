@@ -16,13 +16,17 @@ namespace CarDVR
         private static readonly Point pointWhite = new Point(5, 5);
         private static readonly Point pointBlack = new Point(6, 6);
         private static ButtonState buttonState = ButtonState.Start;
+		private static bool VideosourceInitialized = false;
 		
         VideoCaptureDevice videoSource = null;
         GpsReciever gps;
 		VideoSplitter splitter;
+		Bitmap frame;
 
         private void InitVideoSource()
         {
+			VideosourceInitialized = false;
+
             bool running = false;
             if (videoSource != null && videoSource.IsRunning)
             {
@@ -30,15 +34,18 @@ namespace CarDVR
                 buttonStartStop_Click(this, EventArgs.Empty);
             }
 
+#if DEBUG
+			running = splitter.IsRunning && (Program.settings.GetVideoSize() != splitter.VideoSize);
+#endif
+
             if (videoSource != null)
                 videoSource.NewFrame -= videoSource_NewFrame;
 
             videoSource = new VideoCaptureDevice(Program.settings.VideoSourceId);
             videoSource.NewFrame += new NewFrameEventHandler(videoSource_NewFrame);
             videoSource.DesiredFrameRate = Program.settings.VideoFps;
-            videoSource.DesiredFrameSize = Program.settings.GetVideoSize();
+            videoSource.DesiredFrameSize = new Size(Program.settings.VideoWidth, Program.settings.VideoHeight);
 
-            //splitter.Codec = "XVID";
             splitter.Codec = "FFDS";
             splitter.FPS = Program.settings.VideoFps;
             splitter.VideoSize = Program.settings.GetVideoSize();
@@ -48,6 +55,8 @@ namespace CarDVR
 
             if (running)
                 buttonStartStop_Click(this, EventArgs.Empty);
+
+			VideosourceInitialized = true;
         }
 
         public MainForm()
@@ -106,22 +115,54 @@ namespace CarDVR
 
         void videoSource_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
-            Bitmap frame = (Bitmap)eventArgs.Frame.Clone();
+			#if DEBUG
+			frame = (Bitmap)Bitmap.FromFile("../../Resources/1.jpg");
+			#else
+            frame = (Bitmap)eventArgs.Frame.Clone();
+			#endif
 
-            Graphics graphics = Graphics.FromImage(frame);
-            string frameString = MakeFrameString();
-            graphics.DrawString(frameString, framefont, Brushes.Black, pointBlack);
-            graphics.DrawString(frameString, framefont, Brushes.White, pointWhite);
+			if (Program.settings.EnableRotate)
+			{
+				switch (Program.settings.RotateAngle)
+				{
+					case 90:
+						frame.RotateFlip(RotateFlipType.Rotate90FlipNone);
+						break;
+					case 180:
+						frame.RotateFlip(RotateFlipType.Rotate180FlipNone);
+						break;
+					case 270:
+						frame.RotateFlip(RotateFlipType.Rotate270FlipNone);
+						break;
+				}
+			}
 
-			splitter.AddFrame(ref frame);
+			// if settings not applied yet
+			if (!VideosourceInitialized || frame.Size != Program.settings.GetVideoSize())
+				return;
 
-            if (Visible)
-                camView.Image = frame;
+			using (Graphics graphics = Graphics.FromImage(frame))
+			{
+				string frameString = MakeFrameString();
+				graphics.DrawString(frameString, framefont, Brushes.Black, pointBlack);
+				graphics.DrawString(frameString, framefont, Brushes.White, pointWhite);
+
+				splitter.AddFrame(ref frame);
+
+				if (Visible)
+					camView.Image = frame;
+			}
         }
 
         private bool IsWebCamAvaliable()
         {
-			bool WebCamPresent = !string.IsNullOrEmpty(Program.settings.VideoSource);
+			bool WebCamPresent;
+
+			#if DEBUG
+			WebCamPresent = true;
+			#else
+			WebCamPresent = !string.IsNullOrEmpty(Program.settings.VideoSource);
+			#endif
 
             buttonStartStop.Enabled = WebCamPresent;
             labelNoVideoSource.Visible = !WebCamPresent;
@@ -181,7 +222,11 @@ namespace CarDVR
                     }
 
 					splitter.Start();
+					#if DEBUG
+					timerDebug.Start();
+					#else
                     videoSource.Start();
+					#endif
                     
                     break;
 
@@ -190,6 +235,7 @@ namespace CarDVR
                     videoSource.WaitForStop();
                     splitter.Stop();
                     camView.Image = new Bitmap(Program.settings.VideoWidth, Program.settings.VideoHeight);
+					timerDebug.Stop();
 
                     // check for opened Serial Port implemented inside Gps Reciever class
                     gps.Close();
@@ -225,6 +271,11 @@ namespace CarDVR
 		{
 			this.Show();
 			trayIcon.Visible = false;
+		}
+
+		private void timerDebug_Tick(object sender, EventArgs e)
+		{
+			videoSource_NewFrame(this, null);
 		}
     }
 }
