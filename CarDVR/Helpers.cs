@@ -4,6 +4,9 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 using System.Security;
 using System.Security.Permissions;
+using System.Security.AccessControl;
+using System.IO;
+using System.Security.Principal;
 
 namespace CarDVR
 {
@@ -34,7 +37,22 @@ namespace CarDVR
     {
         public static bool Process(string dir)
         {
-            return SecurityManager.IsGranted(new FileIOPermission(FileIOPermissionAccess.Write, dir + "/filename.avi"));
+			string filename = dir + "/test.avi";
+
+			try
+			{
+				using (FileStream fs = File.Create(filename))
+				{
+					fs.Close();
+					File.Delete(filename);
+				}
+			}
+			catch (Exception e)
+			{
+				return false;
+			}
+
+			return true;
         }
     }
 

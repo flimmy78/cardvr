@@ -243,12 +243,7 @@ namespace CarDVR
             using (FolderBrowserDialog dlg = new FolderBrowserDialog())
             {
                 if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    string aviDirectory = dlg.SelectedPath;
-
-                    if (CheckDirectoryForWrite(aviDirectory))
-                        textBoxPath.Text = aviDirectory;                                            
-                }
+					textBoxPath.Text = dlg.SelectedPath;
             }
         }
 
