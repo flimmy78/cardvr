@@ -78,14 +78,18 @@ namespace CarDVR
             string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             Text += " v" + version.Substring(0, version.Length-4);
 
-			if (Program.settings.StartMinimized)
-				buttonMinimize_Click(this, EventArgs.Empty);
+			if (!Program.settings.StartMinimized)
+				Show();
 
             buttonState = ButtonState.Start;
 
-            IsWebCamAvaliable();
+			IsWebCamAvaliable();
 
-			if (Program.settings.AutostartRecording && !string.IsNullOrEmpty(Program.settings.VideoSource))
+			if (Program.settings.AutostartRecording 
+#if !DEBUG
+				&& !string.IsNullOrEmpty(Program.settings.VideoSource)
+#endif
+				)
 				buttonStartStop_Click(this, EventArgs.Empty);
         }
 
