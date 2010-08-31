@@ -272,7 +272,7 @@ namespace CarDVR
             if (DialogResult != System.Windows.Forms.DialogResult.OK)
                 return;
 
-            if (!CheckDirectoryForWrite(Program.settings.PathForVideo))
+            if (!CheckDirectoryForWrite(textBoxPath.Text))
                 e.Cancel = true;
         }
     }
