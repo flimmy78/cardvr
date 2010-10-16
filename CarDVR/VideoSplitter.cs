@@ -8,15 +8,15 @@ using AForge.Video.VFW;
 
 namespace CarDVR
 {
-    // Pair of two AVIWriters, opening in own threads
+	// Pair of two AVIWriters, opening in own threads
 	class AVIWritersPair
 	{
 		private AVIWriter currentAvi = new AVIWriter();
 		private AVIWriter preparedAvi = new AVIWriter();
 		private object aviWatchDog = new object();
 
-        #region Getters
-        public AVIWriter GetCurrent()
+		#region Getters
+		public AVIWriter GetCurrent()
 		{
 			return currentAvi;
 		}
@@ -25,10 +25,10 @@ namespace CarDVR
 		{
 			return preparedAvi;
 		}
-        #endregion
+		#endregion
 
-        #region Operations
-        public void AddToCurrent(ref Bitmap frame)
+		#region Operations
+		public void AddToCurrent(ref Bitmap frame)
 		{
 			lock (aviWatchDog)
 			{
@@ -45,32 +45,32 @@ namespace CarDVR
 				preparedAvi = tmp;
 			}
 		}
-        #endregion
+		#endregion
 
-        #region Codec
+		#region Codec
 		public string Codec
 		{
 			set
 			{
-                currentAvi.Codec = value;
-                preparedAvi.Codec = value;
+				currentAvi.Codec = value;
+				preparedAvi.Codec = value;
 			}
 		}
-        #endregion
+		#endregion
 
-        #region FrameRate
+		#region FrameRate
 		public int FrameRate
 		{
 			set
 			{
-                currentAvi.FrameRate = value;
-                preparedAvi.FrameRate = value;
+				currentAvi.FrameRate = value;
+				preparedAvi.FrameRate = value;
 			}
 		}
-        #endregion
+		#endregion
 
-        #region Closers
-        public void CloseCurrent()
+		#region Closers
+		public void CloseCurrent()
 		{
 			lock (aviWatchDog)
 			{
@@ -93,9 +93,9 @@ namespace CarDVR
 				currentAvi.Close();
 				preparedAvi.Close();
 			}
-        }
-        #endregion
-    }
+		}
+		#endregion
+	}
 
 	class VideoSplitter
 	{
@@ -121,7 +121,7 @@ namespace CarDVR
 		#endregion
 
 		#region FileDuration
-		private int fileDuration = 10*60;
+		private int fileDuration = 10 * 60;
 		public int FileDuration
 		{
 			get { return fileDuration / 60; }
@@ -176,7 +176,7 @@ namespace CarDVR
 		{
 			++secondsElapsed;
 		}
-		
+
 		public void AddFrame(ref Bitmap frame)
 		{
 #if DEBUG
@@ -221,7 +221,7 @@ namespace CarDVR
 
 			avipair.Codec = codec;
 			avipair.FrameRate = fps;
-			
+
 			nextAviPrepared = false;
 			StartNewMovie(0);
 			timerSplit.Start();
@@ -264,7 +264,7 @@ namespace CarDVR
 			string filename = oneOfAvi == 1 ? DateTime.Now.AddSeconds(9).ToString() : DateTime.Now.ToString();
 
 			filename = path + "\\CarDVR_" +
-                filename.Replace(':', '_').Replace(' ', '_').Replace('.', '_') + ".avi";
+				filename.Replace(':', '_').Replace(' ', '_').Replace('.', '_') + ".avi";
 
 			try
 			{
@@ -274,10 +274,10 @@ namespace CarDVR
 			catch (Exception e)
 			{
 				Reporter.Error
-                    (
-                        "Can't open output file " + filename + "\n" +
-                        e.Message
-                    );
+					(
+						"Can't open output file " + filename + "\n" +
+						e.Message
+					);
 			}
 
 			DirectoryInfo dir = new DirectoryInfo(Program.settings.PathForVideo);

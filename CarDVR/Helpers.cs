@@ -15,17 +15,17 @@ namespace CarDVR
 		public static int[] values = { 110, 300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 38400, 56000, 57600, 115200, 128000, 256000 };
 	}
 
-    class NoWebcamException : Exception
-    {
-    }
+	class NoWebcamException : Exception
+	{
+	}
 
-    public class Reporter
-    {
-   	    static public void Error(string text)
-	    {
-		    MessageBox.Show(text, "Error", MessageBoxButtons.OK);
-	    }
-    }
+	public class Reporter
+	{
+		static public void Error(string text)
+		{
+			MessageBox.Show(text, "Error", MessageBoxButtons.OK);
+		}
+	}
 
 	enum ButtonState
 	{
@@ -33,10 +33,10 @@ namespace CarDVR
 		Stop
 	}
 
-    class DirectoryWriteChecker
-    {
-        public static bool Process(string dir)
-        {
+	class DirectoryWriteChecker
+	{
+		public static bool Process(string dir)
+		{
 			string filename = dir + "/test.avi";
 
 			try
@@ -53,8 +53,8 @@ namespace CarDVR
 			}
 
 			return true;
-        }
-    }
+		}
+	}
 
 	class AutorunHelper
 	{
@@ -65,9 +65,9 @@ namespace CarDVR
 
 			string exepath = asm.Location;
 			string CarDrv = asm.GetName().Name;
-			
+
 			RegistryKey key = Registry.CurrentUser;
-	
+
 			try
 			{
 				key = Registry.CurrentUser.OpenSubKey(AUTORUN_KEY, true);

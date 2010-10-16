@@ -4,8 +4,8 @@ using System.Diagnostics;
 
 namespace CarDVR
 {
-    static class Program
-    {
+	static class Program
+	{
 		static MainForm mainform;
 		public static SettingsImpl settings = new SettingsImpl();
 
@@ -17,21 +17,21 @@ namespace CarDVR
 			}
 		}
 
-        [STAThread]
-        static void Main()
-        {
-            int processCount = 0;
+		[STAThread]
+		static void Main()
+		{
+			int processCount = 0;
 
-            foreach (Process p in Process.GetProcesses())
-                if (p.ProcessName == Process.GetCurrentProcess().ProcessName)
-                {
-                    if (++processCount == 2)
-                        return;
-                }
+			foreach (Process p in Process.GetProcesses())
+				if (p.ProcessName == Process.GetCurrentProcess().ProcessName)
+				{
+					if (++processCount == 2)
+						return;
+				}
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+			Application.EnableVisualStyles();
+			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new MyAppContext());
-        }
-    }
+		}
+	}
 }

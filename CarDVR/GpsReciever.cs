@@ -3,230 +3,230 @@ using System.IO.Ports;
 
 namespace CarDVR
 {
-    public class SpeedEventArgs : EventArgs
-    {
-        private int _speed;
-        public SpeedEventArgs(int speed)
-        {
-            _speed = speed;
-        }
-        public int Speed
-        {
-            get
-            {
-                return _speed;
-            }
-        }
-    }
-    public enum GpsState
-    {
-        NotActive,
-        Active,
-        NoSignal
-    }
+	public class SpeedEventArgs : EventArgs
+	{
+		private int _speed;
+		public SpeedEventArgs(int speed)
+		{
+			_speed = speed;
+		}
+		public int Speed
+		{
+			get
+			{
+				return _speed;
+			}
+		}
+	}
+	public enum GpsState
+	{
+		NotActive,
+		Active,
+		NoSignal
+	}
 
-    class GpsReciever
-    {
-        private static readonly double KMpHPerKnot = 1.852;
-        private static readonly string rn = "\r\n";
+	class GpsReciever
+	{
+		private static readonly double KMpHPerKnot = 1.852;
+		private static readonly string rn = "\r\n";
 
-        private SerialPort com = null;
-        private string buff = string.Empty;
-        private bool IsInitialized = false;
-        private GpsState gpsState = GpsState.NotActive;
-        private DateTime lastSpeedUpdate = DateTime.Now;
-        private string latitude = string.Empty;
-        private string longitude = string.Empty;
-        private int speed = 0;
+		private SerialPort com = null;
+		private string buff = string.Empty;
+		private bool IsInitialized = false;
+		private GpsState gpsState = GpsState.NotActive;
+		private DateTime lastSpeedUpdate = DateTime.Now;
+		private string latitude = string.Empty;
+		private string longitude = string.Empty;
+		private int speed = 0;
 
-        private int fixTaken = 0;
-        private int numberOfSattelites = 0;
+		private int fixTaken = 0;
+		private int numberOfSattelites = 0;
 
-        public GpsState GpsState
-        {
-            get
-            {
-                return gpsState;
-            }
-        }
-        
-        public GpsReciever()
-        {
-            com = new SerialPort();
-            com.DataReceived += new SerialDataReceivedEventHandler(com_DataReceived);
-        }
+		public GpsState GpsState
+		{
+			get
+			{
+				return gpsState;
+			}
+		}
 
-        public void Initialize(string comport, int baud)
-        {
-            if (com.IsOpen)
-                return;
+		public GpsReciever()
+		{
+			com = new SerialPort();
+			com.DataReceived += new SerialDataReceivedEventHandler(com_DataReceived);
+		}
 
-            com.PortName = comport;
-            com.BaudRate = baud;
-            gpsState = GpsState.Active;
-            IsInitialized = true;
-        }
+		public void Initialize(string comport, int baud)
+		{
+			if (com.IsOpen)
+				return;
 
-        ~GpsReciever()
-        {
-            try
-            {
-                if (com.IsOpen)
-                    com.Close();
-            }
-            catch (Exception) { }
+			com.PortName = comport;
+			com.BaudRate = baud;
+			gpsState = GpsState.Active;
+			IsInitialized = true;
+		}
 
-            com.DataReceived -= com_DataReceived;
-            com.Dispose();
-        }
+		~GpsReciever()
+		{
+			try
+			{
+				if (com.IsOpen)
+					com.Close();
+			}
+			catch (Exception) { }
 
-        string ParseSentence(string sentenceName, int paramNum)
-        {
-            if (!buff.Contains(sentenceName))
-                return string.Empty;
-            
-            buff = buff.Substring(buff.IndexOf(sentenceName));
+			com.DataReceived -= com_DataReceived;
+			com.Dispose();
+		}
 
-            if (!buff.Contains(rn))
-                return string.Empty;
+		string ParseSentence(string sentenceName, int paramNum)
+		{
+			if (!buff.Contains(sentenceName))
+				return string.Empty;
 
-            int eol = buff.IndexOf(rn);
-            string sents = buff.Substring(0, eol);
-            buff.Remove(0, eol);
+			buff = buff.Substring(buff.IndexOf(sentenceName));
 
-            String[] lines = sents.Split(',');
+			if (!buff.Contains(rn))
+				return string.Empty;
 
-            return lines.Length > paramNum ? lines[paramNum] : string.Empty;
-        }
+			int eol = buff.IndexOf(rn);
+			string sents = buff.Substring(0, eol);
+			buff.Remove(0, eol);
 
-        void ParseGGA(ref string[] parameters)
-        {
-            if (parameters.Length <= 7)
-                return;
+			String[] lines = sents.Split(',');
 
-            latitude = parameters[3] + " ";
-            latitude += parameters[2].Insert(2, " ");
+			return lines.Length > paramNum ? lines[paramNum] : string.Empty;
+		}
 
-            longitude = parameters[5] + " ";
-            longitude += parameters[4].Insert(3, " ");
-            if (longitude.Contains(" 0"))
-                longitude = longitude.Remove(2, 1);
+		void ParseGGA(ref string[] parameters)
+		{
+			if (parameters.Length <= 7)
+				return;
 
-            string outstring = latitude + " " + longitude;
+			latitude = parameters[3] + " ";
+			latitude += parameters[2].Insert(2, " ");
 
-            if (!int.TryParse(parameters[6], out fixTaken))
-                fixTaken = 0;
+			longitude = parameters[5] + " ";
+			longitude += parameters[4].Insert(3, " ");
+			if (longitude.Contains(" 0"))
+				longitude = longitude.Remove(2, 1);
 
-            if (!int.TryParse(parameters[7], out numberOfSattelites))
-                numberOfSattelites = 0;
+			string outstring = latitude + " " + longitude;
 
-            gpsState = fixTaken == 0 ? CarDVR.GpsState.NoSignal : CarDVR.GpsState.Active;
-        }
+			if (!int.TryParse(parameters[6], out fixTaken))
+				fixTaken = 0;
 
-        void ParseRMC(ref string[] parameters)
-        {
-            if (parameters.Length <= 7)
-                return;
+			if (!int.TryParse(parameters[7], out numberOfSattelites))
+				numberOfSattelites = 0;
 
-            string velocity = parameters[7];
+			gpsState = fixTaken == 0 ? CarDVR.GpsState.NoSignal : CarDVR.GpsState.Active;
+		}
 
-            if (!String.IsNullOrEmpty(velocity))
-            {
-                lastSpeedUpdate = DateTime.Now;
+		void ParseRMC(ref string[] parameters)
+		{
+			if (parameters.Length <= 7)
+				return;
 
-                try
-                {
-                    speed = Convert.ToInt32(Convert.ToDouble(velocity.Replace('.', ',')) * KMpHPerKnot);
-                }
-                catch (Exception) { }
-            }
-        }
+			string velocity = parameters[7];
 
-        void com_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            buff += com.ReadExisting();
+			if (!String.IsNullOrEmpty(velocity))
+			{
+				lastSpeedUpdate = DateTime.Now;
 
-            while (buff.Contains(rn))
-            {
-                int rnPos = buff.IndexOf(rn);
+				try
+				{
+					speed = Convert.ToInt32(Convert.ToDouble(velocity.Replace('.', ',')) * KMpHPerKnot);
+				}
+				catch (Exception) { }
+			}
+		}
 
-                string line = buff.Substring(0, rnPos);
-                buff = buff.Remove(0, rnPos + rn.Length);
+		void com_DataReceived(object sender, SerialDataReceivedEventArgs e)
+		{
+			buff += com.ReadExisting();
 
-                string[] parameters = line.Split(',');
+			while (buff.Contains(rn))
+			{
+				int rnPos = buff.IndexOf(rn);
 
-                if (parameters.Length == 0)
-                    continue;
+				string line = buff.Substring(0, rnPos);
+				buff = buff.Remove(0, rnPos + rn.Length);
 
-                if (parameters[0] == "$GPRMC")
-                    ParseRMC(ref parameters);
-                else if (parameters[0] == "$GPGGA")
-                    ParseGGA(ref parameters);
-            }
+				string[] parameters = line.Split(',');
 
-        }
+				if (parameters.Length == 0)
+					continue;
 
-        public bool Open()
-        {
-            gpsState = CarDVR.GpsState.NotActive;
+				if (parameters[0] == "$GPRMC")
+					ParseRMC(ref parameters);
+				else if (parameters[0] == "$GPGGA")
+					ParseGGA(ref parameters);
+			}
 
-            if (!IsInitialized)
-                return false;
+		}
 
-            try
-            {
-                com.Open();
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+		public bool Open()
+		{
+			gpsState = CarDVR.GpsState.NotActive;
 
-            return true;
-        }
+			if (!IsInitialized)
+				return false;
 
-        public void Close()
-        {
-            if (!com.IsOpen)
-                return;
+			try
+			{
+				com.Open();
+			}
+			catch (Exception)
+			{
+				return false;
+			}
 
-            try
-            {
-                com.Close();
-            }
-            catch (Exception) { }
-        }
+			return true;
+		}
 
-        public string Coordinates
-        {
-            get
-            {
-                if (gpsState != GpsState.Active)
-                    return string.Empty;
+		public void Close()
+		{
+			if (!com.IsOpen)
+				return;
 
-                return latitude + " " + longitude;
-            }
-        }
+			try
+			{
+				com.Close();
+			}
+			catch (Exception) { }
+		}
 
-        public int NumberOfSattelites
-        {
-            get
-            {
-                return numberOfSattelites;
-            }
-        }
+		public string Coordinates
+		{
+			get
+			{
+				if (gpsState != GpsState.Active)
+					return string.Empty;
 
-        public int Speed
-        {
-            get
-            {
-                return speed;
-            }
-        }
+				return latitude + " " + longitude;
+			}
+		}
 
-        public bool IsOpened()
-        {
-            return com.IsOpen;
-        }
-    }
+		public int NumberOfSattelites
+		{
+			get
+			{
+				return numberOfSattelites;
+			}
+		}
+
+		public int Speed
+		{
+			get
+			{
+				return speed;
+			}
+		}
+
+		public bool IsOpened()
+		{
+			return com.IsOpen;
+		}
+	}
 }
