@@ -276,151 +276,50 @@ namespace CarDVR
 	{
 		// Registry path to our settings
 		private static readonly string REG_PATH = @"Software\CarDVR";
+        // Default path to store video files
         private static readonly string DEFAULT_PATH = @"C:\";
 
-		#region SerialPort
-		private string _GpsSerialPort = string.Empty;
-		public string GpsSerialPort
-		{
-			get { return _GpsSerialPort; }
-			set { _GpsSerialPort = value; }
-		}
-		#endregion
+		public string GpsSerialPort	{ get; set;	}
+		public int SerialPortBaudRate { get; set; }
+		public string VideoSource { get; set; }
+		public string VideoSourceId { get; set; }
+        public int VideoWidth { get; set; }
+        public int VideoHeight { get; set; }
+		public int VideoFps { get; set; }
+        public string VideoResolutionString { get; set; }
+		public bool GpsEnabled { get; set; }
+		public bool StartWithWindows { get; set; }
+        public bool AutostartRecording { get; set; }
+		public bool StartMinimized { get; set; }
+        public int AviDuration { get; set; }
+        public int AmountOfFiles { get; set; }
+        public string PathForVideo { get; set; }
+        public bool EnableRotate { get; set; }
+		public int RotateAngle { get; set; }
 
-		#region BaudRate
-		private int _SerialPortBaudRate = 0;
-		public int SerialPortBaudRate
-		{
-			get { return _SerialPortBaudRate; }
-			set { _SerialPortBaudRate = value; }
-		}
-		#endregion
-
-		#region Video Source Name
-		private string _VideoSource = string.Empty;
-		public string VideoSource
-		{
-			get { return _VideoSource; }
-			set { _VideoSource = value; }
-		}
-		#endregion
-
-		#region Video Source Id
-		private string _VideoSourceId = string.Empty;
-		public string VideoSourceId
-		{
-			get { return _VideoSourceId; }
-			set { _VideoSourceId = value; }
-		}
-		#endregion
-
-        #region Video Resolution
-        private int _VideoWidth = 0;
-        public int VideoWidth
+        /// <summary>
+        /// Initialization constructor
+        /// </summary>
+        public SettingsImpl()
         {
-            get { return _VideoWidth; }
-            set { _VideoWidth = value; }
+            GpsSerialPort = string.Empty;
+            SerialPortBaudRate = 0;
+            VideoSource = string.Empty;
+            VideoSourceId = string.Empty;
+            VideoWidth = 0;
+            VideoHeight = 0;
+            VideoFps = 0;
+            VideoResolutionString = string.Empty;
+            GpsEnabled = false;
+            StartWithWindows = false;
+            AutostartRecording = false;
+            StartMinimized = false;
+            PathForVideo = DEFAULT_PATH;
+            AmountOfFiles = 10;
+            AviDuration = 10;
+            EnableRotate = false;
+            RotateAngle = 0;            
         }
-        private int _VideoHeight = 0;
-        public int VideoHeight
-        {
-            get { return _VideoHeight; }
-            set { _VideoHeight = value; }
-        }
-		private int _VideoFps = 0;
-		public int VideoFps
-		{
-			get { return _VideoFps; }
-			set { _VideoFps = value; }
-		}
-        private string _VideoResolutionString = string.Empty;
-        public string VideoResolutionString
-        {
-            get { return _VideoResolutionString; }
-            set { _VideoResolutionString = value; }
-        }
-        #endregion
-
-		#region GpsEnabled
-		private bool _GpsEnabled = false;
-		public bool GpsEnabled
-		{
-			get { return _GpsEnabled; }
-			set { _GpsEnabled = value; }
-		}
-		#endregion
-
-		#region StartWithWindows
-		private bool _StartWithWindows = false;
-		public bool StartWithWindows
-		{
-			get { return _StartWithWindows; }
-			set { _StartWithWindows = value; }
-		}
-		#endregion
-
-		#region AutostartRecording
-		private bool _AutostartRecording = false;
-		public bool AutostartRecording
-		{
-			get { return _AutostartRecording; }
-			set { _AutostartRecording = value; }
-		}
-		#endregion
-
-		#region Start Minimized
-		private bool _StartMinimized = false;
-		public bool StartMinimized
-		{
-			get { return _StartMinimized; }
-			set { _StartMinimized = value; }
-		}
-		#endregion
-
-        #region AVI duration
-        private int _AviDuration = 10;
-        public int AviDuration
-        {
-            get { return _AviDuration; }
-            set { _AviDuration = value; }
-        }
-        #endregion
-
-        #region Amount of files
-        private int _AmountOfFiles = 10;
-        public int AmountOfFiles
-        {
-            get { return _AmountOfFiles; }
-            set { _AmountOfFiles = value; }
-        }
-        #endregion
-
-        #region Path to save
-        private string _PathForVideo = DEFAULT_PATH;
-        public string PathForVideo
-        {
-            get { return _PathForVideo; }
-            set { _PathForVideo = value; }
-        }
-        #endregion
-
-		#region Enable Rotate
-		private bool _EnableRotate = false;
-		public bool EnableRotate
-		{
-			get { return _EnableRotate; }
-			set { _EnableRotate = value; }
-		}
-		#endregion
-
-		#region Rotate Value
-		private int _RotateAngle = 0;
-		public int RotateAngle
-		{
-			get { return _RotateAngle; }
-			set { _RotateAngle = value; }
-		}
-		#endregion
 
 		/// <summary>
 		/// Read settings from the registry and applies to this class
