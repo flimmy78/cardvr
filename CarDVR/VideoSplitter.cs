@@ -110,63 +110,19 @@ namespace CarDVR
 		private bool _IsRunning = false;
 #endif
 
-
-		#region Path
-		private string path = string.Empty;
-		public string Path
-		{
-			get { return path; }
-			set { path = value; }
-		}
-		#endregion
-
-		#region FileDuration
-		private int fileDuration = 10 * 60;
-		public int FileDuration
-		{
-			get { return fileDuration / 60; }
-			set { fileDuration = value * 60; }
-		}
-		#endregion
-
-		#region Number of cycled files
-		private int numberOfFiles = 10;
-		public int NumberOfFiles
-		{
-			get { return numberOfFiles; }
-			set { numberOfFiles = value; }
-		}
-		#endregion
-
-		#region Codec
-		private string codec = string.Empty;
-		public string Codec
-		{
-			get { return codec; }
-			set { codec = value; }
-		}
-		#endregion
-
-		#region Frapes Per Second
-		private int fps = 0;
-		public int FPS
-		{
-			get { return fps; }
-			set { fps = value; }
-		}
-		#endregion
-
-		#region Video Size
-		private Size videoSize = Size.Empty;
-		public Size VideoSize
-		{
-			get { return videoSize; }
-			set { videoSize = value; }
-		}
-		#endregion
+		public string Path { get; set; }
+		public int FileDuration { get; set; }
+		public int NumberOfFiles { get; set; }
+		public string Codec { get; set; }
+		public int FPS { get; set; }
+		public Size VideoSize { get; set; }
 
 		public VideoSplitter()
 		{
+			// default settings
+			FileDuration = 10 * 60;
+			NumberOfFiles = 10;
+
 			timerSplit = new System.Timers.Timer();
 			timerSplit.Interval = 1000;
 			timerSplit.Elapsed += new ElapsedEventHandler(timerSplit_Elapsed);
@@ -186,13 +142,13 @@ namespace CarDVR
 			lock (secondsWatchDog)
 			{
 				// before 10 seconds, open new avi
-				if (!nextAviPrepared && (secondsElapsed % fileDuration) == (fileDuration - 9))
+				if (!nextAviPrepared && (secondsElapsed % FileDuration) == (FileDuration - 9))
 				{
 					nextAviPrepared = true;
 					new Thread(PrepareNewMovie).Start();
 				}
 
-				if (nextAviPrepared && (secondsElapsed % fileDuration) == 0)
+				if (nextAviPrepared && (secondsElapsed % FileDuration) == 0)
 				{
 					nextAviPrepared = false;
 					avipair.Replace();
@@ -219,8 +175,8 @@ namespace CarDVR
 			_IsRunning = true;
 #endif
 
-			avipair.Codec = codec;
-			avipair.FrameRate = fps;
+			avipair.Codec = Codec;
+			avipair.FrameRate = FPS;
 
 			nextAviPrepared = false;
 			StartNewMovie(0);
@@ -263,13 +219,13 @@ namespace CarDVR
 			// if preparing, next avi will started after 10 seconds
 			string filename = oneOfAvi == 1 ? DateTime.Now.AddSeconds(9).ToString() : DateTime.Now.ToString();
 
-			filename = path + "\\CarDVR_" +
+			filename = Path + "\\CarDVR_" +
 				filename.Replace(':', '_').Replace(' ', '_').Replace('.', '_') + ".avi";
 
 			try
 			{
 				AVIWriter avi = oneOfAvi == 0 ? avipair.GetCurrent() : avipair.GetPrepared();
-				avi.Open(filename, videoSize.Width, videoSize.Height);
+				avi.Open(filename, VideoSize.Width, VideoSize.Height);
 			}
 			catch (Exception e)
 			{
@@ -295,23 +251,12 @@ namespace CarDVR
 			}
 		}
 
-		#region Helpers
 		private class FileInfoComparer : IComparer<FileInfo>
 		{
 			public int Compare(FileInfo x, FileInfo y)
 			{
-				if (x.CreationTime == y.CreationTime)
-					return 0;
-
-				if (x.CreationTime > y.CreationTime)
-					return -1;
-
-				if (x.CreationTime < y.CreationTime)
-					return 1;
-
-				return 0;
+				return -x.CreationTime.CompareTo(y.CreationTime);
 			}
 		}
-		#endregion
 	}
 }

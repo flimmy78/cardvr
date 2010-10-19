@@ -282,6 +282,7 @@ namespace CarDVR
 		// Default path to store video files
 		private static readonly string DEFAULT_PATH = @"C:\";
 
+		// Settings properties
 		public string GpsSerialPort { get; set; }
 		public int SerialPortBaudRate { get; set; }
 		public string VideoSource { get; set; }

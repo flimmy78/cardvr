@@ -17,6 +17,8 @@ namespace CarDVR
 		private static readonly Point pointBlack = new Point(6, 6);
 		private static ButtonState buttonState = ButtonState.Start;
 		private static bool VideosourceInitialized = false;
+		private static System.Windows.Forms.Timer AutostartDelayer = new System.Windows.Forms.Timer();
+		protected delegate void TickDelegate(object source, EventArgs e);
 
 		VideoCaptureDevice videoSource = null;
 		GpsReciever gps;
@@ -61,8 +63,30 @@ namespace CarDVR
 
 		public MainForm()
 		{
+			InitializeComponent();
+
 			Program.settings.Read();
 
+			if (Program.settings.AutostartRecording)
+			{
+				Thread.Sleep(Program.settings.DelayBeforeStart * 1000);
+				/*
+				AutostartDelayer.Interval = Program.settings.DelayBeforeStart * 1000;
+				AutostartDelayer.Enabled = true;
+				AutostartDelayer.Tick += new EventHandler(AutostartDelayer_Tick);
+				 * */
+				GlobalInitialization();
+				 
+			}
+			else
+			{
+				GlobalInitialization();
+			}
+		}
+
+		//private void GlobalInitialization(object source, EventArgs e)
+		private void GlobalInitialization()
+		{
 			// Create avi-splitter. It will be initialized in InitVideoSource()
 			splitter = new VideoSplitter();
 			gps = new GpsReciever();
@@ -72,8 +96,6 @@ namespace CarDVR
 
 			// create first video source
 			InitVideoSource();
-
-			InitializeComponent();
 
 			string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 			Text += " v" + version.Substring(0, version.Length - 4);
@@ -91,7 +113,11 @@ namespace CarDVR
 #endif
 )
 				buttonStartStop_Click(this, EventArgs.Empty);
+
 		}
+
+		int lastFrames = 0, totalFrames = 0, lastFps = 0;
+		object framesKeeper = new object();
 
 		private string MakeFrameString()
 		{
@@ -103,7 +129,7 @@ namespace CarDVR
 				switch (gps.GpsState)
 				{
 					case GpsState.Active:
-						result += "Скорость: " + gps.Speed.ToString() + " км/ч Cпутников: " + gps.NumberOfSattelites.ToString() + "\n" + gps.Coordinates;
+						result += "Скорость: " + gps.Speed + " км/ч Cпутников: " + gps.NumberOfSattelites.ToString() + "\n" + gps.Coordinates;
 						break;
 					case GpsState.NoSignal:
 						result += "Нет сигнала GPS";
@@ -114,17 +140,23 @@ namespace CarDVR
 				}
 			}
 
+			lock (framesKeeper)
+			{
+				result += "\n" + lastFps.ToString() + " FPS";
+			}
+
 			return result;
 		}
 
 		void videoSource_NewFrame(object sender, NewFrameEventArgs eventArgs)
 		{
+			++totalFrames;
 #if DEBUG
 			frame = (Bitmap)Bitmap.FromFile("../../Resources/1.jpg");
 #else
 			frame = (Bitmap)eventArgs.Frame.Clone();
 #endif
-
+			
 			if (Program.settings.EnableRotate)
 			{
 				switch (Program.settings.RotateAngle)
@@ -231,6 +263,7 @@ namespace CarDVR
 #else
 					videoSource.Start();
 #endif
+					FpsDisplayer.Enabled = true;
 
 					break;
 
@@ -243,6 +276,7 @@ namespace CarDVR
 
 					// check for opened Serial Port implemented inside Gps Reciever class
 					gps.Close();
+					FpsDisplayer.Enabled = false;
 
 					break;
 			}
@@ -280,6 +314,24 @@ namespace CarDVR
 		private void timerDebug_Tick(object sender, EventArgs e)
 		{
 			videoSource_NewFrame(this, null);
+		}
+
+		private void AutostartDelayer_Tick(object sender, EventArgs e)
+		{
+			AutostartDelayer.Enabled = false;
+
+			/*if (InvokeRequired)
+				this.BeginInvoke(GlobalInitialization);*/
+			//GlobalInitialization();
+		}
+
+		private void FpsDisplayer_Tick(object sender, EventArgs e)
+		{
+			lock (framesKeeper)
+			{
+				lastFps = totalFrames - lastFrames;
+				lastFrames = totalFrames;
+			}
 		}
 	}
 }

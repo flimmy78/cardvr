@@ -18,6 +18,7 @@ namespace CarDVR
 			}
 		}
 	}
+
 	public enum GpsState
 	{
 		NotActive,
@@ -38,6 +39,7 @@ namespace CarDVR
 		private string latitude = string.Empty;
 		private string longitude = string.Empty;
 		private int speed = 0;
+		private bool convertedOk = true;
 
 		private int fixTaken = 0;
 		private int numberOfSattelites = 0;
@@ -48,6 +50,14 @@ namespace CarDVR
 			{
 				return gpsState;
 			}
+			set
+			{
+				if (gpsState == value)
+					return;
+
+				gpsState = value;
+			}
+
 		}
 
 		public GpsReciever()
@@ -63,7 +73,7 @@ namespace CarDVR
 
 			com.PortName = comport;
 			com.BaudRate = baud;
-			gpsState = GpsState.Active;
+			GpsState = GpsState.Active;
 			IsInitialized = true;
 		}
 
@@ -120,25 +130,35 @@ namespace CarDVR
 			if (!int.TryParse(parameters[7], out numberOfSattelites))
 				numberOfSattelites = 0;
 
-			gpsState = fixTaken == 0 ? CarDVR.GpsState.NoSignal : CarDVR.GpsState.Active;
+			GpsState = fixTaken == 0 ? CarDVR.GpsState.NoSignal : CarDVR.GpsState.Active;
 		}
 
 		void ParseRMC(ref string[] parameters)
 		{
 			if (parameters.Length <= 7)
+			{
+				convertedOk = false;
 				return;
+			}
 
 			string velocity = parameters[7];
 
-			if (!String.IsNullOrEmpty(velocity))
+			if (String.IsNullOrEmpty(velocity))
 			{
-				lastSpeedUpdate = DateTime.Now;
+				convertedOk = false;
+				return;
+			}
 
-				try
-				{
-					speed = Convert.ToInt32(Convert.ToDouble(velocity.Replace('.', ',')) * KMpHPerKnot);
-				}
-				catch (Exception) { }
+			try
+			{
+				speed = (int)(Convert.ToDouble(velocity.Replace('.', ',')) * KMpHPerKnot);
+				convertedOk = true;
+				lastSpeedUpdate = DateTime.Now;
+			}
+			catch (Exception) 
+			{
+				speed = 0;
+				convertedOk = false;
 			}
 		}
 
@@ -168,7 +188,7 @@ namespace CarDVR
 
 		public bool Open()
 		{
-			gpsState = CarDVR.GpsState.NotActive;
+			GpsState = CarDVR.GpsState.NotActive;
 
 			if (!IsInitialized)
 				return false;
@@ -201,7 +221,7 @@ namespace CarDVR
 		{
 			get
 			{
-				if (gpsState != GpsState.Active)
+				if (GpsState != GpsState.Active)
 					return string.Empty;
 
 				return latitude + " " + longitude;
@@ -216,11 +236,11 @@ namespace CarDVR
 			}
 		}
 
-		public int Speed
+		public string Speed
 		{
 			get
 			{
-				return speed;
+				return convertedOk ? speed.ToString() : "err";
 			}
 		}
 
