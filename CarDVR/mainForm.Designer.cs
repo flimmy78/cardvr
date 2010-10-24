@@ -38,6 +38,7 @@
 			this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.timerDebug = new System.Windows.Forms.Timer(this.components);
 			this.FpsDisplayer = new System.Windows.Forms.Timer(this.components);
+			this.timerWriter = new System.Windows.Forms.Timer(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.camView)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -117,6 +118,12 @@
 			this.FpsDisplayer.Interval = 1000;
 			this.FpsDisplayer.Tick += new System.EventHandler(this.FpsDisplayer_Tick);
 			// 
+			// timerWriter
+			// 
+			this.timerWriter.Enabled = true;
+			this.timerWriter.Interval = 40;
+			this.timerWriter.Tick += new System.EventHandler(this.timerWriter_Tick);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -151,6 +158,7 @@
 		private System.Windows.Forms.NotifyIcon trayIcon;
 		private System.Windows.Forms.Timer timerDebug;
 		private System.Windows.Forms.Timer FpsDisplayer;
+		private System.Windows.Forms.Timer timerWriter;
     }
 }
 

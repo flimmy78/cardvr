@@ -24,6 +24,7 @@ namespace CarDVR
 		GpsReciever gps;
 		VideoSplitter splitter;
 		Bitmap frame;
+		object frameKeeper = new object();
 
 		private void InitVideoSource()
 		{
@@ -45,15 +46,18 @@ namespace CarDVR
 
 			videoSource = new VideoCaptureDevice(Program.settings.VideoSourceId);
 			videoSource.NewFrame += new NewFrameEventHandler(videoSource_NewFrame);
-			videoSource.DesiredFrameRate = Program.settings.VideoFps;
+			videoSource.DesiredFrameRate = Program.settings.OutputRateFps != 0 ? Program.settings.OutputRateFps : Program.settings.VideoFps;
 			videoSource.DesiredFrameSize = new Size(Program.settings.VideoWidth, Program.settings.VideoHeight);
 
 			splitter.Codec = "XVID";
-			splitter.FPS = Program.settings.VideoFps;
+			splitter.FPS = Program.settings.OutputRateFps != 0 ? Program.settings.OutputRateFps : Program.settings.VideoFps;
 			splitter.VideoSize = Program.settings.GetVideoSize();
 			splitter.FileDuration = Program.settings.AviDuration;
 			splitter.NumberOfFiles = Program.settings.AmountOfFiles;
 			splitter.Path = Program.settings.PathForVideo;
+
+			if (splitter.FPS > 0)
+				timerWriter.Interval = 1000 / splitter.FPS;
 
 			if (running)
 				buttonStartStop_Click(this, EventArgs.Empty);
@@ -151,42 +155,42 @@ namespace CarDVR
 		void videoSource_NewFrame(object sender, NewFrameEventArgs eventArgs)
 		{
 			++totalFrames;
+
+			lock (frameKeeper)
+			{
 #if DEBUG
 			frame = (Bitmap)Bitmap.FromFile("../../Resources/1.jpg");
 #else
-			frame = (Bitmap)eventArgs.Frame.Clone();
+				frame = (Bitmap)eventArgs.Frame.Clone();
 #endif
-			
-			if (Program.settings.EnableRotate)
-			{
-				switch (Program.settings.RotateAngle)
+
+
+				if (Program.settings.EnableRotate)
 				{
-					case 90:
-						frame.RotateFlip(RotateFlipType.Rotate90FlipNone);
-						break;
-					case 180:
-						frame.RotateFlip(RotateFlipType.Rotate180FlipNone);
-						break;
-					case 270:
-						frame.RotateFlip(RotateFlipType.Rotate270FlipNone);
-						break;
+					switch (Program.settings.RotateAngle)
+					{
+						case 90:
+							frame.RotateFlip(RotateFlipType.Rotate90FlipNone);
+							break;
+						case 180:
+							frame.RotateFlip(RotateFlipType.Rotate180FlipNone);
+							break;
+						case 270:
+							frame.RotateFlip(RotateFlipType.Rotate270FlipNone);
+							break;
+					}
 				}
-			}
 
-			// if settings not applied yet
-			if (!VideosourceInitialized || frame.Size != Program.settings.GetVideoSize())
-				return;
+				// if settings not applied yet
+				if (!VideosourceInitialized || frame.Size != Program.settings.GetVideoSize())
+					return;
 
-			using (Graphics graphics = Graphics.FromImage(frame))
-			{
-				string frameString = MakeFrameString();
-				graphics.DrawString(frameString, framefont, Brushes.Black, pointBlack);
-				graphics.DrawString(frameString, framefont, Brushes.White, pointWhite);
-
-				splitter.AddFrame(ref frame);
-
-				if (Visible)
-					camView.Image = frame;
+				using (Graphics graphics = Graphics.FromImage(frame))
+				{
+					string frameString = MakeFrameString();
+					graphics.DrawString(frameString, framefont, Brushes.Black, pointBlack);
+					graphics.DrawString(frameString, framefont, Brushes.White, pointWhite);
+				}
 			}
 		}
 
@@ -331,6 +335,17 @@ namespace CarDVR
 			{
 				lastFps = totalFrames - lastFrames;
 				lastFrames = totalFrames;
+			}
+		}
+
+		private void timerWriter_Tick(object sender, EventArgs e)
+		{
+			lock (frameKeeper)
+			{
+				splitter.AddFrame(ref frame);
+
+				if (Visible)
+					camView.Image = frame;
 			}
 		}
 	}

@@ -32,7 +32,14 @@ namespace CarDVR
 		{
 			lock (aviWatchDog)
 			{
-				currentAvi.AddFrame(frame);
+				try
+				{
+					currentAvi.AddFrame(frame);
+				}
+				catch (Exception)
+				{
+					// frame was not added (may be shutdown)
+				}
 			}
 		}
 
@@ -135,6 +142,8 @@ namespace CarDVR
 
 		public void AddFrame(ref Bitmap frame)
 		{
+			if (frame == null)
+				return;
 #if DEBUG
 			if (!_IsRunning)
 				return;

@@ -145,7 +145,7 @@ namespace CarDVR
 			}
 			#endregion
 
-			aviDuration.Value = Program.settings.AviDuration;
+			aviDuration.Value = Program.settings.AviDuration / 60;
 			amountOfFiles.Value = Program.settings.AmountOfFiles;
 
 			enableGps.Checked = Program.settings.GpsEnabled;
@@ -155,6 +155,7 @@ namespace CarDVR
 			textBoxPath.Text = Program.settings.PathForVideo;
 			enableRotate.Checked = Program.settings.EnableRotate;
 			delayBeforeStart.Value = Program.settings.DelayBeforeStart;
+			outputRate.SelectedItem = Program.settings.OutputRateFps;
 		}
 
 		public void ApplyFormToSettings()
@@ -181,7 +182,7 @@ namespace CarDVR
 				}
 
 			Program.settings.AmountOfFiles = (int)amountOfFiles.Value;
-			Program.settings.AviDuration = (int)aviDuration.Value;
+			Program.settings.AviDuration = (int)aviDuration.Value*60;
 			Program.settings.PathForVideo = textBoxPath.Text;
 
 			Program.settings.VideoResolutionString = comboResolution.Text;
@@ -198,6 +199,7 @@ namespace CarDVR
 				Program.settings.RotateAngle = (int)comboRotateAngle.SelectedItem;
 
 			Program.settings.DelayBeforeStart = (int)delayBeforeStart.Value;
+			Program.settings.OutputRateFps = (int)outputRate.SelectedItem;
 		}
 
 		public settingsForm()
@@ -301,6 +303,7 @@ namespace CarDVR
 		public bool EnableRotate { get; set; }
 		public int RotateAngle { get; set; }
 		public int DelayBeforeStart { get; set; }
+		public int OutputRateFps { get; set; }
 
 		/// <summary>
 		/// Initialization constructor
@@ -321,10 +324,10 @@ namespace CarDVR
 			StartMinimized = false;
 			PathForVideo = DEFAULT_PATH;
 			AmountOfFiles = 10;
-			AviDuration = 10;
+			AviDuration = 10*60;
 			EnableRotate = false;
 			RotateAngle = 0;
-
+			OutputRateFps = 25;
 		}
 
 		/// <summary>
