@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO.Ports;
+using System.Globalization;
 
 namespace CarDVR
 {
@@ -151,7 +152,7 @@ namespace CarDVR
 
 			try
 			{
-				speed = (int)(Convert.ToDouble(velocity.Replace('.', ',')) * KMpHPerKnot);
+				speed = (int)(double.Parse(velocity, CultureInfo.InvariantCulture) * KMpHPerKnot);
 				convertedOk = true;
 				lastSpeedUpdate = DateTime.Now;
 			}

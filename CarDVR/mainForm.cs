@@ -46,7 +46,7 @@ namespace CarDVR
 
 			videoSource = new VideoCaptureDevice(Program.settings.VideoSourceId);
 			videoSource.NewFrame += new NewFrameEventHandler(videoSource_NewFrame);
-			videoSource.DesiredFrameRate = Program.settings.OutputRateFps != 0 ? Program.settings.OutputRateFps : Program.settings.VideoFps;
+			videoSource.DesiredFrameRate = Program.settings.VideoFps;
 			videoSource.DesiredFrameSize = new Size(Program.settings.VideoWidth, Program.settings.VideoHeight);
 
 			splitter.Codec = "XVID";
