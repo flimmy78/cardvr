@@ -59,6 +59,8 @@ namespace CarDVR
 			if (splitter.FPS > 0)
 				timerWriter.Interval = 1000 / splitter.FPS;
 
+			IsWebCamAvaliable();
+
 			if (running)
 				buttonStartStop_Click(this, EventArgs.Empty);
 
@@ -109,8 +111,6 @@ namespace CarDVR
 
 			buttonState = ButtonState.Start;
 
-			IsWebCamAvaliable();
-
 			if (Program.settings.AutostartRecording
 #if !DEBUG
  && !string.IsNullOrEmpty(Program.settings.VideoSource)
@@ -146,7 +146,7 @@ namespace CarDVR
 
 			lock (framesKeeper)
 			{
-				result += "\n" + lastFps.ToString() + " FPS";
+				result += "\n" + totalFrames.ToString() + " | " + lastFps.ToString() + " FPS";
 			}
 
 			return result;
@@ -251,9 +251,6 @@ namespace CarDVR
 				case ButtonState.Start:
 					// Update settings, may be web cam became not avaliable
 					Program.settings.Read();
-
-					if (!IsWebCamAvaliable())
-						return;
 
 					if (Program.settings.GpsEnabled)
 					{

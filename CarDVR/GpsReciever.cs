@@ -72,10 +72,14 @@ namespace CarDVR
 			if (com.IsOpen)
 				return;
 
-			com.PortName = comport;
-			com.BaudRate = baud;
-			GpsState = GpsState.Active;
-			IsInitialized = true;
+			try
+			{
+				com.PortName = comport;
+				com.BaudRate = baud;
+				GpsState = GpsState.Active;
+				IsInitialized = true;
+			}
+			catch (Exception) { }
 		}
 
 		~GpsReciever()
