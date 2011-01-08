@@ -144,6 +144,26 @@ namespace CarDVR
 				}
 			}
 			#endregion
+			  
+			#region Set Codec
+
+			labelSelectedCodec.Text = string.Empty;
+
+			foreach (object obj in listCodecs.Items)
+			{
+				CodecInfo item = obj as CodecInfo;
+
+				if (item == null)
+					continue;
+
+				if (item.Fcc == Program.settings.Codec)
+				{
+					listCodecs.SelectedItem = obj;
+					labelSelectedCodec.Text = item.Fcc;
+					break;
+				}
+			}
+			#endregion
 
 			aviDuration.Value = Program.settings.AviDuration / 60;
 			amountOfFiles.Value = Program.settings.AmountOfFiles;
@@ -156,6 +176,8 @@ namespace CarDVR
 			enableRotate.Checked = Program.settings.EnableRotate;
 			delayBeforeStart.Value = Program.settings.DelayBeforeStart;
 			outputRate.SelectedItem = Program.settings.OutputRateFps;
+			comboLanguage.SelectedItem = Program.settings.Language;
+
 		}
 
 		public void ApplyFormToSettings()
@@ -200,6 +222,79 @@ namespace CarDVR
 
 			Program.settings.DelayBeforeStart = (int)delayBeforeStart.Value;
 			Program.settings.OutputRateFps = (int)outputRate.SelectedItem;
+
+			if (comboLanguage.SelectedItem != null)
+			{
+				Program.settings.Language = comboLanguage.SelectedItem as string;
+			}
+
+			if (listCodecs.SelectedItem != null)
+			{
+				CodecInfo ci = listCodecs.SelectedItem as CodecInfo;
+
+				if (ci != null)
+					Program.settings.Codec = ci.Fcc;
+			}
+		}
+
+		class CodecInfo
+		{
+			public string Fcc;
+			public string Description;
+			public override string ToString()
+			{
+				return Description + " (" + Fcc + ")";
+			}
+
+			public CodecInfo(string fcc, string desc)
+			{
+				Fcc = fcc.ToUpper();
+				Description = desc;
+			}
+		}
+
+		private List<CodecInfo> ReadCodecList()
+		{
+			string basePath = @"Software\Microsoft\ActiveMovie\devenum\{33D9A760-90C8-11D0-BD43-00A0C911CE86}";
+			
+			List<CodecInfo>	codecs = new List<CodecInfo>();
+			RegistryKey key = null;
+
+			try
+			{
+				key = Registry.CurrentUser.OpenSubKey(basePath);
+				string[] subkeys = key.GetSubKeyNames();
+
+				foreach (string subkey in subkeys)
+				{
+					RegistryKey skey = null;
+					try
+					{
+						skey = key.OpenSubKey(subkey);
+						codecs.Add
+						(
+							new CodecInfo
+							(
+								skey.GetValue("FccHandler").ToString(), 
+								skey.GetValue("FriendlyName").ToString()
+							)
+						);
+					}
+					catch (Exception) 
+					{ 
+					}
+					if (skey != null) 
+						skey.Close();
+				}				
+			}
+			catch (Exception)
+			{
+			}
+
+			if (key != null)
+				key.Close();
+
+			return codecs;
 		}
 
 		public settingsForm()
@@ -207,6 +302,18 @@ namespace CarDVR
 			Program.settings = new SettingsImpl();
 			videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
 			InitializeComponent();
+
+			List<CodecInfo> codecs = ReadCodecList();
+
+			listCodecs.BeginUpdate();
+			listCodecs.Items.Clear();
+
+			foreach (CodecInfo item in codecs)
+			{
+				listCodecs.Items.Add(item);
+			}
+
+			listCodecs.EndUpdate();
 		}
 
 		private void buttonOk_Click(object sender, EventArgs e)
@@ -275,6 +382,16 @@ namespace CarDVR
 			if (!CheckDirectoryForWrite(textBoxPath.Text))
 				e.Cancel = true;
 		}
+
+		private void listCodecs_SelectedValueChanged(object sender, EventArgs e)
+		{
+			CodecInfo item = listCodecs.SelectedItem as CodecInfo;
+			
+			if (item == null)
+				return;
+
+			labelSelectedCodec.Text = item.Fcc;
+		}
 	}
 
 	public class SettingsImpl
@@ -283,6 +400,10 @@ namespace CarDVR
 		private static readonly string REG_PATH = @"Software\CarDVR";
 		// Default path to store video files
 		private static readonly string DEFAULT_PATH = @"C:\";
+		// Default language
+		public static readonly string DEFAULT_LANGUAGE = "English";
+		//
+		public static readonly string DEFAULT_CODEC = "XVID";
 
 		// Settings properties
 		public string GpsSerialPort { get; set; }
@@ -304,6 +425,8 @@ namespace CarDVR
 		public int RotateAngle { get; set; }
 		public int DelayBeforeStart { get; set; }
 		public int OutputRateFps { get; set; }
+		public string Language { get; set; }
+		public string Codec { get; set; }
 
 		/// <summary>
 		/// Initialization constructor
@@ -328,6 +451,8 @@ namespace CarDVR
 			EnableRotate = false;
 			RotateAngle = 0;
 			OutputRateFps = 25;
+			Language = DEFAULT_LANGUAGE;
+			Codec = DEFAULT_CODEC;
 		}
 
 		/// <summary>
@@ -356,6 +481,12 @@ namespace CarDVR
 			{
 				return false;
 			}
+
+			if (Program.settings.Language == null)
+				Program.settings.Language = SettingsImpl.DEFAULT_LANGUAGE;
+
+			if (Program.settings.Codec == null)
+				Program.settings.Codec = SettingsImpl.DEFAULT_CODEC;
 
 			return true;
 		}

@@ -7,6 +7,8 @@ using AForge.Video.DirectShow;
 using AForge.Video;
 using System.IO;
 using System.Threading;
+using System.Resources;
+using System.Globalization;
 
 namespace CarDVR
 {
@@ -18,6 +20,13 @@ namespace CarDVR
 		private static ButtonState buttonState = ButtonState.Start;
 		private static bool VideosourceInitialized = false;
 		private AutostartDelayer autostartDelayer;
+		private static ResourceManager resources;
+
+		private static string resSpeed;
+		private static string resKmh;
+		private static string resSatellites;
+		private static string resNoGpsSignal;
+		private static string resGpsNotConnected;		
 		
 		VideoCaptureDevice videoSource = null;
 		GpsReciever gps;
@@ -27,11 +36,20 @@ namespace CarDVR
 
 		public MainForm()
 		{
+			Program.settings.Read();
+
+			CultureInfo ci = new CultureInfo(Program.settings.Language.Equals("Russian") ? "ru-RU" : "en-US");
+			Thread.CurrentThread.CurrentUICulture = ci;
+
+			VideoWindowMode = ScreenMode.Normal;
+
 			InitializeComponent();
 
-			ReadSettingsAndUpdateGui();
+			IsWebCamAvaliable();
 
-			if (Program.settings.AutostartRecording)
+			resources = new ResourceManager("CarDVR.mainForm", GetType().Assembly);
+
+			if (Program.settings.AutostartRecording && Program.settings.DelayBeforeStart > 0)
 				autostartDelayer = new AutostartDelayer(
 											Program.settings.DelayBeforeStart * 1000, 
 											AutostartDelayer_Handler
@@ -63,7 +81,7 @@ namespace CarDVR
 			videoSource.DesiredFrameRate = Program.settings.VideoFps;
 			videoSource.DesiredFrameSize = new Size(Program.settings.VideoWidth, Program.settings.VideoHeight);
 
-			splitter.Codec = "XVID";
+			splitter.Codec = Program.settings.Codec;
 			splitter.FPS = Program.settings.OutputRateFps != 0 ? Program.settings.OutputRateFps : Program.settings.VideoFps;
 			splitter.VideoSize = Program.settings.GetVideoSize();
 			splitter.FileDuration = Program.settings.AviDuration;
@@ -74,6 +92,13 @@ namespace CarDVR
 				timerWriter.Interval = 1000 / splitter.FPS;
 
 			IsWebCamAvaliable();
+
+			// init static resources
+			resSpeed = resources.GetString("Speed:");
+			resKmh = resources.GetString("km/h");
+			resSatellites = resources.GetString("Satellites:"); ;
+			resNoGpsSignal = resources.GetString("No GPS signal"); ;
+			resGpsNotConnected = resources.GetString("GPS not connected");
 
 			if (running)
 				StartStopRecording();
@@ -124,13 +149,15 @@ namespace CarDVR
 				switch (gps.State)
 				{
 					case GpsState.Active:
-						result += "Скорость: " + gps.Speed + " км/ч Cпутников: " + gps.NumberOfSatellites.ToString() + "\n" + gps.Coordinates;
+						result +=	resSpeed + " " + gps.Speed + " " + 
+									resKmh + " " + 
+									resSatellites + " " + gps.NumberOfSatellites.ToString() + "\n" + gps.Coordinates;
 						break;
 					case GpsState.NoSignal:
-						result += "Нет сигнала GPS";
+						result += resNoGpsSignal;
 						break;
 					case GpsState.NotActive:
-						result += "GPS не подключен";
+						result += resGpsNotConnected;
 						break;
 				}
 			}
@@ -234,7 +261,8 @@ namespace CarDVR
 		private void StartRecording()
 		{
 			// Update settings, may be web cam became not avaliable
-			ReadSettingsAndUpdateGui();
+			Program.settings.Read();
+			IsWebCamAvaliable();
 
 			if (Program.settings.GpsEnabled)
 			{
@@ -279,7 +307,7 @@ namespace CarDVR
 					break;
 			}
 
-			buttonStartStop.Text = buttonState == ButtonState.Start ? "Stop" : "Start";
+			buttonStartStop.Text = buttonState == ButtonState.Start ? resources.GetString("Stop") : resources.GetString("buttonStartStop.Text");
 			buttonState = buttonState == ButtonState.Start ? ButtonState.Stop : ButtonState.Start;
 			buttonStartStop.Enabled = true;
 		}
@@ -348,11 +376,30 @@ namespace CarDVR
 			}
 		}
 
-		private void ReadSettingsAndUpdateGui()
+		public enum ScreenMode
 		{
-			Program.settings.Read();
+			Normal,
+			FullScreen
+		}
 
-			IsWebCamAvaliable();
+		private ScreenMode VideoWindowMode { get; set; }
+		private const int SpaceToButtons = 26;
+
+		private void camView_Click(object sender, EventArgs e)
+		{
+			if (VideoWindowMode == ScreenMode.Normal)
+			{
+				camView.Dock = DockStyle.Fill;
+				VideoWindowMode = ScreenMode.FullScreen;
+			}
+			else
+			{
+				camView.Dock = DockStyle.None;
+				camView.Size = new Size(buttonSettings.Left - SpaceToButtons, buttonStartStop.Top - SpaceToButtons);
+				camView.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
+
+				VideoWindowMode = ScreenMode.Normal;
+			}
 		}
 	}
 }

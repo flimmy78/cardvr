@@ -33,7 +33,6 @@
 			this.autostartRecording = new System.Windows.Forms.CheckBox();
 			this.labelVideosource = new System.Windows.Forms.Label();
 			this.videoSource = new System.Windows.Forms.ComboBox();
-			this.groupBoxGps = new System.Windows.Forms.GroupBox();
 			this.labelBaudRate = new System.Windows.Forms.Label();
 			this.serialPortBaudRate = new System.Windows.Forms.ComboBox();
 			this.serialPortName = new System.Windows.Forms.ComboBox();
@@ -54,133 +53,104 @@
 			this.enableRotate = new System.Windows.Forms.CheckBox();
 			this.labelDegrees = new System.Windows.Forms.Label();
 			this.gbAutostart = new System.Windows.Forms.GroupBox();
-			this.labelDelayAutostart = new System.Windows.Forms.Label();
-			this.delayBeforeStart = new System.Windows.Forms.NumericUpDown();
+			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.outputRate = new System.Windows.Forms.ComboBox();
-			this.label2 = new System.Windows.Forms.Label();
-			this.groupBoxGps.SuspendLayout();
+			this.labelDelayAutostart = new System.Windows.Forms.Label();
+			this.delayBeforeStart = new System.Windows.Forms.NumericUpDown();
+			this.groupVideoArchive = new System.Windows.Forms.GroupBox();
+			this.comboLanguage = new System.Windows.Forms.ComboBox();
+			this.labelLanguage = new System.Windows.Forms.Label();
+			this.tabPageSettings = new System.Windows.Forms.TabControl();
+			this.tabStartOptions = new System.Windows.Forms.TabPage();
+			this.tabVideoSource = new System.Windows.Forms.TabPage();
+			this.tabCompression = new System.Windows.Forms.TabPage();
+			this.labelSelectedCodec = new System.Windows.Forms.Label();
+			this.labelSelectedCodecTitle = new System.Windows.Forms.Label();
+			this.listCodecs = new System.Windows.Forms.ListBox();
+			this.tabOutput = new System.Windows.Forms.TabPage();
+			this.tabGps = new System.Windows.Forms.TabPage();
+			this.tabLocalization = new System.Windows.Forms.TabPage();
 			((System.ComponentModel.ISupportInitialize)(this.aviDuration)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.amountOfFiles)).BeginInit();
 			this.gbAutostart.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.delayBeforeStart)).BeginInit();
+			this.groupVideoArchive.SuspendLayout();
+			this.tabPageSettings.SuspendLayout();
+			this.tabStartOptions.SuspendLayout();
+			this.tabVideoSource.SuspendLayout();
+			this.tabCompression.SuspendLayout();
+			this.tabOutput.SuspendLayout();
+			this.tabGps.SuspendLayout();
+			this.tabLocalization.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// startWithWindows
 			// 
-			this.startWithWindows.AutoSize = true;
-			this.startWithWindows.Location = new System.Drawing.Point(12, 12);
+			resources.ApplyResources(this.startWithWindows, "startWithWindows");
 			this.startWithWindows.Name = "startWithWindows";
-			this.startWithWindows.Size = new System.Drawing.Size(112, 17);
-			this.startWithWindows.TabIndex = 0;
-			this.startWithWindows.Text = "start with windows";
 			this.startWithWindows.UseVisualStyleBackColor = true;
 			// 
 			// autostartRecording
 			// 
-			this.autostartRecording.AutoSize = true;
-			this.autostartRecording.Location = new System.Drawing.Point(13, 19);
+			resources.ApplyResources(this.autostartRecording, "autostartRecording");
 			this.autostartRecording.Name = "autostartRecording";
-			this.autostartRecording.Size = new System.Drawing.Size(149, 17);
-			this.autostartRecording.TabIndex = 1;
-			this.autostartRecording.Text = "enable autostart recording";
 			this.autostartRecording.UseVisualStyleBackColor = true;
 			// 
 			// labelVideosource
 			// 
-			this.labelVideosource.AutoSize = true;
-			this.labelVideosource.Location = new System.Drawing.Point(175, 27);
+			resources.ApplyResources(this.labelVideosource, "labelVideosource");
 			this.labelVideosource.Name = "labelVideosource";
-			this.labelVideosource.Size = new System.Drawing.Size(68, 13);
-			this.labelVideosource.TabIndex = 2;
-			this.labelVideosource.Text = "video source";
 			// 
 			// videoSource
 			// 
 			this.videoSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.videoSource.FormattingEnabled = true;
-			this.videoSource.Location = new System.Drawing.Point(249, 24);
+			resources.ApplyResources(this.videoSource, "videoSource");
 			this.videoSource.Name = "videoSource";
-			this.videoSource.Size = new System.Drawing.Size(173, 21);
-			this.videoSource.TabIndex = 3;
-			// 
-			// groupBoxGps
-			// 
-			this.groupBoxGps.Controls.Add(this.labelBaudRate);
-			this.groupBoxGps.Controls.Add(this.serialPortBaudRate);
-			this.groupBoxGps.Controls.Add(this.serialPortName);
-			this.groupBoxGps.Controls.Add(this.enableGps);
-			this.groupBoxGps.Location = new System.Drawing.Point(12, 185);
-			this.groupBoxGps.Name = "groupBoxGps";
-			this.groupBoxGps.Size = new System.Drawing.Size(135, 119);
-			this.groupBoxGps.TabIndex = 4;
-			this.groupBoxGps.TabStop = false;
-			this.groupBoxGps.Text = "gps";
 			// 
 			// labelBaudRate
 			// 
-			this.labelBaudRate.AutoSize = true;
-			this.labelBaudRate.Location = new System.Drawing.Point(7, 72);
+			resources.ApplyResources(this.labelBaudRate, "labelBaudRate");
 			this.labelBaudRate.Name = "labelBaudRate";
-			this.labelBaudRate.Size = new System.Drawing.Size(52, 13);
-			this.labelBaudRate.TabIndex = 9;
-			this.labelBaudRate.Text = "baud rate";
 			// 
 			// serialPortBaudRate
 			// 
 			this.serialPortBaudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.serialPortBaudRate.FormattingEnabled = true;
-			this.serialPortBaudRate.Location = new System.Drawing.Point(10, 88);
+			resources.ApplyResources(this.serialPortBaudRate, "serialPortBaudRate");
 			this.serialPortBaudRate.Name = "serialPortBaudRate";
-			this.serialPortBaudRate.Size = new System.Drawing.Size(95, 21);
-			this.serialPortBaudRate.TabIndex = 3;
 			// 
 			// serialPortName
 			// 
 			this.serialPortName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.serialPortName.FormattingEnabled = true;
-			this.serialPortName.Location = new System.Drawing.Point(10, 44);
+			resources.ApplyResources(this.serialPortName, "serialPortName");
 			this.serialPortName.Name = "serialPortName";
-			this.serialPortName.Size = new System.Drawing.Size(95, 21);
-			this.serialPortName.TabIndex = 2;
 			// 
 			// enableGps
 			// 
-			this.enableGps.AutoSize = true;
-			this.enableGps.Location = new System.Drawing.Point(10, 19);
+			resources.ApplyResources(this.enableGps, "enableGps");
 			this.enableGps.Name = "enableGps";
-			this.enableGps.Size = new System.Drawing.Size(58, 17);
-			this.enableGps.TabIndex = 1;
-			this.enableGps.Text = "enable";
 			this.enableGps.UseVisualStyleBackColor = true;
 			// 
 			// buttonOk
 			// 
-			this.buttonOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			resources.ApplyResources(this.buttonOk, "buttonOk");
 			this.buttonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.buttonOk.Location = new System.Drawing.Point(13, 378);
 			this.buttonOk.Name = "buttonOk";
-			this.buttonOk.Size = new System.Drawing.Size(90, 62);
-			this.buttonOk.TabIndex = 5;
-			this.buttonOk.Text = "OK";
 			this.buttonOk.UseVisualStyleBackColor = true;
 			this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
 			// 
 			// labelMinutesOnEachFile
 			// 
-			this.labelMinutesOnEachFile.AutoSize = true;
-			this.labelMinutesOnEachFile.Location = new System.Drawing.Point(10, 84);
+			resources.ApplyResources(this.labelMinutesOnEachFile, "labelMinutesOnEachFile");
 			this.labelMinutesOnEachFile.Name = "labelMinutesOnEachFile";
-			this.labelMinutesOnEachFile.Size = new System.Drawing.Size(125, 13);
-			this.labelMinutesOnEachFile.TabIndex = 6;
-			this.labelMinutesOnEachFile.Text = "duration of each file (min)";
 			// 
 			// aviDuration
 			// 
-			this.aviDuration.Location = new System.Drawing.Point(13, 101);
+			resources.ApplyResources(this.aviDuration, "aviDuration");
 			this.aviDuration.Name = "aviDuration";
-			this.aviDuration.Size = new System.Drawing.Size(66, 20);
-			this.aviDuration.TabIndex = 7;
 			this.aviDuration.Value = new decimal(new int[] {
             10,
             0,
@@ -189,10 +159,8 @@
 			// 
 			// amountOfFiles
 			// 
-			this.amountOfFiles.Location = new System.Drawing.Point(13, 148);
+			resources.ApplyResources(this.amountOfFiles, "amountOfFiles");
 			this.amountOfFiles.Name = "amountOfFiles";
-			this.amountOfFiles.Size = new System.Drawing.Size(66, 20);
-			this.amountOfFiles.TabIndex = 9;
 			this.amountOfFiles.Value = new decimal(new int[] {
             10,
             0,
@@ -201,223 +169,269 @@
 			// 
 			// labelStoreFiles
 			// 
-			this.labelStoreFiles.AutoSize = true;
-			this.labelStoreFiles.Location = new System.Drawing.Point(10, 131);
+			resources.ApplyResources(this.labelStoreFiles, "labelStoreFiles");
 			this.labelStoreFiles.Name = "labelStoreFiles";
-			this.labelStoreFiles.Size = new System.Drawing.Size(112, 13);
-			this.labelStoreFiles.TabIndex = 8;
-			this.labelStoreFiles.Text = "files amount in archive";
 			// 
 			// labelPath
 			// 
-			this.labelPath.AutoSize = true;
-			this.labelPath.Location = new System.Drawing.Point(19, 316);
+			resources.ApplyResources(this.labelPath, "labelPath");
 			this.labelPath.Name = "labelPath";
-			this.labelPath.Size = new System.Drawing.Size(128, 13);
-			this.labelPath.TabIndex = 10;
-			this.labelPath.Text = "path to store video files to";
 			// 
 			// textBoxPath
 			// 
-			this.textBoxPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxPath.Location = new System.Drawing.Point(19, 332);
+			resources.ApplyResources(this.textBoxPath, "textBoxPath");
 			this.textBoxPath.Name = "textBoxPath";
-			this.textBoxPath.Size = new System.Drawing.Size(366, 20);
-			this.textBoxPath.TabIndex = 11;
 			// 
 			// buttonBrowse
 			// 
-			this.buttonBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonBrowse.Location = new System.Drawing.Point(401, 329);
+			resources.ApplyResources(this.buttonBrowse, "buttonBrowse");
 			this.buttonBrowse.Name = "buttonBrowse";
-			this.buttonBrowse.Size = new System.Drawing.Size(25, 23);
-			this.buttonBrowse.TabIndex = 12;
-			this.buttonBrowse.Text = "...";
 			this.buttonBrowse.UseVisualStyleBackColor = true;
 			this.buttonBrowse.Click += new System.EventHandler(this.buttonBrowse_Click);
 			// 
 			// startMinimized
 			// 
-			this.startMinimized.AutoSize = true;
-			this.startMinimized.Location = new System.Drawing.Point(12, 50);
+			resources.ApplyResources(this.startMinimized, "startMinimized");
 			this.startMinimized.Name = "startMinimized";
-			this.startMinimized.Size = new System.Drawing.Size(94, 17);
-			this.startMinimized.TabIndex = 13;
-			this.startMinimized.Text = "start minimized";
 			this.startMinimized.UseVisualStyleBackColor = true;
 			// 
 			// comboResolution
 			// 
 			this.comboResolution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboResolution.FormattingEnabled = true;
-			this.comboResolution.Location = new System.Drawing.Point(249, 61);
+			resources.ApplyResources(this.comboResolution, "comboResolution");
 			this.comboResolution.Name = "comboResolution";
-			this.comboResolution.Size = new System.Drawing.Size(173, 21);
-			this.comboResolution.TabIndex = 15;
 			this.comboResolution.DropDown += new System.EventHandler(this.comboResolution_DropDown);
 			// 
 			// labelResolution
 			// 
-			this.labelResolution.AutoSize = true;
-			this.labelResolution.Location = new System.Drawing.Point(191, 64);
+			resources.ApplyResources(this.labelResolution, "labelResolution");
 			this.labelResolution.Name = "labelResolution";
-			this.labelResolution.Size = new System.Drawing.Size(52, 13);
-			this.labelResolution.TabIndex = 14;
-			this.labelResolution.Text = "resolution";
 			// 
 			// button1
 			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			resources.ApplyResources(this.button1, "button1");
 			this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.button1.Location = new System.Drawing.Point(336, 378);
 			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(90, 62);
-			this.button1.TabIndex = 16;
-			this.button1.Text = "Cancel";
 			this.button1.UseVisualStyleBackColor = true;
 			// 
 			// comboRotateAngle
 			// 
 			this.comboRotateAngle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboRotateAngle.FormattingEnabled = true;
-			this.comboRotateAngle.Location = new System.Drawing.Point(98, 71);
+			resources.ApplyResources(this.comboRotateAngle, "comboRotateAngle");
 			this.comboRotateAngle.Name = "comboRotateAngle";
-			this.comboRotateAngle.Size = new System.Drawing.Size(74, 21);
-			this.comboRotateAngle.TabIndex = 4;
 			// 
 			// enableRotate
 			// 
-			this.enableRotate.AutoSize = true;
-			this.enableRotate.Location = new System.Drawing.Point(13, 72);
+			resources.ApplyResources(this.enableRotate, "enableRotate");
 			this.enableRotate.Name = "enableRotate";
-			this.enableRotate.Size = new System.Drawing.Size(82, 17);
-			this.enableRotate.TabIndex = 18;
-			this.enableRotate.Text = "rotate video";
 			this.enableRotate.UseVisualStyleBackColor = true;
 			// 
 			// labelDegrees
 			// 
-			this.labelDegrees.AutoSize = true;
-			this.labelDegrees.Location = new System.Drawing.Point(178, 75);
+			resources.ApplyResources(this.labelDegrees, "labelDegrees");
 			this.labelDegrees.Name = "labelDegrees";
-			this.labelDegrees.Size = new System.Drawing.Size(45, 13);
-			this.labelDegrees.TabIndex = 19;
-			this.labelDegrees.Text = "degrees";
 			// 
 			// gbAutostart
 			// 
 			this.gbAutostart.Controls.Add(this.label2);
 			this.gbAutostart.Controls.Add(this.label1);
 			this.gbAutostart.Controls.Add(this.outputRate);
-			this.gbAutostart.Controls.Add(this.labelDelayAutostart);
 			this.gbAutostart.Controls.Add(this.labelDegrees);
-			this.gbAutostart.Controls.Add(this.delayBeforeStart);
 			this.gbAutostart.Controls.Add(this.comboRotateAngle);
 			this.gbAutostart.Controls.Add(this.enableRotate);
-			this.gbAutostart.Controls.Add(this.autostartRecording);
-			this.gbAutostart.Location = new System.Drawing.Point(164, 158);
+			resources.ApplyResources(this.gbAutostart, "gbAutostart");
 			this.gbAutostart.Name = "gbAutostart";
-			this.gbAutostart.Size = new System.Drawing.Size(258, 146);
-			this.gbAutostart.TabIndex = 20;
 			this.gbAutostart.TabStop = false;
-			this.gbAutostart.Text = "Video output";
 			// 
-			// labelDelayAutostart
+			// label2
 			// 
-			this.labelDelayAutostart.AutoSize = true;
-			this.labelDelayAutostart.Location = new System.Drawing.Point(65, 46);
-			this.labelDelayAutostart.Name = "labelDelayAutostart";
-			this.labelDelayAutostart.Size = new System.Drawing.Size(135, 13);
-			this.labelDelayAutostart.TabIndex = 9;
-			this.labelDelayAutostart.Text = "delay before autostart (sec)";
-			// 
-			// delayBeforeStart
-			// 
-			this.delayBeforeStart.Location = new System.Drawing.Point(14, 44);
-			this.delayBeforeStart.Name = "delayBeforeStart";
-			this.delayBeforeStart.Size = new System.Drawing.Size(45, 20);
-			this.delayBeforeStart.TabIndex = 8;
-			this.delayBeforeStart.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
+			resources.ApplyResources(this.label2, "label2");
+			this.label2.Name = "label2";
 			// 
 			// label1
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(178, 103);
+			resources.ApplyResources(this.label1, "label1");
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(21, 13);
-			this.label1.TabIndex = 21;
-			this.label1.Text = "fps";
 			// 
 			// outputRate
 			// 
 			this.outputRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.outputRate.FormattingEnabled = true;
 			this.outputRate.Items.AddRange(new object[] {
-            1,
-            5,
-            10,
-            15,
-            20,
-            25});
-			this.outputRate.Location = new System.Drawing.Point(98, 99);
+            ((object)(resources.GetObject("outputRate.Items"))),
+            ((object)(resources.GetObject("outputRate.Items1"))),
+            ((object)(resources.GetObject("outputRate.Items2"))),
+            ((object)(resources.GetObject("outputRate.Items3"))),
+            ((object)(resources.GetObject("outputRate.Items4"))),
+            ((object)(resources.GetObject("outputRate.Items5")))});
+			resources.ApplyResources(this.outputRate, "outputRate");
 			this.outputRate.Name = "outputRate";
-			this.outputRate.Size = new System.Drawing.Size(74, 21);
-			this.outputRate.TabIndex = 20;
 			// 
-			// label2
+			// labelDelayAutostart
 			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(27, 103);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(58, 13);
-			this.label2.TabIndex = 22;
-			this.label2.Text = "output rate";
+			resources.ApplyResources(this.labelDelayAutostart, "labelDelayAutostart");
+			this.labelDelayAutostart.Name = "labelDelayAutostart";
+			// 
+			// delayBeforeStart
+			// 
+			resources.ApplyResources(this.delayBeforeStart, "delayBeforeStart");
+			this.delayBeforeStart.Name = "delayBeforeStart";
+			this.delayBeforeStart.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			// 
+			// groupVideoArchive
+			// 
+			this.groupVideoArchive.Controls.Add(this.labelMinutesOnEachFile);
+			this.groupVideoArchive.Controls.Add(this.aviDuration);
+			this.groupVideoArchive.Controls.Add(this.labelStoreFiles);
+			this.groupVideoArchive.Controls.Add(this.amountOfFiles);
+			resources.ApplyResources(this.groupVideoArchive, "groupVideoArchive");
+			this.groupVideoArchive.Name = "groupVideoArchive";
+			this.groupVideoArchive.TabStop = false;
+			// 
+			// comboLanguage
+			// 
+			this.comboLanguage.DisplayMember = "English";
+			this.comboLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboLanguage.FormattingEnabled = true;
+			this.comboLanguage.Items.AddRange(new object[] {
+            resources.GetString("comboLanguage.Items"),
+            resources.GetString("comboLanguage.Items1")});
+			resources.ApplyResources(this.comboLanguage, "comboLanguage");
+			this.comboLanguage.Name = "comboLanguage";
+			// 
+			// labelLanguage
+			// 
+			resources.ApplyResources(this.labelLanguage, "labelLanguage");
+			this.labelLanguage.Name = "labelLanguage";
+			// 
+			// tabPageSettings
+			// 
+			this.tabPageSettings.Controls.Add(this.tabStartOptions);
+			this.tabPageSettings.Controls.Add(this.tabVideoSource);
+			this.tabPageSettings.Controls.Add(this.tabCompression);
+			this.tabPageSettings.Controls.Add(this.tabOutput);
+			this.tabPageSettings.Controls.Add(this.tabGps);
+			this.tabPageSettings.Controls.Add(this.tabLocalization);
+			resources.ApplyResources(this.tabPageSettings, "tabPageSettings");
+			this.tabPageSettings.Name = "tabPageSettings";
+			this.tabPageSettings.SelectedIndex = 0;
+			// 
+			// tabStartOptions
+			// 
+			this.tabStartOptions.Controls.Add(this.startWithWindows);
+			this.tabStartOptions.Controls.Add(this.startMinimized);
+			this.tabStartOptions.Controls.Add(this.autostartRecording);
+			this.tabStartOptions.Controls.Add(this.labelDelayAutostart);
+			this.tabStartOptions.Controls.Add(this.delayBeforeStart);
+			resources.ApplyResources(this.tabStartOptions, "tabStartOptions");
+			this.tabStartOptions.Name = "tabStartOptions";
+			this.tabStartOptions.UseVisualStyleBackColor = true;
+			// 
+			// tabVideoSource
+			// 
+			this.tabVideoSource.Controls.Add(this.comboResolution);
+			this.tabVideoSource.Controls.Add(this.labelVideosource);
+			this.tabVideoSource.Controls.Add(this.videoSource);
+			this.tabVideoSource.Controls.Add(this.labelResolution);
+			resources.ApplyResources(this.tabVideoSource, "tabVideoSource");
+			this.tabVideoSource.Name = "tabVideoSource";
+			this.tabVideoSource.UseVisualStyleBackColor = true;
+			// 
+			// tabCompression
+			// 
+			this.tabCompression.Controls.Add(this.labelSelectedCodec);
+			this.tabCompression.Controls.Add(this.labelSelectedCodecTitle);
+			this.tabCompression.Controls.Add(this.listCodecs);
+			resources.ApplyResources(this.tabCompression, "tabCompression");
+			this.tabCompression.Name = "tabCompression";
+			this.tabCompression.UseVisualStyleBackColor = true;
+			// 
+			// labelSelectedCodec
+			// 
+			resources.ApplyResources(this.labelSelectedCodec, "labelSelectedCodec");
+			this.labelSelectedCodec.Name = "labelSelectedCodec";
+			// 
+			// labelSelectedCodecTitle
+			// 
+			resources.ApplyResources(this.labelSelectedCodecTitle, "labelSelectedCodecTitle");
+			this.labelSelectedCodecTitle.Name = "labelSelectedCodecTitle";
+			// 
+			// listCodecs
+			// 
+			this.listCodecs.FormattingEnabled = true;
+			resources.ApplyResources(this.listCodecs, "listCodecs");
+			this.listCodecs.Name = "listCodecs";
+			this.listCodecs.SelectedValueChanged += new System.EventHandler(this.listCodecs_SelectedValueChanged);
+			// 
+			// tabOutput
+			// 
+			this.tabOutput.Controls.Add(this.groupVideoArchive);
+			this.tabOutput.Controls.Add(this.gbAutostart);
+			this.tabOutput.Controls.Add(this.buttonBrowse);
+			this.tabOutput.Controls.Add(this.labelPath);
+			this.tabOutput.Controls.Add(this.textBoxPath);
+			resources.ApplyResources(this.tabOutput, "tabOutput");
+			this.tabOutput.Name = "tabOutput";
+			this.tabOutput.UseVisualStyleBackColor = true;
+			// 
+			// tabGps
+			// 
+			this.tabGps.Controls.Add(this.labelBaudRate);
+			this.tabGps.Controls.Add(this.serialPortName);
+			this.tabGps.Controls.Add(this.serialPortBaudRate);
+			this.tabGps.Controls.Add(this.enableGps);
+			resources.ApplyResources(this.tabGps, "tabGps");
+			this.tabGps.Name = "tabGps";
+			this.tabGps.UseVisualStyleBackColor = true;
+			// 
+			// tabLocalization
+			// 
+			this.tabLocalization.Controls.Add(this.comboLanguage);
+			this.tabLocalization.Controls.Add(this.labelLanguage);
+			resources.ApplyResources(this.tabLocalization, "tabLocalization");
+			this.tabLocalization.Name = "tabLocalization";
+			this.tabLocalization.UseVisualStyleBackColor = true;
 			// 
 			// settingsForm
 			// 
 			this.AcceptButton = this.buttonOk;
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(438, 452);
-			this.Controls.Add(this.gbAutostart);
+			this.Controls.Add(this.tabPageSettings);
 			this.Controls.Add(this.button1);
-			this.Controls.Add(this.comboResolution);
-			this.Controls.Add(this.labelResolution);
-			this.Controls.Add(this.startMinimized);
-			this.Controls.Add(this.buttonBrowse);
-			this.Controls.Add(this.textBoxPath);
-			this.Controls.Add(this.labelPath);
-			this.Controls.Add(this.amountOfFiles);
-			this.Controls.Add(this.labelStoreFiles);
-			this.Controls.Add(this.aviDuration);
-			this.Controls.Add(this.labelMinutesOnEachFile);
 			this.Controls.Add(this.buttonOk);
-			this.Controls.Add(this.groupBoxGps);
-			this.Controls.Add(this.videoSource);
-			this.Controls.Add(this.labelVideosource);
-			this.Controls.Add(this.startWithWindows);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "settingsForm";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "Settings";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.settingsForm_FormClosing);
-			this.groupBoxGps.ResumeLayout(false);
-			this.groupBoxGps.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.aviDuration)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.amountOfFiles)).EndInit();
 			this.gbAutostart.ResumeLayout(false);
 			this.gbAutostart.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.delayBeforeStart)).EndInit();
+			this.groupVideoArchive.ResumeLayout(false);
+			this.groupVideoArchive.PerformLayout();
+			this.tabPageSettings.ResumeLayout(false);
+			this.tabStartOptions.ResumeLayout(false);
+			this.tabStartOptions.PerformLayout();
+			this.tabVideoSource.ResumeLayout(false);
+			this.tabVideoSource.PerformLayout();
+			this.tabCompression.ResumeLayout(false);
+			this.tabCompression.PerformLayout();
+			this.tabOutput.ResumeLayout(false);
+			this.tabOutput.PerformLayout();
+			this.tabGps.ResumeLayout(false);
+			this.tabGps.PerformLayout();
+			this.tabLocalization.ResumeLayout(false);
+			this.tabLocalization.PerformLayout();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
         }
 
@@ -426,8 +440,7 @@
         private System.Windows.Forms.CheckBox startWithWindows;
         private System.Windows.Forms.CheckBox autostartRecording;
         private System.Windows.Forms.Label labelVideosource;
-        private System.Windows.Forms.ComboBox videoSource;
-        private System.Windows.Forms.GroupBox groupBoxGps;
+		private System.Windows.Forms.ComboBox videoSource;
 		private System.Windows.Forms.CheckBox enableGps;
         private System.Windows.Forms.Button buttonOk;
 		private System.Windows.Forms.ComboBox serialPortBaudRate;
@@ -453,5 +466,18 @@
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.ComboBox outputRate;
+		private System.Windows.Forms.GroupBox groupVideoArchive;
+		private System.Windows.Forms.ComboBox comboLanguage;
+		private System.Windows.Forms.Label labelLanguage;
+		private System.Windows.Forms.TabControl tabPageSettings;
+		private System.Windows.Forms.TabPage tabStartOptions;
+		private System.Windows.Forms.TabPage tabVideoSource;
+		private System.Windows.Forms.TabPage tabOutput;
+		private System.Windows.Forms.TabPage tabGps;
+		private System.Windows.Forms.TabPage tabLocalization;
+		private System.Windows.Forms.TabPage tabCompression;
+		private System.Windows.Forms.ListBox listCodecs;
+		private System.Windows.Forms.Label labelSelectedCodecTitle;
+		private System.Windows.Forms.Label labelSelectedCodec;
     }
 }

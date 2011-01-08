@@ -44,67 +44,42 @@
 			// 
 			// buttonSettings
 			// 
-			this.buttonSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonSettings.Location = new System.Drawing.Point(256, 12);
+			resources.ApplyResources(this.buttonSettings, "buttonSettings");
 			this.buttonSettings.Name = "buttonSettings";
-			this.buttonSettings.Size = new System.Drawing.Size(90, 62);
-			this.buttonSettings.TabIndex = 0;
-			this.buttonSettings.Text = "Settings";
 			this.buttonSettings.UseVisualStyleBackColor = true;
 			this.buttonSettings.Click += new System.EventHandler(this.buttonSettings_Click);
 			// 
 			// buttonMinimize
 			// 
-			this.buttonMinimize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonMinimize.Location = new System.Drawing.Point(256, 214);
+			resources.ApplyResources(this.buttonMinimize, "buttonMinimize");
 			this.buttonMinimize.Name = "buttonMinimize";
-			this.buttonMinimize.Size = new System.Drawing.Size(90, 62);
-			this.buttonMinimize.TabIndex = 1;
-			this.buttonMinimize.Text = "Minimize";
 			this.buttonMinimize.UseVisualStyleBackColor = true;
 			this.buttonMinimize.Click += new System.EventHandler(this.buttonMinimize_Click);
 			// 
 			// buttonStartStop
 			// 
-			this.buttonStartStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.buttonStartStop.Location = new System.Drawing.Point(12, 214);
+			resources.ApplyResources(this.buttonStartStop, "buttonStartStop");
 			this.buttonStartStop.Name = "buttonStartStop";
-			this.buttonStartStop.Size = new System.Drawing.Size(90, 62);
-			this.buttonStartStop.TabIndex = 2;
-			this.buttonStartStop.Text = "Start";
 			this.buttonStartStop.UseVisualStyleBackColor = true;
 			this.buttonStartStop.Click += new System.EventHandler(this.buttonStartStop_Click);
 			// 
 			// camView
 			// 
-			this.camView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
 			this.camView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.camView.Location = new System.Drawing.Point(12, 12);
+			resources.ApplyResources(this.camView, "camView");
 			this.camView.Name = "camView";
-			this.camView.Size = new System.Drawing.Size(224, 190);
-			this.camView.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-			this.camView.TabIndex = 3;
 			this.camView.TabStop = false;
+			this.camView.Click += new System.EventHandler(this.camView_Click);
 			// 
 			// labelNoVideoSource
 			// 
-			this.labelNoVideoSource.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.labelNoVideoSource.AutoSize = true;
+			resources.ApplyResources(this.labelNoVideoSource, "labelNoVideoSource");
 			this.labelNoVideoSource.ForeColor = System.Drawing.Color.Red;
-			this.labelNoVideoSource.Location = new System.Drawing.Point(114, 239);
 			this.labelNoVideoSource.Name = "labelNoVideoSource";
-			this.labelNoVideoSource.Size = new System.Drawing.Size(128, 13);
-			this.labelNoVideoSource.TabIndex = 4;
-			this.labelNoVideoSource.Text = "No video source selected";
 			// 
 			// trayIcon
 			// 
-			this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("trayIcon.Icon")));
-			this.trayIcon.Text = "CarDVR";
-			this.trayIcon.Visible = true;
+			resources.ApplyResources(this.trayIcon, "trayIcon");
 			this.trayIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.trayIcon_MouseClick);
 			// 
 			// timerDebug
@@ -126,20 +101,15 @@
 			// 
 			// MainForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(357, 288);
-			this.Controls.Add(this.labelNoVideoSource);
 			this.Controls.Add(this.camView);
+			this.Controls.Add(this.labelNoVideoSource);
 			this.Controls.Add(this.buttonStartStop);
 			this.Controls.Add(this.buttonMinimize);
 			this.Controls.Add(this.buttonSettings);
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimizeBox = false;
-			this.MinimumSize = new System.Drawing.Size(373, 326);
 			this.Name = "MainForm";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "Car DVR";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.mainForm_FormClosing);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
 			((System.ComponentModel.ISupportInitialize)(this.camView)).EndInit();

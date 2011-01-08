@@ -77,6 +77,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutostartDelayer.cs" />
+    <Compile Include="Forms\mainForm.en.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>mainForm.en.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\settingsForm1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>settingsForm.resx</DependentUpon>
+    </Compile>
     <Compile Include="Gps\GpsReciever.cs" />
     <Compile Include="Gps\GpsSpeed.cs" />
     <Compile Include="Gps\GpsState.cs" />
@@ -98,11 +108,28 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VideoSplitter.cs" />
+    <EmbeddedResource Include="Forms\mainForm.en.resx">
+      <DependentUpon>mainForm.cs</DependentUpon>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>mainForm.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\mainForm.ru.resx">
+      <DependentUpon>mainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\settingsForm.en.resx">
+      <DependentUpon>settingsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\settingsForm.resx">
       <DependentUpon>settingsForm.cs</DependentUpon>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>settingsForm1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\mainForm.resx">
       <DependentUpon>mainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\settingsForm.ru.resx">
+      <DependentUpon>settingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
