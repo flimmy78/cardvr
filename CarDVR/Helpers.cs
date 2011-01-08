@@ -47,7 +47,7 @@ namespace CarDVR
 					File.Delete(filename);
 				}
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				return false;
 			}

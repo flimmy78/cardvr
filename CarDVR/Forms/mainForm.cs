@@ -17,14 +17,28 @@ namespace CarDVR
 		private static readonly Point pointBlack = new Point(6, 6);
 		private static ButtonState buttonState = ButtonState.Start;
 		private static bool VideosourceInitialized = false;
-		private static System.Windows.Forms.Timer AutostartDelayer = new System.Windows.Forms.Timer();
-		protected delegate void TickDelegate(object source, EventArgs e);
-
+		private AutostartDelayer autostartDelayer;
+		
 		VideoCaptureDevice videoSource = null;
 		GpsReciever gps;
 		VideoSplitter splitter;
 		Bitmap frame;
 		object frameKeeper = new object();
+
+		public MainForm()
+		{
+			InitializeComponent();
+
+			ReadSettingsAndUpdateGui();
+
+			if (Program.settings.AutostartRecording)
+				autostartDelayer = new AutostartDelayer(
+											Program.settings.DelayBeforeStart * 1000, 
+											AutostartDelayer_Handler
+											);
+			else
+				GlobalInitialization();
+		}
 
 		private void InitVideoSource()
 		{
@@ -34,7 +48,7 @@ namespace CarDVR
 			if (videoSource != null && videoSource.IsRunning)
 			{
 				running = true;
-				buttonStartStop_Click(this, EventArgs.Empty);
+				StartStopRecording();
 			}
 
 #if DEBUG
@@ -62,35 +76,12 @@ namespace CarDVR
 			IsWebCamAvaliable();
 
 			if (running)
-				buttonStartStop_Click(this, EventArgs.Empty);
+				StartStopRecording();
 
 			VideosourceInitialized = true;
 		}
 
-		public MainForm()
-		{
-			InitializeComponent();
 
-			Program.settings.Read();
-
-			if (Program.settings.AutostartRecording)
-			{
-				Thread.Sleep(Program.settings.DelayBeforeStart * 1000);
-				/*
-				AutostartDelayer.Interval = Program.settings.DelayBeforeStart * 1000;
-				AutostartDelayer.Enabled = true;
-				AutostartDelayer.Tick += new EventHandler(AutostartDelayer_Tick);
-				 * */
-				GlobalInitialization();
-				 
-			}
-			else
-			{
-				GlobalInitialization();
-			}
-		}
-
-		//private void GlobalInitialization(object source, EventArgs e)
 		private void GlobalInitialization()
 		{
 			// Create avi-splitter. It will be initialized in InitVideoSource()
@@ -116,7 +107,7 @@ namespace CarDVR
  && !string.IsNullOrEmpty(Program.settings.VideoSource)
 #endif
 )
-				buttonStartStop_Click(this, EventArgs.Empty);
+				StartStopRecording();
 
 		}
 
@@ -130,10 +121,10 @@ namespace CarDVR
 			// Do not write anything if GPS disabled in settings
 			if (Program.settings.GpsEnabled)
 			{
-				switch (gps.GpsState)
+				switch (gps.State)
 				{
 					case GpsState.Active:
-						result += "Скорость: " + gps.Speed + " км/ч Cпутников: " + gps.NumberOfSattelites.ToString() + "\n" + gps.Coordinates;
+						result += "Скорость: " + gps.Speed + " км/ч Cпутников: " + gps.NumberOfSatellites.ToString() + "\n" + gps.Coordinates;
 						break;
 					case GpsState.NoSignal:
 						result += "Нет сигнала GPS";
@@ -233,57 +224,69 @@ namespace CarDVR
 				InitVideoSource();
 
 				// reinit gps
-				gps.Close();
-
-				if (Program.settings.GpsEnabled)
+				if (!Program.settings.GpsEnabled)
+					gps.Close();
+				else
 					gps.Initialize(Program.settings.GpsSerialPort, Program.settings.SerialPortBaudRate);
-
-				gps.Open();
 			}
 		}
 
-		private void buttonStartStop_Click(object sender, EventArgs e)
+		private void StartRecording()
+		{
+			// Update settings, may be web cam became not avaliable
+			ReadSettingsAndUpdateGui();
+
+			if (Program.settings.GpsEnabled)
+			{
+				gps.Initialize(Program.settings.GpsSerialPort, Program.settings.SerialPortBaudRate);
+				gps.Open();
+			}
+
+			splitter.Start();
+#if DEBUG
+					timerDebug.Start();
+#else
+			videoSource.Start();
+#endif
+			FpsDisplayer.Enabled = true;
+		}
+
+		private void StopRecording()
+		{
+			videoSource.Stop();
+			videoSource.WaitForStop();
+			splitter.Stop();
+			camView.Image = new Bitmap(Program.settings.VideoWidth, Program.settings.VideoHeight);
+			timerDebug.Stop();
+
+			// check for opened Serial Port implemented inside Gps Reciever class
+			gps.Close();
+			FpsDisplayer.Enabled = false;
+		}
+
+		private void StartStopRecording()
 		{
 			buttonStartStop.Enabled = false;
 
 			switch (buttonState)
 			{
 				case ButtonState.Start:
-					// Update settings, may be web cam became not avaliable
-					Program.settings.Read();
-
-					if (Program.settings.GpsEnabled)
-					{
-						gps.Initialize(Program.settings.GpsSerialPort, Program.settings.SerialPortBaudRate);
-						gps.Open();
-					}
-
-					splitter.Start();
-#if DEBUG
-					timerDebug.Start();
-#else
-					videoSource.Start();
-#endif
-					FpsDisplayer.Enabled = true;
-
+					StartRecording();
 					break;
 
 				case ButtonState.Stop:
-					videoSource.Stop();
-					videoSource.WaitForStop();
-					splitter.Stop();
-					camView.Image = new Bitmap(Program.settings.VideoWidth, Program.settings.VideoHeight);
-					timerDebug.Stop();
-
-					// check for opened Serial Port implemented inside Gps Reciever class
-					gps.Close();
-					FpsDisplayer.Enabled = false;
-
+					StopRecording();
 					break;
 			}
+
 			buttonStartStop.Text = buttonState == ButtonState.Start ? "Stop" : "Start";
 			buttonState = buttonState == ButtonState.Start ? ButtonState.Stop : ButtonState.Start;
 			buttonStartStop.Enabled = true;
+		}
+
+		private void buttonStartStop_Click(object sender, EventArgs e)
+		{
+			StartStopRecording();
 		}
 
 		private void mainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -317,13 +320,9 @@ namespace CarDVR
 			videoSource_NewFrame(this, null);
 		}
 
-		private void AutostartDelayer_Tick(object sender, EventArgs e)
+		private void AutostartDelayer_Handler(object sender, EventArgs e)
 		{
-			AutostartDelayer.Enabled = false;
-
-			/*if (InvokeRequired)
-				this.BeginInvoke(GlobalInitialization);*/
-			//GlobalInitialization();
+			GlobalInitialization();
 		}
 
 		private void FpsDisplayer_Tick(object sender, EventArgs e)
@@ -337,6 +336,9 @@ namespace CarDVR
 
 		private void timerWriter_Tick(object sender, EventArgs e)
 		{
+			if (!VideosourceInitialized)
+				return;
+
 			lock (frameKeeper)
 			{
 				splitter.AddFrame(ref frame);
@@ -344,6 +346,13 @@ namespace CarDVR
 				if (Visible)
 					camView.Image = frame;
 			}
+		}
+
+		private void ReadSettingsAndUpdateGui()
+		{
+			Program.settings.Read();
+
+			IsWebCamAvaliable();
 		}
 	}
 }
