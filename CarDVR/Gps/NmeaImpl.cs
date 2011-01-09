@@ -51,8 +51,6 @@ namespace CarDVR
 			if (longitude.Contains(" 0"))
 				longitude = longitude.Remove(2, 1);
 
-			string outstring = latitude + " " + longitude;
-
 			if (!int.TryParse(parameters[6], out fixTaken))
 				fixTaken = 0;
 

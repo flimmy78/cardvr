@@ -56,7 +56,7 @@ namespace CarDVR
 
 				gps.Parse(line);
 
-				State = gps.FixTaken ? GpsState.NoSignal : GpsState.Active;
+				State = gps.FixTaken ? GpsState.Active : GpsState.NoSignal;
 			}
 		}
 		#endregion
