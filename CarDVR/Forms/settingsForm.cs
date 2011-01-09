@@ -491,7 +491,7 @@ namespace CarDVR
 			if (Program.settings.Codec == null)
 				Program.settings.Codec = SettingsImpl.DEFAULT_CODEC;
 
-			if (Program.settings.AviDuration == 0)
+			if (Program.settings.AviDuration < 60)
 				Program.settings.AviDuration = 10*60;
 
 			if (Program.settings.AmountOfFiles == 0)
