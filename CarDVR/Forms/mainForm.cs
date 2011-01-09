@@ -41,13 +41,16 @@ namespace CarDVR
 			CultureInfo ci = new CultureInfo(Program.settings.Language.Equals("Russian") ? "ru-RU" : "en-US");
 			Thread.CurrentThread.CurrentUICulture = ci;
 
-			VideoWindowMode = ScreenMode.Normal;
+			VideoWindowMode = FillMode.Normal;
 
 			InitializeComponent();
 
 			IsWebCamAvaliable();
 
 			resources = new ResourceManager("CarDVR.mainForm", GetType().Assembly);
+
+			if (Program.settings.StartWithFullWindowedVideo)
+				MakeFullWindowVideo();
 
 			if (Program.settings.AutostartRecording && Program.settings.DelayBeforeStart > 0)
 				autostartDelayer = new AutostartDelayer(
@@ -376,30 +379,35 @@ namespace CarDVR
 			}
 		}
 
-		public enum ScreenMode
+		public enum FillMode
 		{
 			Normal,
-			FullScreen
+			Full
 		}
 
-		private ScreenMode VideoWindowMode { get; set; }
+		private FillMode VideoWindowMode { get; set; }
 		private const int SpaceToButtons = 26;
+
+		private void MakeFullWindowVideo()
+		{
+			camView.Dock = DockStyle.Fill;
+			VideoWindowMode = FillMode.Full;
+		}
+
+		private void MakeSmallSizedVideo()
+		{
+			camView.Dock = DockStyle.None;
+			camView.Size = new Size(buttonSettings.Left - SpaceToButtons, buttonStartStop.Top - SpaceToButtons);
+			camView.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
+			VideoWindowMode = FillMode.Normal;
+		}
 
 		private void camView_Click(object sender, EventArgs e)
 		{
-			if (VideoWindowMode == ScreenMode.Normal)
-			{
-				camView.Dock = DockStyle.Fill;
-				VideoWindowMode = ScreenMode.FullScreen;
-			}
-			else
-			{
-				camView.Dock = DockStyle.None;
-				camView.Size = new Size(buttonSettings.Left - SpaceToButtons, buttonStartStop.Top - SpaceToButtons);
-				camView.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
-
-				VideoWindowMode = ScreenMode.Normal;
-			}
+			if (VideoWindowMode == FillMode.Normal)
+				MakeFullWindowVideo();
+			else if (VideoWindowMode == FillMode.Full)
+				MakeSmallSizedVideo();
 		}
 	}
 }

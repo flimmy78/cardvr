@@ -255,9 +255,9 @@
   <data name="&gt;&gt;labelNoVideoSource.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <metadata name="trayIcon.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <data name="trayIcon.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>17, 17</value>
-  </metadata>
+  </data>
   <data name="trayIcon.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAwAEBAQAAAAAAAoAQAAxgAAABAQAAABABgAaAMAAO4BAAAQEAAAAQAgAGgEAABWBQAAICAQAAAA
@@ -1298,18 +1298,18 @@
   <data name="trayIcon.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <metadata name="timerDebug.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <data name="timerDebug.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>112, 17</value>
-  </metadata>
-  <metadata name="FpsDisplayer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  </data>
+  <data name="FpsDisplayer.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>229, 17</value>
-  </metadata>
-  <metadata name="timerWriter.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  </data>
+  <data name="timerWriter.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>349, 17</value>
-  </metadata>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  </data>
+  <data name="$this.Localizable" type="System.Boolean, mscorlib">
     <value>True</value>
-  </metadata>
+  </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>
@@ -2388,5 +2388,23 @@
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GPS not connected" xml:space="preserve">
+    <value>GPS not connected</value>
+  </data>
+  <data name="km/h" xml:space="preserve">
+    <value>km/h</value>
+  </data>
+  <data name="No GPS signal" xml:space="preserve">
+    <value>No GPS signal</value>
+  </data>
+  <data name="Satellites:" xml:space="preserve">
+    <value>Satellites:</value>
+  </data>
+  <data name="Speed:" xml:space="preserve">
+    <value>Speed:</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
   </data>
 </root>

@@ -172,12 +172,12 @@ namespace CarDVR
 			startWithWindows.Checked = Program.settings.StartWithWindows;
 			autostartRecording.Checked = Program.settings.AutostartRecording;
 			startMinimized.Checked = Program.settings.StartMinimized;
+			startWithFullWindowedVideo.Checked = Program.settings.StartWithFullWindowedVideo;
 			textBoxPath.Text = Program.settings.PathForVideo;
 			enableRotate.Checked = Program.settings.EnableRotate;
 			delayBeforeStart.Value = Program.settings.DelayBeforeStart;
 			outputRate.SelectedItem = Program.settings.OutputRateFps;
 			comboLanguage.SelectedItem = Program.settings.Language;
-
 		}
 
 		public void ApplyFormToSettings()
@@ -194,6 +194,7 @@ namespace CarDVR
 			Program.settings.StartWithWindows = startWithWindows.Checked;
 			Program.settings.AutostartRecording = autostartRecording.Checked;
 			Program.settings.StartMinimized = startMinimized.Checked;
+			Program.settings.StartWithFullWindowedVideo = startWithFullWindowedVideo.Checked;
 
 			Program.settings.VideoSourceId = string.Empty;
 			foreach (FilterInfo fi in videoDevices)
@@ -427,6 +428,7 @@ namespace CarDVR
 		public int OutputRateFps { get; set; }
 		public string Language { get; set; }
 		public string Codec { get; set; }
+		public bool StartWithFullWindowedVideo { get; set; }
 
 		/// <summary>
 		/// Initialization constructor
@@ -482,11 +484,18 @@ namespace CarDVR
 				return false;
 			}
 
+			// set default values after read
 			if (Program.settings.Language == null)
 				Program.settings.Language = SettingsImpl.DEFAULT_LANGUAGE;
 
 			if (Program.settings.Codec == null)
 				Program.settings.Codec = SettingsImpl.DEFAULT_CODEC;
+
+			if (Program.settings.AviDuration == 0)
+				Program.settings.AviDuration = 10*60;
+
+			if (Program.settings.AmountOfFiles == 0)
+				Program.settings.AmountOfFiles = 10;
 
 			return true;
 		}

@@ -862,7 +862,7 @@ namespace CarDVR.Forms {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to XVID.
+        ///   Looks up a localized string similar to none.
         /// </summary>
         public static string labelSelectedCodec_Text {
             get {
@@ -899,7 +899,7 @@ namespace CarDVR.Forms {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Selected codec:.
+        ///   Looks up a localized string similar to selected codec:.
         /// </summary>
         public static string labelSelectedCodecTitle_Text {
             get {
@@ -1141,6 +1141,50 @@ namespace CarDVR.Forms {
         public static string startMinimized_Text {
             get {
                 return ResourceManager.GetString("startMinimized.Text", resourceCulture);
+            }
+        }
+        
+        public static bool startWithFullWindowedVideo_AutoSize {
+            get {
+                object obj = ResourceManager.GetObject("startWithFullWindowedVideo.AutoSize", resourceCulture);
+                return ((bool)(obj));
+            }
+        }
+        
+        public static System.Windows.Forms.ImeMode startWithFullWindowedVideo_ImeMode {
+            get {
+                object obj = ResourceManager.GetObject("startWithFullWindowedVideo.ImeMode", resourceCulture);
+                return ((System.Windows.Forms.ImeMode)(obj));
+            }
+        }
+        
+        public static System.Drawing.Point startWithFullWindowedVideo_Location {
+            get {
+                object obj = ResourceManager.GetObject("startWithFullWindowedVideo.Location", resourceCulture);
+                return ((System.Drawing.Point)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size startWithFullWindowedVideo_Size {
+            get {
+                object obj = ResourceManager.GetObject("startWithFullWindowedVideo.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        public static int startWithFullWindowedVideo_TabIndex {
+            get {
+                object obj = ResourceManager.GetObject("startWithFullWindowedVideo.TabIndex", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to start with full windowed video.
+        /// </summary>
+        public static string startWithFullWindowedVideo_Text {
+            get {
+                return ResourceManager.GetString("startWithFullWindowedVideo.Text", resourceCulture);
             }
         }
         

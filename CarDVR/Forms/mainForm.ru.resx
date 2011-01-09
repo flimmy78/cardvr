@@ -2213,4 +2213,22 @@
         /////////////////////////////////////////////////////////////////////////////w==
 </value>
   </data>
+  <data name="GPS not connected" xml:space="preserve">
+    <value>GPS не подключен</value>
+  </data>
+  <data name="km/h" xml:space="preserve">
+    <value>км/ч</value>
+  </data>
+  <data name="No GPS signal" xml:space="preserve">
+    <value>Нет сигнала GPS</value>
+  </data>
+  <data name="Satellites:" xml:space="preserve">
+    <value>Спутников:</value>
+  </data>
+  <data name="Speed:" xml:space="preserve">
+    <value>Скорость:</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Стоп</value>
+  </data>
 </root>

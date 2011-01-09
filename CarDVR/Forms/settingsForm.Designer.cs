@@ -63,6 +63,7 @@
 			this.labelLanguage = new System.Windows.Forms.Label();
 			this.tabPageSettings = new System.Windows.Forms.TabControl();
 			this.tabStartOptions = new System.Windows.Forms.TabPage();
+			this.startWithFullWindowedVideo = new System.Windows.Forms.CheckBox();
 			this.tabVideoSource = new System.Windows.Forms.TabPage();
 			this.tabCompression = new System.Windows.Forms.TabPage();
 			this.labelSelectedCodec = new System.Windows.Forms.Label();
@@ -104,9 +105,9 @@
 			// 
 			// videoSource
 			// 
+			resources.ApplyResources(this.videoSource, "videoSource");
 			this.videoSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.videoSource.FormattingEnabled = true;
-			resources.ApplyResources(this.videoSource, "videoSource");
 			this.videoSource.Name = "videoSource";
 			// 
 			// labelBaudRate
@@ -116,16 +117,16 @@
 			// 
 			// serialPortBaudRate
 			// 
+			resources.ApplyResources(this.serialPortBaudRate, "serialPortBaudRate");
 			this.serialPortBaudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.serialPortBaudRate.FormattingEnabled = true;
-			resources.ApplyResources(this.serialPortBaudRate, "serialPortBaudRate");
 			this.serialPortBaudRate.Name = "serialPortBaudRate";
 			// 
 			// serialPortName
 			// 
+			resources.ApplyResources(this.serialPortName, "serialPortName");
 			this.serialPortName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.serialPortName.FormattingEnabled = true;
-			resources.ApplyResources(this.serialPortName, "serialPortName");
 			this.serialPortName.Name = "serialPortName";
 			// 
 			// enableGps
@@ -150,6 +151,11 @@
 			// aviDuration
 			// 
 			resources.ApplyResources(this.aviDuration, "aviDuration");
+			this.aviDuration.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			this.aviDuration.Name = "aviDuration";
 			this.aviDuration.Value = new decimal(new int[] {
             10,
@@ -160,6 +166,11 @@
 			// amountOfFiles
 			// 
 			resources.ApplyResources(this.amountOfFiles, "amountOfFiles");
+			this.amountOfFiles.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			this.amountOfFiles.Name = "amountOfFiles";
 			this.amountOfFiles.Value = new decimal(new int[] {
             10,
@@ -197,9 +208,9 @@
 			// 
 			// comboResolution
 			// 
+			resources.ApplyResources(this.comboResolution, "comboResolution");
 			this.comboResolution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboResolution.FormattingEnabled = true;
-			resources.ApplyResources(this.comboResolution, "comboResolution");
 			this.comboResolution.Name = "comboResolution";
 			this.comboResolution.DropDown += new System.EventHandler(this.comboResolution_DropDown);
 			// 
@@ -217,9 +228,9 @@
 			// 
 			// comboRotateAngle
 			// 
+			resources.ApplyResources(this.comboRotateAngle, "comboRotateAngle");
 			this.comboRotateAngle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboRotateAngle.FormattingEnabled = true;
-			resources.ApplyResources(this.comboRotateAngle, "comboRotateAngle");
 			this.comboRotateAngle.Name = "comboRotateAngle";
 			// 
 			// enableRotate
@@ -235,13 +246,13 @@
 			// 
 			// gbAutostart
 			// 
+			resources.ApplyResources(this.gbAutostart, "gbAutostart");
 			this.gbAutostart.Controls.Add(this.label2);
 			this.gbAutostart.Controls.Add(this.label1);
 			this.gbAutostart.Controls.Add(this.outputRate);
 			this.gbAutostart.Controls.Add(this.labelDegrees);
 			this.gbAutostart.Controls.Add(this.comboRotateAngle);
 			this.gbAutostart.Controls.Add(this.enableRotate);
-			resources.ApplyResources(this.gbAutostart, "gbAutostart");
 			this.gbAutostart.Name = "gbAutostart";
 			this.gbAutostart.TabStop = false;
 			// 
@@ -257,6 +268,7 @@
 			// 
 			// outputRate
 			// 
+			resources.ApplyResources(this.outputRate, "outputRate");
 			this.outputRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.outputRate.FormattingEnabled = true;
 			this.outputRate.Items.AddRange(new object[] {
@@ -266,7 +278,6 @@
             ((object)(resources.GetObject("outputRate.Items3"))),
             ((object)(resources.GetObject("outputRate.Items4"))),
             ((object)(resources.GetObject("outputRate.Items5")))});
-			resources.ApplyResources(this.outputRate, "outputRate");
 			this.outputRate.Name = "outputRate";
 			// 
 			// labelDelayAutostart
@@ -286,23 +297,23 @@
 			// 
 			// groupVideoArchive
 			// 
+			resources.ApplyResources(this.groupVideoArchive, "groupVideoArchive");
 			this.groupVideoArchive.Controls.Add(this.labelMinutesOnEachFile);
 			this.groupVideoArchive.Controls.Add(this.aviDuration);
 			this.groupVideoArchive.Controls.Add(this.labelStoreFiles);
 			this.groupVideoArchive.Controls.Add(this.amountOfFiles);
-			resources.ApplyResources(this.groupVideoArchive, "groupVideoArchive");
 			this.groupVideoArchive.Name = "groupVideoArchive";
 			this.groupVideoArchive.TabStop = false;
 			// 
 			// comboLanguage
 			// 
+			resources.ApplyResources(this.comboLanguage, "comboLanguage");
 			this.comboLanguage.DisplayMember = "English";
 			this.comboLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboLanguage.FormattingEnabled = true;
 			this.comboLanguage.Items.AddRange(new object[] {
             resources.GetString("comboLanguage.Items"),
             resources.GetString("comboLanguage.Items1")});
-			resources.ApplyResources(this.comboLanguage, "comboLanguage");
 			this.comboLanguage.Name = "comboLanguage";
 			// 
 			// labelLanguage
@@ -312,43 +323,50 @@
 			// 
 			// tabPageSettings
 			// 
+			resources.ApplyResources(this.tabPageSettings, "tabPageSettings");
 			this.tabPageSettings.Controls.Add(this.tabStartOptions);
 			this.tabPageSettings.Controls.Add(this.tabVideoSource);
 			this.tabPageSettings.Controls.Add(this.tabCompression);
 			this.tabPageSettings.Controls.Add(this.tabOutput);
 			this.tabPageSettings.Controls.Add(this.tabGps);
 			this.tabPageSettings.Controls.Add(this.tabLocalization);
-			resources.ApplyResources(this.tabPageSettings, "tabPageSettings");
 			this.tabPageSettings.Name = "tabPageSettings";
 			this.tabPageSettings.SelectedIndex = 0;
 			// 
 			// tabStartOptions
 			// 
+			resources.ApplyResources(this.tabStartOptions, "tabStartOptions");
+			this.tabStartOptions.Controls.Add(this.startWithFullWindowedVideo);
 			this.tabStartOptions.Controls.Add(this.startWithWindows);
 			this.tabStartOptions.Controls.Add(this.startMinimized);
 			this.tabStartOptions.Controls.Add(this.autostartRecording);
 			this.tabStartOptions.Controls.Add(this.labelDelayAutostart);
 			this.tabStartOptions.Controls.Add(this.delayBeforeStart);
-			resources.ApplyResources(this.tabStartOptions, "tabStartOptions");
 			this.tabStartOptions.Name = "tabStartOptions";
 			this.tabStartOptions.UseVisualStyleBackColor = true;
 			// 
+			// startWithFullWindowedVideo
+			// 
+			resources.ApplyResources(this.startWithFullWindowedVideo, "startWithFullWindowedVideo");
+			this.startWithFullWindowedVideo.Name = "startWithFullWindowedVideo";
+			this.startWithFullWindowedVideo.UseVisualStyleBackColor = true;
+			// 
 			// tabVideoSource
 			// 
+			resources.ApplyResources(this.tabVideoSource, "tabVideoSource");
 			this.tabVideoSource.Controls.Add(this.comboResolution);
 			this.tabVideoSource.Controls.Add(this.labelVideosource);
 			this.tabVideoSource.Controls.Add(this.videoSource);
 			this.tabVideoSource.Controls.Add(this.labelResolution);
-			resources.ApplyResources(this.tabVideoSource, "tabVideoSource");
 			this.tabVideoSource.Name = "tabVideoSource";
 			this.tabVideoSource.UseVisualStyleBackColor = true;
 			// 
 			// tabCompression
 			// 
+			resources.ApplyResources(this.tabCompression, "tabCompression");
 			this.tabCompression.Controls.Add(this.labelSelectedCodec);
 			this.tabCompression.Controls.Add(this.labelSelectedCodecTitle);
 			this.tabCompression.Controls.Add(this.listCodecs);
-			resources.ApplyResources(this.tabCompression, "tabCompression");
 			this.tabCompression.Name = "tabCompression";
 			this.tabCompression.UseVisualStyleBackColor = true;
 			// 
@@ -364,37 +382,37 @@
 			// 
 			// listCodecs
 			// 
-			this.listCodecs.FormattingEnabled = true;
 			resources.ApplyResources(this.listCodecs, "listCodecs");
+			this.listCodecs.FormattingEnabled = true;
 			this.listCodecs.Name = "listCodecs";
 			this.listCodecs.SelectedValueChanged += new System.EventHandler(this.listCodecs_SelectedValueChanged);
 			// 
 			// tabOutput
 			// 
+			resources.ApplyResources(this.tabOutput, "tabOutput");
 			this.tabOutput.Controls.Add(this.groupVideoArchive);
 			this.tabOutput.Controls.Add(this.gbAutostart);
 			this.tabOutput.Controls.Add(this.buttonBrowse);
 			this.tabOutput.Controls.Add(this.labelPath);
 			this.tabOutput.Controls.Add(this.textBoxPath);
-			resources.ApplyResources(this.tabOutput, "tabOutput");
 			this.tabOutput.Name = "tabOutput";
 			this.tabOutput.UseVisualStyleBackColor = true;
 			// 
 			// tabGps
 			// 
+			resources.ApplyResources(this.tabGps, "tabGps");
 			this.tabGps.Controls.Add(this.labelBaudRate);
 			this.tabGps.Controls.Add(this.serialPortName);
 			this.tabGps.Controls.Add(this.serialPortBaudRate);
 			this.tabGps.Controls.Add(this.enableGps);
-			resources.ApplyResources(this.tabGps, "tabGps");
 			this.tabGps.Name = "tabGps";
 			this.tabGps.UseVisualStyleBackColor = true;
 			// 
 			// tabLocalization
 			// 
+			resources.ApplyResources(this.tabLocalization, "tabLocalization");
 			this.tabLocalization.Controls.Add(this.comboLanguage);
 			this.tabLocalization.Controls.Add(this.labelLanguage);
-			resources.ApplyResources(this.tabLocalization, "tabLocalization");
 			this.tabLocalization.Name = "tabLocalization";
 			this.tabLocalization.UseVisualStyleBackColor = true;
 			// 
@@ -479,5 +497,6 @@
 		private System.Windows.Forms.ListBox listCodecs;
 		private System.Windows.Forms.Label labelSelectedCodecTitle;
 		private System.Windows.Forms.Label labelSelectedCodec;
+		private System.Windows.Forms.CheckBox startWithFullWindowedVideo;
     }
 }
