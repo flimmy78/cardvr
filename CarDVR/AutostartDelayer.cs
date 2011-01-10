@@ -11,7 +11,7 @@ namespace CarDVR
 
 		public AutostartDelayer(int pause, EventHandler callback)
 		{
-			//timer.Interval = Program.settings.DelayBeforeStart * 1000;
+			timer.Interval = Program.settings.DelayBeforeStart * 1000;
 			timer.Enabled = true;
 			timer.Tick += new EventHandler(timer_Tick);
 			timer.Tick += new EventHandler(callback);
