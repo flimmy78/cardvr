@@ -5,25 +5,16 @@ using System.Text;
 namespace CarDVR
 {
 	/// <summary>
-	/// This class implements IGpsFormat interface and declares NMEA Gps Protocol
+	/// This class implements GpsFormat interface and declares NMEA Gps Protocol
 	/// </summary>
 	class NmeaImpl : GpsFormat
 	{
 		private string latitude = string.Empty;
 		private string longitude = string.Empty;
+		private string speed = string.Empty;
 
 		private int fixTaken = 0;
 		private int numberOfSatellites = 0;
-
-		public NmeaSpeed speed = new NmeaSpeed();
-
-		public bool FixTaken
-		{
-			get
-			{
-				return fixTaken == 1;
-			}
-		}
 
 		public void Parse(string line)
 		{
@@ -65,7 +56,22 @@ namespace CarDVR
 			if (parameters.Length > 7)
 				velocity = parameters[7];
 
-			speed.Convert(velocity);
+			try
+			{
+				speed = NmeaSpeed.Convert(velocity).ToString();
+			}
+			catch
+			{
+				speed = string.Format("speed convertation error (velocity={0})", velocity);
+			}
+		}
+
+		public bool FixTaken
+		{
+			get
+			{
+				return fixTaken == 1;
+			}
 		}
 
 		public string Coordinates
@@ -88,7 +94,7 @@ namespace CarDVR
 		{
 			get
 			{
-				return speed.ToString();
+				return speed;
 			}
 		}
 	}

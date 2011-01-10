@@ -87,8 +87,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>settingsForm.resx</DependentUpon>
     </Compile>
-    <Compile Include="Gps\GpsReciever.cs" />
-    <Compile Include="Gps\GpsSpeed.cs" />
+    <Compile Include="Gps\GpsReceiver.cs" />
+    <Compile Include="Gps\NmeaSpeed.cs" />
     <Compile Include="Gps\GpsState.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Gps\GpsFormat.cs" />
