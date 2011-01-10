@@ -36,7 +36,6 @@
 			this.camView = new System.Windows.Forms.PictureBox();
 			this.labelNoVideoSource = new System.Windows.Forms.Label();
 			this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
-			this.timerDebug = new System.Windows.Forms.Timer(this.components);
 			this.FpsDisplayer = new System.Windows.Forms.Timer(this.components);
 			this.timerWriter = new System.Windows.Forms.Timer(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.camView)).BeginInit();
@@ -82,11 +81,6 @@
 			resources.ApplyResources(this.trayIcon, "trayIcon");
 			this.trayIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.trayIcon_MouseClick);
 			// 
-			// timerDebug
-			// 
-			this.timerDebug.Interval = 500;
-			this.timerDebug.Tick += new System.EventHandler(this.timerDebug_Tick);
-			// 
 			// FpsDisplayer
 			// 
 			this.FpsDisplayer.Enabled = true;
@@ -126,7 +120,6 @@
         private System.Windows.Forms.PictureBox camView;
         private System.Windows.Forms.Label labelNoVideoSource;
 		private System.Windows.Forms.NotifyIcon trayIcon;
-		private System.Windows.Forms.Timer timerDebug;
 		private System.Windows.Forms.Timer FpsDisplayer;
 		private System.Windows.Forms.Timer timerWriter;
     }

@@ -20,14 +20,7 @@ namespace CarDVR
 		private static ButtonState buttonState = ButtonState.Start;
 		private static bool VideosourceInitialized = false;
 		private AutostartDelayer autostartDelayer;
-		private static ResourceManager resources;
 
-		private static string resSpeed;
-		private static string resKmh;
-		private static string resSatellites;
-		private static string resNoGpsSignal;
-		private static string resGpsNotConnected;		
-		
 		VideoCaptureDevice videoSource = null;
 		GpsReceiver gps;
 		VideoSplitter splitter;
@@ -36,29 +29,11 @@ namespace CarDVR
 
 		public MainForm()
 		{
-			Program.settings.Read();
-
-			CultureInfo ci = new CultureInfo(Program.settings.Language.Equals("Russian") ? "ru-RU" : "en-US");
-			Thread.CurrentThread.CurrentUICulture = ci;
-
-			VideoWindowMode = FillMode.Normal;
+			BeforeInitializeComponent();
 
 			InitializeComponent();
 
-			IsWebCamAvaliable();
-
-			resources = new ResourceManager("CarDVR.mainForm", GetType().Assembly);
-
-			if (Program.settings.StartWithFullWindowedVideo)
-				MakeFullWindowVideo();
-
-			if (Program.settings.AutostartRecording && Program.settings.DelayBeforeStart > 0)
-				autostartDelayer = new AutostartDelayer(
-											Program.settings.DelayBeforeStart * 1000, 
-											AutostartDelayer_Handler
-											);
-			else
-				GlobalInitialization();
+			AfterInitializeComponent();
 		}
 
 		private void InitVideoSource()
@@ -71,10 +46,6 @@ namespace CarDVR
 				running = true;
 				StartStopRecording();
 			}
-
-#if DEBUG
-			running = splitter.IsRunning && (Program.settings.GetVideoSize() != splitter.VideoSize);
-#endif
 
 			if (videoSource != null)
 				videoSource.NewFrame -= videoSource_NewFrame;
@@ -95,13 +66,6 @@ namespace CarDVR
 				timerWriter.Interval = 1000 / splitter.FPS;
 
 			IsWebCamAvaliable();
-
-			// init static resources
-			resSpeed = resources.GetString("Speed:");
-			resKmh = resources.GetString("km/h");
-			resSatellites = resources.GetString("Satellites:"); ;
-			resNoGpsSignal = resources.GetString("No GPS signal"); ;
-			resGpsNotConnected = resources.GetString("GPS not connected");
 
 			if (running)
 				StartStopRecording();
@@ -178,12 +142,7 @@ namespace CarDVR
 
 			lock (frameKeeper)
 			{
-#if DEBUG
-			frame = (Bitmap)Bitmap.FromFile("../../Resources/1.jpg");
-#else
 				frame = (Bitmap)eventArgs.Frame.Clone();
-#endif
-
 
 				if (Program.settings.EnableRotate)
 				{
@@ -218,12 +177,7 @@ namespace CarDVR
 		{
 			bool WebCamPresent;
 
-#if DEBUG
-			WebCamPresent = true;
-#else
 			WebCamPresent = !string.IsNullOrEmpty(Program.settings.VideoSource);
-#endif
-
 			buttonStartStop.Enabled = WebCamPresent;
 			labelNoVideoSource.Visible = !WebCamPresent;
 
@@ -302,11 +256,7 @@ namespace CarDVR
 			}
 
 			splitter.Start();
-#if DEBUG
-					timerDebug.Start();
-#else
 			videoSource.Start();
-#endif
 			FpsDisplayer.Enabled = true;
 		}
 
@@ -316,7 +266,6 @@ namespace CarDVR
 			videoSource.WaitForStop();
 			splitter.Stop();
 			camView.Image = new Bitmap(Program.settings.VideoWidth, Program.settings.VideoHeight);
-			timerDebug.Stop();
 
 			// check for opened Serial Port implemented inside Gps Reciever class
 			gps.Close();
@@ -331,15 +280,19 @@ namespace CarDVR
 			{
 				case ButtonState.Start:
 					StartRecording();
+
+					buttonStartStop.Text = resStop;
+					buttonState = ButtonState.Stop;
 					break;
 
 				case ButtonState.Stop:
 					StopRecording();
+
+					buttonStartStop.Text = resStart;
+					buttonState = ButtonState.Start;
 					break;
 			}
 
-			buttonStartStop.Text = buttonState == ButtonState.Start ? resources.GetString("Stop") : resources.GetString("buttonStartStop.Text");
-			buttonState = buttonState == ButtonState.Start ? ButtonState.Stop : ButtonState.Start;
 			buttonStartStop.Enabled = true;
 		}
 

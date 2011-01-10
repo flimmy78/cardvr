@@ -22,12 +22,12 @@ namespace CarDVR
 
 		public void Initialize(string port, int baud)
 		{
-			IsInitialized = false;
-
-			bool wasOpened = com.IsOpen;
-
 			try
 			{
+				IsInitialized = false;
+
+				bool wasOpened = com.IsOpen;
+
 				if (wasOpened) com.Close();
 
 				com.PortName = port;

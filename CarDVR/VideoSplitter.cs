@@ -113,10 +113,6 @@ namespace CarDVR
 		private object aviWatchDog = new object();
 		private AVIWritersPair avipair = new AVIWritersPair();
 
-#if DEBUG
-		private bool _IsRunning = false;
-#endif
-
 		public string Path { get; set; }
 		public int FileDuration { get; set; }
 		public int NumberOfFiles { get; set; }
@@ -144,10 +140,7 @@ namespace CarDVR
 		{
 			if (frame == null)
 				return;
-#if DEBUG
-			if (!_IsRunning)
-				return;
-#endif
+
 			lock (secondsWatchDog)
 			{
 				// before 10 seconds, open new avi
@@ -168,22 +161,8 @@ namespace CarDVR
 			avipair.AddToCurrent(ref frame);
 		}
 
-#if DEBUG
-		public bool IsRunning
-		{
-			get
-			{
-				return _IsRunning;
-			}
-		}
-#endif
-
 		public void Start()
 		{
-#if DEBUG
-			_IsRunning = true;
-#endif
-
 			avipair.Codec = Codec;
 			avipair.FrameRate = FPS;
 
@@ -197,10 +176,6 @@ namespace CarDVR
 			timerSplit.Stop();
 			CloseCurrentAvi();
 			ClosePreparedAvi();
-
-#if DEBUG
-			_IsRunning = false;
-#endif
 		}
 
 		private void PrepareNewMovie()
