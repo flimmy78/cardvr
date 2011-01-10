@@ -18,7 +18,6 @@ namespace CarDVR
 		private static readonly Point pointWhite = new Point(5, 5);
 		private static readonly Point pointBlack = new Point(6, 6);
 		private static ButtonState buttonState = ButtonState.Start;
-		private static bool VideosourceInitialized = false;
 		private AutostartDelayer autostartDelayer;
 
 		VideoCaptureDevice videoSource = null;
@@ -36,51 +35,43 @@ namespace CarDVR
 			AfterInitializeComponent();
 		}
 
-		private void InitVideoSource()
+		private bool IsRecording()
 		{
-			VideosourceInitialized = false;
-
-			bool running = false;
-			if (videoSource != null && videoSource.IsRunning)
-			{
-				running = true;
-				StartStopRecording();
-			}
-
-			if (videoSource != null)
-				videoSource.NewFrame -= videoSource_NewFrame;
-
-			videoSource = new VideoCaptureDevice(Program.settings.VideoSourceId);
-			videoSource.NewFrame += new NewFrameEventHandler(videoSource_NewFrame);
-			videoSource.DesiredFrameRate = Program.settings.VideoFps;
-			videoSource.DesiredFrameSize = new Size(Program.settings.VideoWidth, Program.settings.VideoHeight);
-
-			splitter.Codec = Program.settings.Codec;
-			splitter.FPS = Program.settings.OutputRateFps != 0 ? Program.settings.OutputRateFps : Program.settings.VideoFps;
-			splitter.VideoSize = Program.settings.GetVideoSize();
-			splitter.FileDuration = Program.settings.AviDuration;
-			splitter.NumberOfFiles = Program.settings.AmountOfFiles;
-			splitter.Path = Program.settings.PathForVideo;
-
-			if (splitter.FPS > 0)
-				timerWriter.Interval = 1000 / splitter.FPS;
-
-			IsWebCamAvaliable();
-
-			if (running)
-				StartStopRecording();
-
-			VideosourceInitialized = true;
+			return videoSource != null && videoSource.IsRunning;
 		}
 
+		private void InitVideoSource()
+		{
+			// locking frameKeeper to prevent using video source
+			lock (frameKeeper)
+			{
+				if (videoSource != null)
+					videoSource.NewFrame -= videoSource_NewFrame;
+
+				videoSource = new VideoCaptureDevice(Program.settings.VideoSourceId);
+				videoSource.NewFrame += videoSource_NewFrame;
+				videoSource.DesiredFrameRate = Program.settings.VideoFps;
+				videoSource.DesiredFrameSize = new Size(Program.settings.VideoWidth, Program.settings.VideoHeight);
+
+				splitter.Codec = Program.settings.Codec;
+				splitter.FPS = Program.settings.OutputRateFps != 0 ? Program.settings.OutputRateFps : Program.settings.VideoFps;
+				splitter.VideoSize = Program.settings.GetVideoSize();
+				splitter.FileDuration = Program.settings.AviDuration;
+				splitter.NumberOfFiles = Program.settings.AmountOfFiles;
+				splitter.Path = Program.settings.PathForVideo;
+
+				if (splitter.FPS > 0)
+					timerWriter.Interval = 1000 / splitter.FPS;
+			}
+		}
 
 		private void GlobalInitialization()
 		{
-			// Create avi-splitter. It will be initialized in InitVideoSource()
+			// Create avi-spliter. It will be initialized in InitVideoSource()
 			splitter = new VideoSplitter();
 			gps = new GpsReceiver();
 
-			InitializeGpsIfEnabled(Program.settings.GpsSerialPort, Program.settings.SerialPortBaudRate);
+			InitializeGpsIfEnabled();
 
 			// create first video source
 			InitVideoSource();
@@ -93,13 +84,8 @@ namespace CarDVR
 
 			buttonState = ButtonState.Start;
 
-			if (Program.settings.AutostartRecording
-#if !DEBUG
- && !string.IsNullOrEmpty(Program.settings.VideoSource)
-#endif
-)
+			if (Program.settings.AutostartRecording && !string.IsNullOrEmpty(Program.settings.VideoSource))
 				StartStopRecording();
-
 		}
 
 		int lastFrames = 0, totalFrames = 0, lastFps = 0;
@@ -161,7 +147,7 @@ namespace CarDVR
 				}
 
 				// if settings not applied yet
-				if (!VideosourceInitialized || frame.Size != Program.settings.GetVideoSize())
+				if (frame.Size != Program.settings.GetVideoSize())
 					return;
 
 				using (Graphics graphics = Graphics.FromImage(frame))
@@ -197,29 +183,37 @@ namespace CarDVR
 				settingsForm.ApplyFormToSettings();
 				settingsForm.SaveToRegistry();
 
-				// apply some parameters immediately
-				if (Program.settings.StartWithWindows)
-					AutorunHelper.EnableAutorun();
-				else
-					AutorunHelper.DisableAutorun();
+				AutorunHelper.SetEnabled(Program.settings.StartWithWindows);
+
+				IsWebCamAvaliable();
 
 				// reinit video source
-				InitVideoSource();
+				{
+					bool isRecording = IsRecording();
+
+					if (isRecording)
+						StopRecording();
+
+					InitVideoSource();
+
+					if (isRecording)
+						StartRecording();
+				}
 
 				// reinit gps
 				if (!Program.settings.GpsEnabled)
 					gps.Close();
 				else
-					InitializeGpsIfEnabled(Program.settings.GpsSerialPort, Program.settings.SerialPortBaudRate);
+					InitializeGpsIfEnabled();
 			}
 		}
 
-		private void InitializeGpsIfEnabled(string port, int baud)
+		private void InitializeGpsIfEnabled()
 		{
 			try
 			{
 				if (Program.settings.GpsEnabled)
-					gps.Initialize(port, baud);
+					gps.Initialize(Program.settings.GpsSerialPort, Program.settings.SerialPortBaudRate);
 			}
 			catch (Exception e)
 			{
@@ -229,11 +223,13 @@ namespace CarDVR
 
 		private void StartRecording()
 		{
+			buttonStartStop.Enabled = false;
+
 			// Update settings, may be web cam became not avaliable
 			Program.settings.Read();
 			IsWebCamAvaliable();
 
-			InitializeGpsIfEnabled(Program.settings.GpsSerialPort, Program.settings.SerialPortBaudRate);
+			InitializeGpsIfEnabled();
 
 			if (Program.settings.GpsEnabled)
 			{
@@ -258,10 +254,17 @@ namespace CarDVR
 			splitter.Start();
 			videoSource.Start();
 			FpsDisplayer.Enabled = true;
+
+			buttonStartStop.Text = resStop;
+			buttonState = ButtonState.Stop;
+
+			buttonStartStop.Enabled = true;
 		}
 
 		private void StopRecording()
 		{
+			buttonStartStop.Enabled = false;
+
 			videoSource.Stop();
 			videoSource.WaitForStop();
 			splitter.Stop();
@@ -270,30 +273,25 @@ namespace CarDVR
 			// check for opened Serial Port implemented inside Gps Reciever class
 			gps.Close();
 			FpsDisplayer.Enabled = false;
+
+			buttonStartStop.Text = resStart;
+			buttonState = ButtonState.Start;
+			
+			buttonStartStop.Enabled = true;
 		}
 
 		private void StartStopRecording()
 		{
-			buttonStartStop.Enabled = false;
-
 			switch (buttonState)
 			{
 				case ButtonState.Start:
 					StartRecording();
-
-					buttonStartStop.Text = resStop;
-					buttonState = ButtonState.Stop;
 					break;
 
 				case ButtonState.Stop:
 					StopRecording();
-
-					buttonStartStop.Text = resStart;
-					buttonState = ButtonState.Start;
 					break;
 			}
-
-			buttonStartStop.Enabled = true;
 		}
 
 		private void buttonStartStop_Click(object sender, EventArgs e)
@@ -348,9 +346,6 @@ namespace CarDVR
 
 		private void timerWriter_Tick(object sender, EventArgs e)
 		{
-			if (!VideosourceInitialized)
-				return;
-
 			lock (frameKeeper)
 			{
 				splitter.AddFrame(ref frame);

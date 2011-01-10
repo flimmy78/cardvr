@@ -97,7 +97,16 @@ namespace CarDVR
 
 	class AutorunHelper
 	{
-		public static readonly string AUTORUN_KEY = "Software\\Microsoft\\Windows\\CurrentVersion\\Run";
+		private static readonly string AUTORUN_KEY = "Software\\Microsoft\\Windows\\CurrentVersion\\Run";
+
+		public static void SetEnabled(bool enabled)
+		{
+			if (enabled)
+				EnableAutorun();
+			else
+				DisableAutorun();
+		}
+
 		public static void EnableAutorun()
 		{
 			Assembly asm = Assembly.GetExecutingAssembly();
