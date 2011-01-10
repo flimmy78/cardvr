@@ -3,7 +3,10 @@ using System.IO.Ports;
 
 namespace CarDVR
 {
-	class GpsReciever
+	/// <summary>
+	/// Receives info from GPS device. Only NMEA format implemented.
+	/// </summary>
+	class GpsReceiver
 	{
 		public GpsFormat gps = new NmeaImpl();
 		public GpsState State { get; set; }
@@ -11,7 +14,7 @@ namespace CarDVR
 		private SerialPort com = new SerialPort();
 		private bool IsInitialized = false;
 
-		public GpsReciever()
+		public GpsReceiver()
 		{
 			com.DataReceived += new SerialDataReceivedEventHandler(com_DataReceived);
 			State = GpsState.NotActive;
@@ -35,7 +38,10 @@ namespace CarDVR
 				State = GpsState.Active;
 				IsInitialized = true;
 			}
-			catch (Exception) { }
+			catch (Exception e) 
+			{
+				throw new Exception(string.Format("Can't open serial port '{0}'. Description: ", port, e.Message));
+			}
 		}
 
 		#region SerialPort data reception
@@ -62,40 +68,38 @@ namespace CarDVR
 		#endregion
 
 		#region Main SerialPort operations
-		public bool Open()
+		public void Open()
 		{
 			State = GpsState.NotActive;
 
 			if (!IsInitialized)
-				return false;
+				throw new TypeInitializationException(this.GetType().Name, new Exception("Not initialized"));
 
-			try
-			{
-				com.Open();
-			}
-			catch (Exception)
-			{
-				return false;
-			}
-
-			return true;
+			com.Open();
 		}
 
 		public void Close()
 		{
-			if (!com.IsOpen)
-				return;
-
 			try
 			{
-				com.Close();
+				if (com.IsOpen)
+				{
+					com.Close();
+				}
 			}
-			catch (InvalidOperationException) { }
+			catch { /* skip all errors */ }
 		}
 
 		public bool IsOpened()
 		{
-			return com.IsOpen;
+			try
+			{
+				return com.IsOpen;
+			}
+			catch
+			{
+				return false;
+			}
 		}
 		#endregion
 

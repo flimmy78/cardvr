@@ -29,20 +29,20 @@ namespace CarDVR
 			}
 			catch (Win32Exception e)
 			{
-				Reporter.Error("Error occured during reading serial ports list.\nGPS won't be activated.\n Reason: " + e.Message);
+				Reporter.SeriousError("Error occured during reading serial ports list.\nGPS won't be activated.\n Reason: " + e.Message);
 				Program.settings.GpsEnabled = false;
 			}
 
 			if (portsList.Count == 0)
 			{
 				// Check any serial port avaliable
-				Reporter.Error("There is no avaliable serial port in your system.\nGPS won't be activated.");
+				Reporter.SeriousError("There is no avaliable serial port in your system.\nGPS won't be activated.");
 				Program.settings.GpsEnabled = false;
 			}
 			else if (!string.IsNullOrEmpty(Program.settings.GpsSerialPort) && !portsList.Contains(Program.settings.GpsSerialPort))
 			{
 				// Check saved serial port exists in system's serial ports list
-				Reporter.Error("Serial port " + Program.settings.GpsSerialPort + " not found in system's serial ports list.\nGPS won't be activated.");
+				Reporter.SeriousError("Serial port " + Program.settings.GpsSerialPort + " not found in system's serial ports list.\nGPS won't be activated.");
 				Program.settings.GpsEnabled = false;
 			}
 			#endregion
@@ -344,7 +344,7 @@ namespace CarDVR
 		{
 			if (!Directory.Exists(dir) || !DirectoryWriteChecker.Process(dir))
 			{
-				Reporter.Error("Can't write AVI file to directory " + dir);
+				Reporter.SeriousError("Can't write AVI file to directory " + dir);
 				return false;
 			}
 

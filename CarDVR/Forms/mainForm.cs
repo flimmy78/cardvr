@@ -29,7 +29,7 @@ namespace CarDVR
 		private static string resGpsNotConnected;		
 		
 		VideoCaptureDevice videoSource = null;
-		GpsReciever gps;
+		GpsReceiver gps;
 		VideoSplitter splitter;
 		Bitmap frame;
 		object frameKeeper = new object();
@@ -114,10 +114,9 @@ namespace CarDVR
 		{
 			// Create avi-splitter. It will be initialized in InitVideoSource()
 			splitter = new VideoSplitter();
-			gps = new GpsReciever();
+			gps = new GpsReceiver();
 
-			if (Program.settings.GpsEnabled)
-				gps.Initialize(Program.settings.GpsSerialPort, Program.settings.SerialPortBaudRate);
+			InitializeGpsIfEnabled(Program.settings.GpsSerialPort, Program.settings.SerialPortBaudRate);
 
 			// create first video source
 			InitVideoSource();
@@ -257,7 +256,20 @@ namespace CarDVR
 				if (!Program.settings.GpsEnabled)
 					gps.Close();
 				else
-					gps.Initialize(Program.settings.GpsSerialPort, Program.settings.SerialPortBaudRate);
+					InitializeGpsIfEnabled(Program.settings.GpsSerialPort, Program.settings.SerialPortBaudRate);
+			}
+		}
+
+		private void InitializeGpsIfEnabled(string port, int baud)
+		{
+			try
+			{
+				if (Program.settings.GpsEnabled)
+					gps.Initialize(port, baud);
+			}
+			catch (Exception e)
+			{
+				Reporter.NonSeriousError(e.Message);
 			}
 		}
 
@@ -267,10 +279,26 @@ namespace CarDVR
 			Program.settings.Read();
 			IsWebCamAvaliable();
 
+			InitializeGpsIfEnabled(Program.settings.GpsSerialPort, Program.settings.SerialPortBaudRate);
+
 			if (Program.settings.GpsEnabled)
 			{
-				gps.Initialize(Program.settings.GpsSerialPort, Program.settings.SerialPortBaudRate);
-				gps.Open();
+				try
+				{
+					gps.Open();
+				}
+				catch (Exception e)
+				{
+					Reporter.NonSeriousError
+					(
+						string.Format
+						(
+							"Can't open GPS receiver on port '{0}'. GPS not active. Description: {1}", 
+							Program.settings.GpsSerialPort, 
+							e.Message
+						)
+					);
+				}
 			}
 
 			splitter.Start();

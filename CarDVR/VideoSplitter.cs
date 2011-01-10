@@ -238,11 +238,11 @@ namespace CarDVR
 			}
 			catch (Exception e)
 			{
-				Reporter.Error
-					(
-						"Can't open output file " + filename + "\n" +
-						e.Message
-					);
+				Reporter.SeriousError
+				(
+					"Can't open output file " + filename + "\n" +
+					e.Message
+				);
 			}
 
 			DirectoryInfo dir = new DirectoryInfo(Program.settings.PathForVideo);

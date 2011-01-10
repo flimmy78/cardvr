@@ -19,12 +19,51 @@ namespace CarDVR
 	{
 	}
 
+	// Simple error reporter / error holder
+	// 
+	// Serious errors always be shown in MessageBox,
+	// non-serious errors will be shown on video frame and be alerted by specific sound.
+	//
+	// There's no synchronization, because Timer works in current thread
 	public class Reporter
 	{
-		static public void Error(string text)
+		public static void NonSeriousError(string text)
+		{
+			InitializeErrorCleaner();
+			longLivingNonSeriousError = text;
+			errorCleaner.Enabled = true;
+		}
+
+		public static string GetNonSeriousError()
+		{
+			return longLivingNonSeriousError;
+		}
+
+		public static void SeriousError(string text)
 		{
 			MessageBox.Show(text, "Error", MessageBoxButtons.OK);
 		}
+
+		private static void InitializeErrorCleaner()
+		{
+			if (errorCleaner == null)
+			{
+				errorCleaner = new Timer();
+				errorCleaner.Interval = 5000;
+				errorCleaner.Enabled = false;
+				errorCleaner.Tick += new EventHandler(errorCleaner_Tick);
+			}
+		}
+
+		private static void errorCleaner_Tick(object sender, EventArgs e)
+		{
+			errorCleaner.Enabled = false;
+			longLivingNonSeriousError = string.Empty;
+		}
+
+		static string longLivingNonSeriousError = string.Empty;
+		static Timer errorCleaner = null;
+		static object errorCleanerHolder = new object();
 	}
 
 	enum ButtonState
@@ -47,7 +86,7 @@ namespace CarDVR
 					File.Delete(filename);
 				}
 			}
-			catch (Exception)
+			catch
 			{
 				return false;
 			}
@@ -73,7 +112,7 @@ namespace CarDVR
 				key = Registry.CurrentUser.OpenSubKey(AUTORUN_KEY, true);
 				key.SetValue(CarDrv, exepath, RegistryValueKind.String);
 			}
-			catch (Exception)
+			catch
 			{
 				Program.settings.StartWithWindows = false;
 				Program.settings.Save();
@@ -92,7 +131,7 @@ namespace CarDVR
 				key = Registry.CurrentUser.OpenSubKey(AUTORUN_KEY, true);
 				key.DeleteValue(CarDvr);
 			}
-			catch (Exception)
+			catch
 			{
 				Program.settings.StartWithWindows = false;
 				Program.settings.Save();
