@@ -20,9 +20,10 @@ namespace CarDVR
 		private static ButtonState buttonState = ButtonState.Start;
 		private AutostartDelayer autostartDelayer;
 
+		GpsReceiver gps = new GpsReceiver();
+		VideoSplitter splitter = new VideoSplitter();
+
 		VideoCaptureDevice videoSource = null;
-		GpsReceiver gps;
-		VideoSplitter splitter;
 		Bitmap frame;
 		object frameKeeper = new object();
 
@@ -65,37 +66,21 @@ namespace CarDVR
 			}
 		}
 
-		private void GlobalInitialization()
+		private void VideoInitialization()
 		{
-			// Create avi-spliter. It will be initialized in InitVideoSource()
-			splitter = new VideoSplitter();
-			gps = new GpsReceiver();
-
-			InitializeGpsIfEnabled();
-
-			// create first video source
 			InitVideoSource();
-
-			string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-			Text += " v" + version.Substring(0, version.Length - 4);
-
-			if (!Program.settings.StartMinimized)
-				Show();
-
-			buttonState = ButtonState.Start;
 
 			if (Program.settings.AutostartRecording && !string.IsNullOrEmpty(Program.settings.VideoSource))
 				StartStopRecording();
 		}
 
 		int lastFrames = 0, totalFrames = 0, lastFps = 0;
-		object framesKeeper = new object();
+		object framesCountKeeper = new object();
 
 		private string MakeFrameString()
 		{
 			string result = DateTime.Now.ToString() + " ";
 
-			// Do not write anything if GPS disabled in settings
 			if (Program.settings.GpsEnabled)
 			{
 				switch (gps.State)
@@ -114,7 +99,7 @@ namespace CarDVR
 				}
 			}
 
-			lock (framesKeeper)
+			lock (framesCountKeeper)
 			{
 				result += "\n" + totalFrames.ToString() + " | " + lastFps.ToString() + " FPS";
 			}
@@ -145,10 +130,6 @@ namespace CarDVR
 							break;
 					}
 				}
-
-				// if settings not applied yet
-				if (frame.Size != Program.settings.GetVideoSize())
-					return;
 
 				using (Graphics graphics = Graphics.FromImage(frame))
 				{
@@ -200,24 +181,45 @@ namespace CarDVR
 						StartRecording();
 				}
 
-				// reinit gps
-				if (!Program.settings.GpsEnabled)
-					gps.Close();
-				else
-					InitializeGpsIfEnabled();
+				InitializeGps();
 			}
 		}
 
-		private void InitializeGpsIfEnabled()
+		private void InitializeGps()
 		{
 			try
 			{
 				if (Program.settings.GpsEnabled)
 					gps.Initialize(Program.settings.GpsSerialPort, Program.settings.SerialPortBaudRate);
+				else
+					gps.Close();
 			}
 			catch (Exception e)
 			{
 				Reporter.NonSeriousError(e.Message);
+			}
+		}
+
+		private void StartGpsReceiver()
+		{
+			if (!Program.settings.GpsEnabled)
+				return;
+
+			try
+			{
+				gps.Open();
+			}
+			catch (Exception e)
+			{
+				Reporter.NonSeriousError
+				(
+					string.Format
+					(
+						"Can't open GPS receiver on port '{0}'. GPS not active. Description: {1}",
+						Program.settings.GpsSerialPort,
+						e.Message
+					)
+				);
 			}
 		}
 
@@ -229,27 +231,8 @@ namespace CarDVR
 			Program.settings.Read();
 			IsWebCamAvaliable();
 
-			InitializeGpsIfEnabled();
-
-			if (Program.settings.GpsEnabled)
-			{
-				try
-				{
-					gps.Open();
-				}
-				catch (Exception e)
-				{
-					Reporter.NonSeriousError
-					(
-						string.Format
-						(
-							"Can't open GPS receiver on port '{0}'. GPS not active. Description: {1}", 
-							Program.settings.GpsSerialPort, 
-							e.Message
-						)
-					);
-				}
-			}
+			InitializeGps();
+			StartGpsReceiver();		
 
 			splitter.Start();
 			videoSource.Start();
@@ -332,12 +315,12 @@ namespace CarDVR
 
 		private void AutostartDelayer_Handler(object sender, EventArgs e)
 		{
-			GlobalInitialization();
+			VideoInitialization();
 		}
 
 		private void FpsDisplayer_Tick(object sender, EventArgs e)
 		{
-			lock (framesKeeper)
+			lock (framesCountKeeper)
 			{
 				lastFps = totalFrames - lastFrames;
 				lastFrames = totalFrames;

@@ -21,11 +21,13 @@ namespace CarDVR
 			Program.settings.Read();
 			SetLocalization(Program.settings.Language);
 			InitDynamicResources(Program.settings.Language);
-			VideoWindowMode = FillMode.Normal;			
+			VideoWindowMode = FillMode.Normal;
 		}
 
 		private void AfterInitializeComponent()
 		{
+			Text = Application.ProductName + " v" + GetProgramVersion();
+
 			IsWebCamAvaliable();
 
 			if (Program.settings.StartWithFullWindowedVideo)
@@ -40,7 +42,17 @@ namespace CarDVR
 									);
 			}
 			else
-				GlobalInitialization();
+				VideoInitialization();
+
+			if (!Program.settings.StartMinimized)
+				Show();
+
+			buttonState = ButtonState.Start;
+		}
+		private string GetProgramVersion()
+		{
+			string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+			return version.Substring(0, version.Length - 4);
 		}
 	}
 }
