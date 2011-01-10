@@ -26,16 +26,18 @@ namespace CarDVR
 			{
 				IsInitialized = false;
 
+				gps.Initialize();
+				State = GpsState.NotActive;
+
 				bool wasOpened = com.IsOpen;
 
 				if (wasOpened) com.Close();
 
 				com.PortName = port;
 				com.BaudRate = baud;
-				
+
 				if (wasOpened) com.Open();
 
-				State = GpsState.Active;
 				IsInitialized = true;
 			}
 			catch (Exception e) 

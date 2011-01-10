@@ -74,6 +74,7 @@ namespace CarDVR
 				StartStopRecording();
 		}
 
+		// TODO: make stand alone class FramesCounter
 		int lastFrames = 0, totalFrames = 0, lastFps = 0;
 		object framesCountKeeper = new object();
 

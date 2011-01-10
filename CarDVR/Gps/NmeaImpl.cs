@@ -97,5 +97,13 @@ namespace CarDVR
 				return speed;
 			}
 		}
+
+		public void Initialize()
+		{
+			fixTaken = 0;
+			speed = string.Empty;
+			latitude = string.Empty;
+			longitude = string.Empty;
+		}
 	}
 }

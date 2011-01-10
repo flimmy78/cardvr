@@ -9,8 +9,10 @@ namespace CarDVR
 	/// </summary>
 	interface GpsFormat
 	{
-		bool FixTaken { get; }
+		void Initialize();
 		void Parse(string line);
+
+		bool FixTaken { get; }		
 		string Coordinates { get; }
 		int FixedSatellites { get; }
 		string Speed { get; }
