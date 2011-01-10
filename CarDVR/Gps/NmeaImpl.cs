@@ -14,7 +14,7 @@ namespace CarDVR
 		private string speed = string.Empty;
 
 		private int fixTaken = 0;
-		private int numberOfSatellites = 0;
+		private int fixedSatellites = 0;
 
 		public void Parse(string line)
 		{
@@ -45,8 +45,8 @@ namespace CarDVR
 			if (!int.TryParse(parameters[6], out fixTaken))
 				fixTaken = 0;
 
-			if (!int.TryParse(parameters[7], out numberOfSatellites))
-				numberOfSatellites = 0;
+			if (!int.TryParse(parameters[7], out fixedSatellites))
+				fixedSatellites = 0;
 		}
 
 		void ParseRMC(ref string[] parameters)
@@ -82,11 +82,11 @@ namespace CarDVR
 			}
 		}
 
-		public int NumberOfSatellites
+		public int FixedSatellites
 		{
 			get
 			{
-				return numberOfSatellites;
+				return fixedSatellites;
 			}
 		}
 

@@ -116,7 +116,7 @@ namespace CarDVR
 		{
 			get
 			{
-				return gps.NumberOfSatellites;
+				return gps.FixedSatellites;
 			}
 		}
 

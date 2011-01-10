@@ -12,7 +12,7 @@ namespace CarDVR
 		bool FixTaken { get; }
 		void Parse(string line);
 		string Coordinates { get; }
-		int NumberOfSatellites { get; }
+		int FixedSatellites { get; }
 		string Speed { get; }
 	}
 }
