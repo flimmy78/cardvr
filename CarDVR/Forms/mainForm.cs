@@ -226,6 +226,9 @@ namespace CarDVR
 
 		private void StartRecording()
 		{
+            if (buttonState == ButtonState.Start)
+                return;
+
 			buttonStartStop.Enabled = false;
 
 			// Update settings, may be web cam became not avaliable
@@ -247,6 +250,9 @@ namespace CarDVR
 
 		private void StopRecording()
 		{
+            if (buttonState == ButtonState.Stop)
+                return;
+
 			buttonStartStop.Enabled = false;
 
 			videoSource.Stop();
