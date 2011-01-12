@@ -285,11 +285,11 @@ namespace CarDVR
 
 		private void mainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			videoSource.Stop();
-			videoSource.WaitForStop();
+            StopRecording();
 
-			gps.Close();
-			splitter.Stop();
+            StreamWriter sr = File.CreateText(@"c:\shutting down.txt");
+            sr.WriteLine(e.CloseReason.ToString());
+            sr.Close();
 		}
 
 		private void buttonMinimize_Click(object sender, EventArgs e)
