@@ -226,7 +226,7 @@ namespace CarDVR
 
 		private void StartRecording()
 		{
-            if (buttonState == ButtonState.Start)
+            if (buttonState == ButtonState.Stop)
                 return;
 
 			buttonStartStop.Enabled = false;
@@ -250,7 +250,7 @@ namespace CarDVR
 
 		private void StopRecording()
 		{
-            if (buttonState == ButtonState.Stop)
+            if (buttonState == ButtonState.Start)
                 return;
 
 			buttonStartStop.Enabled = false;
