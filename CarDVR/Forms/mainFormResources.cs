@@ -7,13 +7,13 @@ namespace CarDVR
 {
 	public partial class MainForm : Form
 	{
-		private static string resSpeed;
-		private static string resKmh;
-		private static string resSatellites;
-		private static string resNoGpsSignal;
-		private static string resGpsNotConnected;
-		private static string resStop;
-		private static string resStart;
+		public static string resSpeed;
+		public static string resKmh;
+		public static string resSatellites;
+		public static string resNoGpsSignal;
+		public static string resGpsNotConnected;
+		public static string resStop;
+		public static string resStart;
 
 		private void InitRussianResources()
 		{

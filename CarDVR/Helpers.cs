@@ -66,10 +66,10 @@ namespace CarDVR
 		static object errorCleanerHolder = new object();
 	}
 
-	enum ButtonState
+	enum RecordingState
 	{
-		Start,
-		Stop
+		Stopped,
+		Started
 	}
 
 	class DirectoryWriteChecker

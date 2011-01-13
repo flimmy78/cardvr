@@ -36,8 +36,7 @@
 			this.camView = new System.Windows.Forms.PictureBox();
 			this.labelNoVideoSource = new System.Windows.Forms.Label();
 			this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
-			this.FpsDisplayer = new System.Windows.Forms.Timer(this.components);
-			this.timerWriter = new System.Windows.Forms.Timer(this.components);
+			this.videoDrawer = new System.Windows.Forms.Timer(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.camView)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -81,17 +80,9 @@
 			resources.ApplyResources(this.trayIcon, "trayIcon");
 			this.trayIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.trayIcon_MouseClick);
 			// 
-			// FpsDisplayer
+			// videoDrawer
 			// 
-			this.FpsDisplayer.Enabled = true;
-			this.FpsDisplayer.Interval = 1000;
-			this.FpsDisplayer.Tick += new System.EventHandler(this.FpsDisplayer_Tick);
-			// 
-			// timerWriter
-			// 
-			this.timerWriter.Enabled = true;
-			this.timerWriter.Interval = 40;
-			this.timerWriter.Tick += new System.EventHandler(this.timerWriter_Tick);
+			this.videoDrawer.Tick += new System.EventHandler(this.videoDrawer_Tick);
 			// 
 			// MainForm
 			// 
@@ -120,8 +111,7 @@
         private System.Windows.Forms.PictureBox camView;
         private System.Windows.Forms.Label labelNoVideoSource;
 		private System.Windows.Forms.NotifyIcon trayIcon;
-		private System.Windows.Forms.Timer FpsDisplayer;
-		private System.Windows.Forms.Timer timerWriter;
+		private System.Windows.Forms.Timer videoDrawer;
     }
 }
 
