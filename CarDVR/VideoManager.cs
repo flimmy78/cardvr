@@ -18,7 +18,7 @@ namespace CarDVR
 		object framesCountKeeper = new object();
 
 		VideoCaptureDevice webcam = null;
-		Bitmap frame;
+		public Bitmap frame = null;
 		public object frameKeeper = new object();
 
 		VideoSplitter splitter = new VideoSplitter();
@@ -41,7 +41,7 @@ namespace CarDVR
 
 			timerWriter.Interval = 40;
 			timerWriter.Elapsed += new System.Timers.ElapsedEventHandler(timerWriter_Tick);
-			timerWriter.Enabled = true;
+			timerWriter.Enabled = false;
 		}
 
 
@@ -75,13 +75,18 @@ namespace CarDVR
 			}
 		}
 
+
 		void videoSource_NewFrame(object sender, NewFrameEventArgs eventArgs)
 		{
 			++totalFrames;
 
 			lock (frameKeeper)
 			{
-				frame = eventArgs.Frame; // (Bitmap)eventArgs.Frame.Clone();
+				if (frame != null)
+					frame.Dispose();
+
+				frame = (Bitmap)eventArgs.Frame.Clone();
+				
 
 				if (Program.settings.EnableRotate)
 				{
@@ -107,7 +112,7 @@ namespace CarDVR
 				}
 
 				if (NewFrame != null)
-					NewFrame(sender, new NewFrameEventArgs(frame)); //(Bitmap)frame.Clone()));
+					NewFrame(sender, new NewFrameEventArgs(frame));
 			}
 		}
 
@@ -115,6 +120,7 @@ namespace CarDVR
 		{
 			splitter.Start();
 			webcam.Start();
+			timerWriter.Enabled = true;
 
 			FpsDisplayer.Enabled = true;
 		}
@@ -122,10 +128,12 @@ namespace CarDVR
 		public void Stop()
 		{
 			FpsDisplayer.Enabled = false;
+			timerWriter.Enabled = false;
 
 			webcam.Stop();
 			webcam.WaitForStop();
 			splitter.Stop();
+			
 		}
 
 		private string MakeFrameString()
@@ -171,12 +179,11 @@ namespace CarDVR
 		{
 			lock (frameKeeper)
 			{
-				splitter.AddFrame(ref frame);
+				if (frame == null)
+					return;
 
-				//if (Visible)
-				//    camView.Image = frame;
+				splitter.AddFrame(frame);
 			}
 		}
-
 	}
 }

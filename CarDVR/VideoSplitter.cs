@@ -28,7 +28,7 @@ namespace CarDVR
 		#endregion
 
 		#region Operations
-		public void AddToCurrent(ref Bitmap frame)
+		public void AddToCurrent(Bitmap frame)
 		{
 			lock (aviWatchDog)
 			{
@@ -36,8 +36,9 @@ namespace CarDVR
 				{
 					currentAvi.AddFrame(frame);
 				}
-				catch (Exception)
+				catch (Exception e)
 				{
+					Reporter.NonSeriousError(e.Message);
 					// frame was not added (may be shutdown)
 				}
 			}
@@ -136,7 +137,7 @@ namespace CarDVR
 			++secondsElapsed;
 		}
 
-		public void AddFrame(ref Bitmap frame)
+		public void AddFrame(Bitmap frame)
 		{
 			if (frame == null)
 				return;
@@ -158,7 +159,7 @@ namespace CarDVR
 				}
 			}
 
-			avipair.AddToCurrent(ref frame);
+			avipair.AddToCurrent(frame);
 		}
 
 		public void Start()

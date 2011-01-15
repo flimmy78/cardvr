@@ -34,19 +34,27 @@ namespace CarDVR
 			if (parameters.Length <= 7)
 				return;
 
-			latitude = parameters[3] + " ";
-			latitude += parameters[2].Insert(2, " ");
-
-			longitude = parameters[5] + " ";
-			longitude += parameters[4].Insert(3, " ");
-			if (longitude.Contains(" 0"))
-				longitude = longitude.Remove(2, 1);
-
 			if (!int.TryParse(parameters[6], out fixTaken))
 				fixTaken = 0;
 
 			if (!int.TryParse(parameters[7], out fixedSatellites))
 				fixedSatellites = 0;
+
+			if (fixTaken == 1)
+			{
+				latitude = parameters[3] + " ";
+				string latitudeValue = parameters[2];
+				if (!string.IsNullOrEmpty(latitudeValue))
+					latitude += latitudeValue.Insert(2, " ");
+
+				longitude = parameters[5] + " ";
+				string longitudeValue = parameters[4];
+				if (!string.IsNullOrEmpty(longitudeValue))
+					longitude += longitudeValue.Insert(3, " ");
+
+				if (longitude.Contains(" 0"))
+					longitude = longitude.Remove(2, 1);
+			}
 		}
 
 		void ParseRMC(ref string[] parameters)
@@ -55,6 +63,12 @@ namespace CarDVR
 
 			if (parameters.Length > 7)
 				velocity = parameters[7];
+
+			if (string.IsNullOrEmpty(velocity))
+			{
+				speed = string.Empty;
+				return;
+			}
 
 			try
 			{

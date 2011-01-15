@@ -27,6 +27,9 @@ namespace CarDVR
 			InitializeComponent();
 
 			AfterInitializeComponent();
+
+			for (int t = 0; t < maxG; ++t)
+				g.Add(null);
 		}
 
 		private void VideoInitialization()
@@ -248,19 +251,44 @@ namespace CarDVR
 				MakeSmallSizedVideo();
 		}
 
+
+		const int maxG = 10;
+		int cnt = maxG-1;
+		List<Bitmap> g = new List<Bitmap>(maxG);
+	   
 		void videoManager_NewFrame(object sender, NewFrameEventArgs eventArgs)
 		{
 			lock (frameKeeper)
 			{
-				frame = (Bitmap)eventArgs.Frame.Clone();
+				cnt++;
+				cnt = cnt % maxG;
+
+				Bitmap b = g[cnt];
+
+				while (b != null && b.Tag != null)
+				{
+					cnt++;
+					cnt = cnt % maxG;
+					b = g[cnt];
+				}
+
+				if (b != null)
+					b.Dispose();
+
+				g[cnt] = (Bitmap)eventArgs.Frame.Clone();
 			}
-		}		
+		}
 
 		private void videoDrawer_Tick(object sender, EventArgs e)
 		{
 			lock (frameKeeper)
 			{
-				camView.Image = frame;
+				if (g[cnt] == null)
+					return;
+
+				camView.Image.Tag = null;
+				camView.Image = g[cnt];
+				camView.Image.Tag = 1;
 			}
 		}
 	}
