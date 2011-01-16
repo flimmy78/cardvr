@@ -286,9 +286,37 @@ namespace CarDVR
 				if (g[cnt] == null)
 					return;
 
-				camView.Image.Tag = null;
+				if (camView.Image != null)
+					camView.Image.Tag = null;
+
 				camView.Image = g[cnt];
 				camView.Image.Tag = 1;
+			}
+		}
+
+		private void buttonMaximize_Click(object sender, EventArgs e)
+		{
+			if (WindowState == FormWindowState.Normal)
+			{
+				buttonMaximize.Text = resNormalize;
+				this.WindowState = FormWindowState.Maximized;
+			}
+			else if (WindowState == FormWindowState.Maximized)
+			{
+				buttonMaximize.Text = resMaximize;
+				this.WindowState = FormWindowState.Normal;
+			}
+		}
+
+		private void MainForm_SizeChanged(object sender, EventArgs e)
+		{
+			if (WindowState == FormWindowState.Normal)
+			{
+				buttonMaximize.Text = resMaximize;
+			}
+			else if (WindowState == FormWindowState.Maximized)
+			{
+				buttonMaximize.Text = resNormalize;
 			}
 		}
 	}

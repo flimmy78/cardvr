@@ -14,6 +14,8 @@ namespace CarDVR
 		public static string resGpsNotConnected;
 		public static string resStop;
 		public static string resStart;
+		public static string resMaximize;
+		public static string resNormalize;
 
 		private void InitRussianResources()
 		{
@@ -24,6 +26,8 @@ namespace CarDVR
 			resGpsNotConnected = "GPS не подключен";
 			resStop = "Стоп";
 			resStart = "Старт";
+			resMaximize = "Развернуть";
+			resNormalize = "Вернуть";
 		}
 
 		private void InitEnglishResources()
@@ -35,6 +39,8 @@ namespace CarDVR
 			resGpsNotConnected = "GPS not connected";
 			resStop = "Stop";
 			resStart = "Start";
+			resMaximize = "Maximize";
+			resNormalize = "Normalize";
 		}			 
 			
 		private void InitDynamicResources(string language)

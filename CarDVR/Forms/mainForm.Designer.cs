@@ -37,6 +37,7 @@
 			this.labelNoVideoSource = new System.Windows.Forms.Label();
 			this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.videoDrawer = new System.Windows.Forms.Timer(this.components);
+			this.buttonMaximize = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.camView)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -84,11 +85,19 @@
 			// 
 			this.videoDrawer.Tick += new System.EventHandler(this.videoDrawer_Tick);
 			// 
+			// buttonMaximize
+			// 
+			resources.ApplyResources(this.buttonMaximize, "buttonMaximize");
+			this.buttonMaximize.Name = "buttonMaximize";
+			this.buttonMaximize.UseVisualStyleBackColor = true;
+			this.buttonMaximize.Click += new System.EventHandler(this.buttonMaximize_Click);
+			// 
 			// MainForm
 			// 
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.camView);
+			this.Controls.Add(this.buttonMaximize);
 			this.Controls.Add(this.labelNoVideoSource);
 			this.Controls.Add(this.buttonStartStop);
 			this.Controls.Add(this.buttonMinimize);
@@ -97,6 +106,7 @@
 			this.Name = "MainForm";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.mainForm_FormClosing);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+			this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
 			((System.ComponentModel.ISupportInitialize)(this.camView)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -112,6 +122,7 @@
         private System.Windows.Forms.Label labelNoVideoSource;
 		private System.Windows.Forms.NotifyIcon trayIcon;
 		private System.Windows.Forms.Timer videoDrawer;
+		private System.Windows.Forms.Button buttonMaximize;
     }
 }
 
