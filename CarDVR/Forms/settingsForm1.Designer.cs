@@ -250,6 +250,36 @@ namespace CarDVR.Forms {
             }
         }
         
+        public static System.Drawing.Point buttonSettings_Location {
+            get {
+                object obj = ResourceManager.GetObject("buttonSettings.Location", resourceCulture);
+                return ((System.Drawing.Point)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size buttonSettings_Size {
+            get {
+                object obj = ResourceManager.GetObject("buttonSettings.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        public static int buttonSettings_TabIndex {
+            get {
+                object obj = ResourceManager.GetObject("buttonSettings.TabIndex", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string buttonSettings_Text {
+            get {
+                return ResourceManager.GetString("buttonSettings.Text", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>

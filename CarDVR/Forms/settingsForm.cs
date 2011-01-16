@@ -393,6 +393,27 @@ namespace CarDVR
 
 			labelSelectedCodec.Text = item.Fcc;
 		}
+
+		private void buttonSettings_Click(object sender, EventArgs e)
+		{
+			string extDescription = "\n";
+
+			VideoSourceInfo camInfo = videoSource.SelectedItem as VideoSourceInfo;
+			if (camInfo != null && !string.IsNullOrEmpty(camInfo.Name))
+			{
+				try
+				{
+					Program.mainform.videoManager.ShowPpropertiesDialog(camInfo.Moniker, this);
+					return;
+				}
+				catch (WebcamPropertiesException err)
+				{
+					extDescription += err.Message;
+				}
+			}
+
+			Reporter.SeriousError("Can't get webcam moniker to display properties.\nBe sure your Webcam connected." + extDescription);
+		}
 	}
 
 	public class SettingsImpl

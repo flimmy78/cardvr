@@ -4,10 +4,11 @@ using System.Text;
 using AForge.Video.DirectShow;
 using System.Drawing;
 using AForge.Video;
+using System.Windows.Forms;
 
 namespace CarDVR
 {
-	class VideoManager
+	public class VideoManager
 	{
 		private static readonly Font framefont = new Font("Arial", 8, FontStyle.Bold);
 		private static readonly Point pointWhite = new Point(5, 5);
@@ -50,13 +51,36 @@ namespace CarDVR
 			return webcam != null && webcam.IsRunning;
 		}
 
+		public bool SureThatWebcamExists(string device)
+		{
+			try
+			{
+				FilterInfoCollection videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+
+				foreach (FilterInfo item in videoDevices)
+				{
+					if (item.MonikerString == device)
+						return true;
+				}
+			}
+			catch { }
+
+			return false;
+		}
+
 		public void Initialize()
 		{
 			// locking frameKeeper to prevent using video source
 			lock (frameKeeper)
 			{
+				// demension error protection in Writer timer
+				frame = null;
+
 				if (webcam != null)
 					webcam.NewFrame -= videoSource_NewFrame;
+
+				if (!SureThatWebcamExists(Program.settings.VideoSourceId))
+					throw new NoWebcamException();
 
 				webcam = new VideoCaptureDevice(Program.settings.VideoSourceId);
 				webcam.NewFrame += videoSource_NewFrame;
@@ -74,7 +98,6 @@ namespace CarDVR
 					timerWriter.Interval = 1000 / splitter.FPS;
 			}
 		}
-
 
 		void videoSource_NewFrame(object sender, NewFrameEventArgs eventArgs)
 		{
@@ -183,6 +206,18 @@ namespace CarDVR
 					return;
 
 				splitter.AddFrame(frame);
+			}
+		}
+
+		public void ShowPpropertiesDialog(string moniker, Form parent)
+		{
+			try
+			{
+				new VideoCaptureDevice(moniker).DisplayPropertyPage(parent.Handle);
+			}
+			catch
+			{
+				throw new WebcamPropertiesException();
 			}
 		}
 	}

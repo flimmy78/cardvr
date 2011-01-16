@@ -7,7 +7,7 @@ namespace CarDVR
 	/// <summary>
 	/// This interface create abstraction above different Gps Protocol formats
 	/// </summary>
-	interface GpsFormat
+	public interface GpsFormat
 	{
 		void Initialize();
 		void Parse(string line);

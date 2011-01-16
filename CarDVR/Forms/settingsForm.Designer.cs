@@ -65,6 +65,7 @@
 			this.tabStartOptions = new System.Windows.Forms.TabPage();
 			this.startWithFullWindowedVideo = new System.Windows.Forms.CheckBox();
 			this.tabVideoSource = new System.Windows.Forms.TabPage();
+			this.buttonSettings = new System.Windows.Forms.Button();
 			this.tabCompression = new System.Windows.Forms.TabPage();
 			this.labelSelectedCodec = new System.Windows.Forms.Label();
 			this.labelSelectedCodecTitle = new System.Windows.Forms.Label();
@@ -354,12 +355,20 @@
 			// tabVideoSource
 			// 
 			resources.ApplyResources(this.tabVideoSource, "tabVideoSource");
+			this.tabVideoSource.Controls.Add(this.buttonSettings);
 			this.tabVideoSource.Controls.Add(this.comboResolution);
 			this.tabVideoSource.Controls.Add(this.labelVideosource);
 			this.tabVideoSource.Controls.Add(this.videoSource);
 			this.tabVideoSource.Controls.Add(this.labelResolution);
 			this.tabVideoSource.Name = "tabVideoSource";
 			this.tabVideoSource.UseVisualStyleBackColor = true;
+			// 
+			// buttonSettings
+			// 
+			resources.ApplyResources(this.buttonSettings, "buttonSettings");
+			this.buttonSettings.Name = "buttonSettings";
+			this.buttonSettings.UseVisualStyleBackColor = true;
+			this.buttonSettings.Click += new System.EventHandler(this.buttonSettings_Click);
 			// 
 			// tabCompression
 			// 
@@ -498,5 +507,6 @@
 		private System.Windows.Forms.Label labelSelectedCodecTitle;
 		private System.Windows.Forms.Label labelSelectedCodec;
 		private System.Windows.Forms.CheckBox startWithFullWindowedVideo;
+		private System.Windows.Forms.Button buttonSettings;
     }
 }

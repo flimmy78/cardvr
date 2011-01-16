@@ -18,7 +18,7 @@ namespace CarDVR
 		private AutostartDelayer autostartDelayer;
 
 		static GpsReceiver gps = new GpsReceiver();
-		VideoManager videoManager = new VideoManager(gps);
+		public VideoManager videoManager = new VideoManager(gps);
 
 		public MainForm()
 		{
@@ -32,17 +32,40 @@ namespace CarDVR
 				g.Add(null);
 		}
 
+		private void SafeVideoManagerInitialize()
+		{
+			try
+			{
+				videoManager.Initialize();
+			}
+			catch (NoWebcamException)
+			{
+				Reporter.SeriousError("Current webcam is not avalizble.");
+			}
+			catch (Exception e)
+			{
+				Reporter.SeriousError(e.Message);
+			}
+		}
+		
 		private void VideoInitialization()
 		{
-			videoManager.Initialize();
+			try
+			{
+				videoManager.Initialize();
 
-			if (Program.settings.AutostartRecording && !string.IsNullOrEmpty(Program.settings.VideoSource))
-				StartStopRecording();
+				if (Program.settings.AutostartRecording && !string.IsNullOrEmpty(Program.settings.VideoSource))
+					StartStopRecording();
+			}
+			catch
+			{
+			}
 		}
 
 		private bool IsWebCamAvaliable()
 		{
-			if (!string.IsNullOrEmpty(Program.settings.VideoSource))
+			if (!string.IsNullOrEmpty(Program.settings.VideoSource) && 
+				videoManager.SureThatWebcamExists(Program.settings.VideoSourceId))
 			{
 				ButtonStartStopEnable();
 				HideNoVideosourceWarning();
@@ -79,10 +102,17 @@ namespace CarDVR
 					if (isRecording)
 						StopRecording();
 
-					videoManager.Initialize();
+					try
+					{
+						videoManager.Initialize();
 
-					if (isRecording)
-						StartRecording();
+						if (isRecording)
+							StartRecording();
+					}
+					catch
+					{
+						Reporter.SeriousError("Current webcam is not avalizble.");
+					}
 				}
 
 				InitializeGps();

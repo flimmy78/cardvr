@@ -211,6 +211,12 @@
   <data name="labelDegrees.Text" xml:space="preserve">
     <value>град</value>
   </data>
+  <data name="gbAutostart.Size" type="System.Drawing.Size, System.Drawing">
+    <value>258, 70</value>
+  </data>
+  <data name="gbAutostart.Text" xml:space="preserve">
+    <value>настройки записи</value>
+  </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 48</value>
   </data>
@@ -225,12 +231,6 @@
   </data>
   <data name="outputRate.Location" type="System.Drawing.Point, System.Drawing">
     <value>108, 44</value>
-  </data>
-  <data name="gbAutostart.Size" type="System.Drawing.Size, System.Drawing">
-    <value>258, 70</value>
-  </data>
-  <data name="gbAutostart.Text" xml:space="preserve">
-    <value>настройки записи</value>
   </data>
   <data name="labelDelayAutostart.Size" type="System.Drawing.Size, System.Drawing">
     <value>205, 13</value>
@@ -250,17 +250,23 @@
   <data name="labelLanguage.Text" xml:space="preserve">
     <value>язык интерфейса</value>
   </data>
+  <data name="tabStartOptions.Text" xml:space="preserve">
+    <value>Настройки запуск</value>
+  </data>
   <data name="startWithFullWindowedVideo.Size" type="System.Drawing.Size, System.Drawing">
     <value>202, 17</value>
   </data>
   <data name="startWithFullWindowedVideo.Text" xml:space="preserve">
     <value>запускать с полно-оконным видео</value>
   </data>
-  <data name="tabStartOptions.Text" xml:space="preserve">
-    <value>Настройки запуск</value>
-  </data>
   <data name="tabVideoSource.Text" xml:space="preserve">
     <value>Источник</value>
+  </data>
+  <data name="buttonSettings.Text" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="tabCompression.Text" xml:space="preserve">
+    <value>Сжатие</value>
   </data>
   <data name="labelSelectedCodec.Location" type="System.Drawing.Point, System.Drawing">
     <value>117, 197</value>
@@ -276,9 +282,6 @@
   </data>
   <data name="labelSelectedCodecTitle.Text" xml:space="preserve">
     <value>выбранный кодек:</value>
-  </data>
-  <data name="tabCompression.Text" xml:space="preserve">
-    <value>Сжатие</value>
   </data>
   <data name="tabOutput.Text" xml:space="preserve">
     <value>Видео</value>

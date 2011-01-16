@@ -19,6 +19,10 @@ namespace CarDVR
 	{
 	}
 
+	class WebcamPropertiesException : Exception
+	{
+	}
+
 	// Simple error reporter / error holder
 	// 
 	// Serious errors always be shown in MessageBox,
@@ -41,7 +45,7 @@ namespace CarDVR
 
 		public static void SeriousError(string text)
 		{
-			MessageBox.Show(text, "Error", MessageBoxButtons.OK);
+			MessageBox.Show(text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 
 		private static void InitializeErrorCleaner()

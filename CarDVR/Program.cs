@@ -6,7 +6,7 @@ namespace CarDVR
 {
 	static class Program
 	{
-		static MainForm mainform;
+		public static MainForm mainform;
 		public static SettingsImpl settings = new SettingsImpl();
 
 		class MyAppContext : ApplicationContext

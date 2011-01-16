@@ -11,7 +11,6 @@ namespace CarDVR
 {
 	public partial class MainForm : Form
 	{
-		Bitmap frame = null;
 		object frameKeeper = new object();
 
 		private void SetLocalization(string language)

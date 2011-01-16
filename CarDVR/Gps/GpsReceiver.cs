@@ -6,7 +6,7 @@ namespace CarDVR
 	/// <summary>
 	/// Receives info from GPS device. Only NMEA format implemented.
 	/// </summary>
-	class GpsReceiver
+	public class GpsReceiver
 	{
 		public GpsFormat gps = new NmeaImpl();
 		public GpsState State { get; set; }
