@@ -64,8 +64,8 @@
 			// 
 			// camView
 			// 
-			this.camView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			resources.ApplyResources(this.camView, "camView");
+			this.camView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.camView.Name = "camView";
 			this.camView.TabStop = false;
 			this.camView.Click += new System.EventHandler(this.camView_Click);

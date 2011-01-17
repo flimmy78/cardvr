@@ -103,6 +103,12 @@ namespace CarDVR
 			}
 		}
 		#endregion
+
+		public void DisposeAll()
+		{
+			currentAvi.Dispose();
+			preparedAvi.Dispose();
+		}
 	}
 
 	class VideoSplitter
@@ -174,9 +180,8 @@ namespace CarDVR
 
 		public void Stop()
 		{
-			timerSplit.Stop();
-			CloseCurrentAvi();
-			ClosePreparedAvi();
+			timerSplit.Enabled = false;
+			CloseAll();
 		}
 
 		private void PrepareNewMovie()
@@ -199,6 +204,11 @@ namespace CarDVR
 			avipair.CloseAll();
 		}
 
+		public void DisposeAll()
+		{
+			avipair.DisposeAll();
+		}
+
 		private void StartNewMovie(int oneOfAvi)
 		{
 			// if preparing, next avi will started after 10 seconds
@@ -210,6 +220,8 @@ namespace CarDVR
 			try
 			{
 				AVIWriter avi = oneOfAvi == 0 ? avipair.GetCurrent() : avipair.GetPrepared();
+
+
 				avi.Open(filename, VideoSize.Width, VideoSize.Height);
 			}
 			catch (Exception e)

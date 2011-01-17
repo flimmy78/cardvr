@@ -34,4 +34,17 @@ namespace CarDVR
 			Application.Run(new MyAppContext());
 		}
 	}
+
+	public class Logger
+	{
+		static public void log(string s)
+		{
+			//using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"CarDvr.log", true))
+			//{
+			//    file.Write(DateTime.Now.ToString() + ": ");
+			//    file.WriteLine(s);
+			//}
+		}
+	}
+
 }

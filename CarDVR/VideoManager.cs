@@ -46,6 +46,11 @@ namespace CarDVR
 		}
 
 
+		public void Close()
+		{
+			splitter.DisposeAll();
+		}
+		
 		public bool IsRecording()
 		{
 			return webcam != null && webcam.IsRunning;
@@ -155,8 +160,7 @@ namespace CarDVR
 
 			webcam.Stop();
 			webcam.WaitForStop();
-			splitter.Stop();
-			
+			splitter.Stop();			
 		}
 
 		private string MakeFrameString()

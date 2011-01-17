@@ -180,7 +180,7 @@ namespace CarDVR
 			ButtonStartStopEnable();
 		}
 
-		private void StopRecording()
+		public void StopRecording()
 		{
 			if (recordingState == RecordingState.Stopped)
 				return;
@@ -221,7 +221,11 @@ namespace CarDVR
 
 		private void mainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			StopRecording();
+			if (videoManager.IsRecording())
+			{
+				StopRecording();
+				videoManager.Close();
+			}
 		}
 
 		private void buttonMinimize_Click(object sender, EventArgs e)
@@ -288,6 +292,9 @@ namespace CarDVR
 	   
 		void videoManager_NewFrame(object sender, NewFrameEventArgs eventArgs)
 		{
+			if (!Visible)
+				return;
+
 			lock (frameKeeper)
 			{
 				cnt++;
@@ -311,6 +318,9 @@ namespace CarDVR
 
 		private void videoDrawer_Tick(object sender, EventArgs e)
 		{
+			if (!Visible)
+				return;
+
 			lock (frameKeeper)
 			{
 				if (g[cnt] == null)
