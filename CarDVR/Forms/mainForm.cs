@@ -111,7 +111,7 @@ namespace CarDVR
 					}
 					catch
 					{
-						Reporter.SeriousError("Current webcam is not avalizble.");
+						Reporter.SeriousError("Current webcam is not avaliable.");
 					}
 				}
 
