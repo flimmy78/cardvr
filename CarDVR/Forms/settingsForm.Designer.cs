@@ -273,7 +273,7 @@
 			this.outputRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.outputRate.FormattingEnabled = true;
 			this.outputRate.Items.AddRange(new object[] {
-            ((object)(resources.GetObject("outputRate.Items"))),
+            //((object)(resources.GetObject("outputRate.Items"))),
             ((object)(resources.GetObject("outputRate.Items1"))),
             ((object)(resources.GetObject("outputRate.Items2"))),
             ((object)(resources.GetObject("outputRate.Items3"))),

@@ -40,9 +40,9 @@ namespace CarDVR
 			FpsDisplayer.Elapsed += new System.Timers.ElapsedEventHandler(FpsDisplayer_Tick);
 			FpsDisplayer.Enabled = false;
 
-			timerWriter.Interval = 40;
-			timerWriter.Elapsed += new System.Timers.ElapsedEventHandler(timerWriter_Tick);
-			timerWriter.Enabled = false;
+			//timerWriter.Interval = 40;
+			//timerWriter.Elapsed += new System.Timers.ElapsedEventHandler(timerWriter_Tick);
+			//timerWriter.Enabled = false;
 		}
 
 
@@ -87,20 +87,25 @@ namespace CarDVR
 				if (!SureThatWebcamExists(Program.settings.VideoSourceId))
 					throw new NoWebcamException();
 
+				int fps = Program.settings.OutputRateFps;
+
+				if (fps > Program.settings.VideoFps)
+					fps = Program.settings.VideoFps;
+				
 				webcam = new VideoCaptureDevice(Program.settings.VideoSourceId);
 				webcam.NewFrame += videoSource_NewFrame;
-				webcam.DesiredFrameRate = Program.settings.VideoFps;
+				webcam.DesiredFrameRate = fps;
 				webcam.DesiredFrameSize = new Size(Program.settings.VideoWidth, Program.settings.VideoHeight);
 
 				splitter.Codec = Program.settings.Codec;
-				splitter.FPS = Program.settings.OutputRateFps != 0 ? Program.settings.OutputRateFps : Program.settings.VideoFps;
+				splitter.FPS = fps;
 				splitter.VideoSize = Program.settings.GetVideoSize();
 				splitter.FileDuration = Program.settings.AviDuration;
 				splitter.NumberOfFiles = Program.settings.AmountOfFiles;
 				splitter.Path = Program.settings.PathForVideo;
 
-				if (splitter.FPS > 0)
-					timerWriter.Interval = 1000 / splitter.FPS;
+				//if (splitter.FPS > 0)
+				//    timerWriter.Interval = 1000 / splitter.FPS;
 			}
 		}
 
@@ -139,6 +144,10 @@ namespace CarDVR
 					graphics.DrawString(frameString, framefont, Brushes.White, pointWhite);
 				}
 
+				splitter.AddFrame(frame);
+
+				++writtenFrames;
+
 				if (NewFrame != null)
 					NewFrame(sender, new NewFrameEventArgs(frame));
 			}
@@ -158,7 +167,7 @@ namespace CarDVR
 			FpsDisplayer.Enabled = false;
 			timerWriter.Enabled = false;
 
-			webcam.Stop();
+			webcam.SignalToStop();
 			webcam.WaitForStop();
 			splitter.Stop();			
 		}
@@ -202,15 +211,18 @@ namespace CarDVR
 			}
 		}
 
+		public int writtenFrames = 0;
+
 		private void timerWriter_Tick(object sender, EventArgs e)
 		{
-			lock (frameKeeper)
-			{
-				if (frame == null)
-					return;
+			//lock (frameKeeper)
+			//{
+			//    if (frame == null)
+			//        return;
 
-				splitter.AddFrame(frame);
-			}
+			//    splitter.AddFrame(frame);
+			//    ++writtenFrames;
+			//}
 		}
 
 		public void ShowPpropertiesDialog(string moniker, Form parent)

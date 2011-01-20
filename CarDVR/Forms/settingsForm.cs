@@ -367,10 +367,14 @@ namespace CarDVR
 
 			if (videoSource.SelectedItem != null)
 			{
-				VideoCaptureDevice vs = new VideoCaptureDevice((videoSource.SelectedItem as VideoSourceInfo).Moniker);
+				VideoSourceInfo webcam = videoSource.SelectedItem as VideoSourceInfo;
 
-				foreach (VideoCapabilities cap in vs.VideoCapabilities)
-					comboResolution.Items.Add(new CapInfo(cap.FrameSize.Width, cap.FrameSize.Height, cap.MaxFrameRate));
+				if (webcam != null)
+				{
+					VideoCaptureDevice vs = new VideoCaptureDevice(webcam.Moniker);
+					foreach (VideoCapabilities cap in vs.VideoCapabilities)
+						comboResolution.Items.Add(new CapInfo(cap.FrameSize.Width, cap.FrameSize.Height, cap.MaxFrameRate));
+				}
 			}
 			comboResolution.EndUpdate();
 		}
