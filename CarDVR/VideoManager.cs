@@ -146,7 +146,7 @@ namespace CarDVR
 
 				splitter.AddFrame(frame);
 
-				++writtenFrames;
+//				++writtenFrames;
 
 				if (NewFrame != null)
 					NewFrame(sender, new NewFrameEventArgs(frame));
@@ -211,7 +211,7 @@ namespace CarDVR
 			}
 		}
 
-		public int writtenFrames = 0;
+		//public int writtenFrames = 0;
 
 		private void timerWriter_Tick(object sender, EventArgs e)
 		{

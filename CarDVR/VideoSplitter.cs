@@ -14,7 +14,10 @@ namespace CarDVR
 		private AVIWriter currentAvi = new AVIWriter();
 		private AVIWriter preparedAvi = new AVIWriter();
 		private object aviWatchDog = new object();
-
+		
+		public string FileName { get; set; }
+		public string PreparedFileName { get; set; }
+		
 		#region Getters
 		public AVIWriter GetCurrent()
 		{
@@ -51,6 +54,7 @@ namespace CarDVR
 				AVIWriter tmp = currentAvi;
 				currentAvi = preparedAvi;
 				preparedAvi = tmp;
+				FileName = PreparedFileName;
 			}
 		}
 		#endregion
@@ -104,10 +108,53 @@ namespace CarDVR
 		}
 		#endregion
 
+		System.Timers.Timer disposeTimer = new System.Timers.Timer();
 		public void DisposeAll()
 		{
+			CloseAll();
+
 			currentAvi.Dispose();
 			preparedAvi.Dispose();
+
+			everythingisgood = false;
+			disposeTimer.Interval = 1000;
+			disposeTimer.Elapsed += new ElapsedEventHandler(disposeTimer_Elapsed);
+			disposeTimer.Enabled = true;
+
+			while (true)
+			{
+				lock (this)
+				{
+					if (everythingisgood)
+						break;
+				}
+
+				Thread.Sleep(1000);
+			}
+
+			disposeTimer.Enabled = false;
+		}
+
+		bool everythingisgood = false;
+
+		void disposeTimer_Elapsed(object sender, ElapsedEventArgs e)
+		{
+			lock (this)
+			{
+				if (everythingisgood)
+					return;
+
+ 				FileInfo info = new FileInfo(FileName);
+				try
+				{
+					FileStream fs = info.OpenWrite();
+					fs.Close();
+					everythingisgood = true;
+				}
+				catch
+				{
+				}
+			}
 		}
 	}
 
@@ -126,7 +173,7 @@ namespace CarDVR
 		public string Codec { get; set; }
 		public int FPS { get; set; }
 		public Size VideoSize { get; set; }
-
+		
 		public VideoSplitter()
 		{
 			// default settings
@@ -221,6 +268,10 @@ namespace CarDVR
 			{
 				AVIWriter avi = oneOfAvi == 0 ? avipair.GetCurrent() : avipair.GetPrepared();
 
+				if (oneOfAvi == 0)
+					avipair.FileName = filename;
+				else
+					avipair.PreparedFileName = filename;
 
 				avi.Open(filename, VideoSize.Width, VideoSize.Height);
 			}
