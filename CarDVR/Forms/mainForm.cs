@@ -236,7 +236,7 @@ namespace CarDVR
 
 		private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			Application.Exit();
+            Program.context.ExitThread();
 		}
 
 		private void trayIcon_MouseClick(object sender, MouseEventArgs e)
