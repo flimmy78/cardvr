@@ -178,6 +178,8 @@ namespace CarDVR
 			delayBeforeStart.Value = Program.settings.DelayBeforeStart;
 			outputRate.SelectedItem = Program.settings.OutputRateFps;
 			comboLanguage.SelectedItem = Program.settings.Language;
+			labelTestColor.ForeColor = Color.FromArgb(Program.settings.InterfaceForeColor);
+			labelTestColor.BackColor = Color.FromArgb(Program.settings.InterfaceBackgroundColor);
 		}
 
 		public void ApplyFormToSettings()
@@ -236,6 +238,9 @@ namespace CarDVR
 				if (ci != null)
 					Program.settings.Codec = ci.Fcc;
 			}
+
+			Program.settings.InterfaceForeColor = labelTestColor.ForeColor.ToArgb();
+			Program.settings.InterfaceBackgroundColor = labelTestColor.BackColor.ToArgb();
 		}
 
 		class CodecInfo
@@ -418,6 +423,26 @@ namespace CarDVR
 
 			Reporter.SeriousError("Can't get webcam moniker to display properties.\nBe sure your Webcam connected." + extDescription);
 		}
+
+		private void buttonTextColor_Click(object sender, EventArgs e)
+		{
+			colorDialog.Color = labelTestColor.ForeColor;
+
+			if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+				return;
+
+			labelTestColor.ForeColor = colorDialog.Color;
+		}
+
+		private void buttonBackColor_Click(object sender, EventArgs e)
+		{
+			colorDialog.Color = labelTestColor.BackColor;
+
+			if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+				return;
+
+			labelTestColor.BackColor = colorDialog.Color;
+		}
 	}
 
 	public class SettingsImpl
@@ -454,6 +479,8 @@ namespace CarDVR
 		public string Language { get; set; }
 		public string Codec { get; set; }
 		public bool StartWithFullWindowedVideo { get; set; }
+		public int InterfaceForeColor { get; set; }
+		public int InterfaceBackgroundColor { get; set; }
 
 		/// <summary>
 		/// Initialization constructor
@@ -521,6 +548,13 @@ namespace CarDVR
 
 			if (Program.settings.AmountOfFiles == 0)
 				Program.settings.AmountOfFiles = 10;
+
+			if (Program.settings.InterfaceBackgroundColor == 0)
+				Program.settings.InterfaceBackgroundColor = Color.FromName("Control").ToArgb();
+
+			if (Program.settings.InterfaceForeColor == 0)
+				Program.settings.InterfaceForeColor = Color.Black.ToArgb();
+
 
 			return true;
 		}

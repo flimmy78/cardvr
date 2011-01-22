@@ -146,6 +146,13 @@ namespace CarDVR.Forms {
             }
         }
         
+        public static System.Windows.Forms.FlatStyle button1_FlatStyle {
+            get {
+                object obj = ResourceManager.GetObject("button1.FlatStyle", resourceCulture);
+                return ((System.Windows.Forms.FlatStyle)(obj));
+            }
+        }
+        
         public static System.Drawing.Point button1_Location {
             get {
                 object obj = ResourceManager.GetObject("button1.Location", resourceCulture);
@@ -176,10 +183,61 @@ namespace CarDVR.Forms {
             }
         }
         
+        public static System.Windows.Forms.FlatStyle buttonBackColor_FlatStyle {
+            get {
+                object obj = ResourceManager.GetObject("buttonBackColor.FlatStyle", resourceCulture);
+                return ((System.Windows.Forms.FlatStyle)(obj));
+            }
+        }
+        
+        public static System.Windows.Forms.ImeMode buttonBackColor_ImeMode {
+            get {
+                object obj = ResourceManager.GetObject("buttonBackColor.ImeMode", resourceCulture);
+                return ((System.Windows.Forms.ImeMode)(obj));
+            }
+        }
+        
+        public static System.Drawing.Point buttonBackColor_Location {
+            get {
+                object obj = ResourceManager.GetObject("buttonBackColor.Location", resourceCulture);
+                return ((System.Drawing.Point)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size buttonBackColor_Size {
+            get {
+                object obj = ResourceManager.GetObject("buttonBackColor.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        public static int buttonBackColor_TabIndex {
+            get {
+                object obj = ResourceManager.GetObject("buttonBackColor.TabIndex", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to back.
+        /// </summary>
+        public static string buttonBackColor_Text {
+            get {
+                return ResourceManager.GetString("buttonBackColor.Text", resourceCulture);
+            }
+        }
+        
         public static System.Windows.Forms.AnchorStyles buttonBrowse_Anchor {
             get {
                 object obj = ResourceManager.GetObject("buttonBrowse.Anchor", resourceCulture);
                 return ((System.Windows.Forms.AnchorStyles)(obj));
+            }
+        }
+        
+        public static System.Windows.Forms.FlatStyle buttonBrowse_FlatStyle {
+            get {
+                object obj = ResourceManager.GetObject("buttonBrowse.FlatStyle", resourceCulture);
+                return ((System.Windows.Forms.FlatStyle)(obj));
             }
         }
         
@@ -220,6 +278,13 @@ namespace CarDVR.Forms {
             }
         }
         
+        public static System.Windows.Forms.FlatStyle buttonOk_FlatStyle {
+            get {
+                object obj = ResourceManager.GetObject("buttonOk.FlatStyle", resourceCulture);
+                return ((System.Windows.Forms.FlatStyle)(obj));
+            }
+        }
+        
         public static System.Drawing.Point buttonOk_Location {
             get {
                 object obj = ResourceManager.GetObject("buttonOk.Location", resourceCulture);
@@ -250,6 +315,13 @@ namespace CarDVR.Forms {
             }
         }
         
+        public static System.Windows.Forms.FlatStyle buttonSettings_FlatStyle {
+            get {
+                object obj = ResourceManager.GetObject("buttonSettings.FlatStyle", resourceCulture);
+                return ((System.Windows.Forms.FlatStyle)(obj));
+            }
+        }
+        
         public static System.Drawing.Point buttonSettings_Location {
             get {
                 object obj = ResourceManager.GetObject("buttonSettings.Location", resourceCulture);
@@ -277,6 +349,50 @@ namespace CarDVR.Forms {
         public static string buttonSettings_Text {
             get {
                 return ResourceManager.GetString("buttonSettings.Text", resourceCulture);
+            }
+        }
+        
+        public static System.Windows.Forms.FlatStyle buttonTextColor_FlatStyle {
+            get {
+                object obj = ResourceManager.GetObject("buttonTextColor.FlatStyle", resourceCulture);
+                return ((System.Windows.Forms.FlatStyle)(obj));
+            }
+        }
+        
+        public static System.Drawing.Point buttonTextColor_Location {
+            get {
+                object obj = ResourceManager.GetObject("buttonTextColor.Location", resourceCulture);
+                return ((System.Drawing.Point)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size buttonTextColor_Size {
+            get {
+                object obj = ResourceManager.GetObject("buttonTextColor.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        public static int buttonTextColor_TabIndex {
+            get {
+                object obj = ResourceManager.GetObject("buttonTextColor.TabIndex", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to text.
+        /// </summary>
+        public static string buttonTextColor_Text {
+            get {
+                return ResourceManager.GetString("buttonTextColor.Text", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Point colorDialog_TrayLocation {
+            get {
+                object obj = ResourceManager.GetObject("colorDialog.TrayLocation", resourceCulture);
+                return ((System.Drawing.Point)(obj));
             }
         }
         
@@ -627,6 +743,43 @@ namespace CarDVR.Forms {
             }
         }
         
+        public static bool labelColors_AutoSize {
+            get {
+                object obj = ResourceManager.GetObject("labelColors.AutoSize", resourceCulture);
+                return ((bool)(obj));
+            }
+        }
+        
+        public static System.Drawing.Point labelColors_Location {
+            get {
+                object obj = ResourceManager.GetObject("labelColors.Location", resourceCulture);
+                return ((System.Drawing.Point)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size labelColors_Size {
+            get {
+                object obj = ResourceManager.GetObject("labelColors.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        public static int labelColors_TabIndex {
+            get {
+                object obj = ResourceManager.GetObject("labelColors.TabIndex", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to colors.
+        /// </summary>
+        public static string labelColors_Text {
+            get {
+                return ResourceManager.GetString("labelColors.Text", resourceCulture);
+            }
+        }
+        
         public static bool labelDegrees_AutoSize {
             get {
                 object obj = ResourceManager.GetObject("labelDegrees.AutoSize", resourceCulture);
@@ -974,6 +1127,50 @@ namespace CarDVR.Forms {
             }
         }
         
+        public static System.Windows.Forms.DockStyle labelTestColor_Dock {
+            get {
+                object obj = ResourceManager.GetObject("labelTestColor.Dock", resourceCulture);
+                return ((System.Windows.Forms.DockStyle)(obj));
+            }
+        }
+        
+        public static System.Drawing.Point labelTestColor_Location {
+            get {
+                object obj = ResourceManager.GetObject("labelTestColor.Location", resourceCulture);
+                return ((System.Drawing.Point)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size labelTestColor_Size {
+            get {
+                object obj = ResourceManager.GetObject("labelTestColor.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        public static int labelTestColor_TabIndex {
+            get {
+                object obj = ResourceManager.GetObject("labelTestColor.TabIndex", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sample.
+        /// </summary>
+        public static string labelTestColor_Text {
+            get {
+                return ResourceManager.GetString("labelTestColor.Text", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.ContentAlignment labelTestColor_TextAlign {
+            get {
+                object obj = ResourceManager.GetObject("labelTestColor.TextAlign", resourceCulture);
+                return ((System.Drawing.ContentAlignment)(obj));
+            }
+        }
+        
         public static bool labelVideosource_AutoSize {
             get {
                 object obj = ResourceManager.GetObject("labelVideosource.AutoSize", resourceCulture);
@@ -1067,13 +1264,6 @@ namespace CarDVR.Forms {
             }
         }
         
-        public static int outputRate_Items5 {
-            get {
-                object obj = ResourceManager.GetObject("outputRate.Items5", resourceCulture);
-                return ((int)(obj));
-            }
-        }
-        
         public static System.Drawing.Point outputRate_Location {
             get {
                 object obj = ResourceManager.GetObject("outputRate.Location", resourceCulture);
@@ -1091,6 +1281,27 @@ namespace CarDVR.Forms {
         public static int outputRate_TabIndex {
             get {
                 object obj = ResourceManager.GetObject("outputRate.TabIndex", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        public static System.Drawing.Point panel1_Location {
+            get {
+                object obj = ResourceManager.GetObject("panel1.Location", resourceCulture);
+                return ((System.Drawing.Point)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size panel1_Size {
+            get {
+                object obj = ResourceManager.GetObject("panel1.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        public static int panel1_TabIndex {
+            get {
+                object obj = ResourceManager.GetObject("panel1.TabIndex", resourceCulture);
                 return ((int)(obj));
             }
         }
@@ -1358,7 +1569,7 @@ namespace CarDVR.Forms {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Localization.
+        ///   Looks up a localized string similar to Interface.
         /// </summary>
         public static string tabLocalization_Text {
             get {

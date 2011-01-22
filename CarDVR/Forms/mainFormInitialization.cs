@@ -62,8 +62,10 @@ namespace CarDVR
 			else
 				VideoInitialization();
 
-			if (!Program.settings.StartMinimized)
-				Show();
+			if (Program.settings.StartMinimized)
+				this.WindowState = FormWindowState.Minimized;
+
+			SetColor(this, Color.FromArgb(Program.settings.InterfaceForeColor), Color.FromArgb(Program.settings.InterfaceBackgroundColor));
 		}
 
 		private string GetProgramVersion()

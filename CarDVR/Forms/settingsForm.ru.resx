@@ -287,7 +287,31 @@
     <value>Видео</value>
   </data>
   <data name="tabLocalization.Text" xml:space="preserve">
-    <value>Локализация</value>
+    <value>Интерфейс</value>
+  </data>
+  <data name="buttonBackColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>315, 52</value>
+  </data>
+  <data name="buttonBackColor.Text" xml:space="preserve">
+    <value>фон</value>
+  </data>
+  <data name="labelColors.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 13</value>
+  </data>
+  <data name="labelColors.Text" xml:space="preserve">
+    <value>цвета</value>
+  </data>
+  <data name="buttonTextColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>256, 52</value>
+  </data>
+  <data name="buttonTextColor.Text" xml:space="preserve">
+    <value>текст</value>
+  </data>
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>119, 51</value>
+  </data>
+  <data name="labelTestColor.Text" xml:space="preserve">
+    <value>Пример</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

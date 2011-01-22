@@ -84,6 +84,7 @@ namespace CarDVR
 			{
 				settingsForm.LoadFromRegistry();
 				settingsForm.ApplySettingsToForm();
+				SetColor(settingsForm, Color.FromArgb(Program.settings.InterfaceForeColor), Color.FromArgb(Program.settings.InterfaceBackgroundColor));
 
 				if (settingsForm.ShowDialog() == DialogResult.Cancel)
 					return;
@@ -214,12 +215,7 @@ namespace CarDVR
 			}
 		}
 
-		private void buttonStartStop_Click(object sender, EventArgs e)
-		{
-			StartStopRecording();
-		}
-
-		private void mainForm_FormClosing(object sender, FormClosingEventArgs e)
+		private void StopRecordingAndWaitForFileClosing()
 		{
 			if (videoManager.IsRecording())
 			{
@@ -228,21 +224,19 @@ namespace CarDVR
 			}
 		}
 
+		private void buttonStartStop_Click(object sender, EventArgs e)
+		{
+			StartStopRecording();
+		}
+
+		private void mainForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			StopRecordingAndWaitForFileClosing();
+		}
+
 		private void buttonMinimize_Click(object sender, EventArgs e)
 		{
-			trayIcon.Visible = true;
-			this.Hide();
-		}
-
-		private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
-		{
-            Program.context.ExitThread();
-		}
-
-		private void trayIcon_MouseClick(object sender, MouseEventArgs e)
-		{
-			this.Show();
-			trayIcon.Visible = false;
+			this.WindowState = FormWindowState.Minimized;
 		}
 
 		private void AutostartDelayer_Handler(object sender, EventArgs e)
@@ -358,6 +352,26 @@ namespace CarDVR
 			{
 				buttonMaximize.Text = resNormalize;
 			}
+		}
+
+		void SetColor(Control control, Color foreColor, Color backColor)
+		{
+			foreach (Control c in control.Controls)
+			{
+				SetColor(c, foreColor, backColor);
+			}
+			try
+			{
+				control.ForeColor = foreColor;
+				control.BackColor = backColor;
+			}
+			catch { }
+		}
+
+		private void buttonExit_Click(object sender, EventArgs e)
+		{
+			StopRecordingAndWaitForFileClosing();
+			this.Close();
 		}
 	}
 }

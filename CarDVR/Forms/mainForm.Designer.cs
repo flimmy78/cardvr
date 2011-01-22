@@ -35,9 +35,9 @@
 			this.buttonStartStop = new System.Windows.Forms.Button();
 			this.camView = new System.Windows.Forms.PictureBox();
 			this.labelNoVideoSource = new System.Windows.Forms.Label();
-			this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.videoDrawer = new System.Windows.Forms.Timer(this.components);
 			this.buttonMaximize = new System.Windows.Forms.Button();
+			this.buttonExit = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.camView)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -73,13 +73,8 @@
 			// labelNoVideoSource
 			// 
 			resources.ApplyResources(this.labelNoVideoSource, "labelNoVideoSource");
-			this.labelNoVideoSource.ForeColor = System.Drawing.Color.Red;
+			this.labelNoVideoSource.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.labelNoVideoSource.Name = "labelNoVideoSource";
-			// 
-			// trayIcon
-			// 
-			resources.ApplyResources(this.trayIcon, "trayIcon");
-			this.trayIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.trayIcon_MouseClick);
 			// 
 			// videoDrawer
 			// 
@@ -92,11 +87,20 @@
 			this.buttonMaximize.UseVisualStyleBackColor = true;
 			this.buttonMaximize.Click += new System.EventHandler(this.buttonMaximize_Click);
 			// 
+			// buttonExit
+			// 
+			resources.ApplyResources(this.buttonExit, "buttonExit");
+			this.buttonExit.Name = "buttonExit";
+			this.buttonExit.UseVisualStyleBackColor = true;
+			this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
+			// 
 			// MainForm
 			// 
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.BackColor = System.Drawing.SystemColors.Control;
 			this.Controls.Add(this.camView);
+			this.Controls.Add(this.buttonExit);
 			this.Controls.Add(this.buttonMaximize);
 			this.Controls.Add(this.labelNoVideoSource);
 			this.Controls.Add(this.buttonStartStop);
@@ -105,7 +109,6 @@
 			this.MinimizeBox = false;
 			this.Name = "MainForm";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.mainForm_FormClosing);
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
 			this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
 			((System.ComponentModel.ISupportInitialize)(this.camView)).EndInit();
 			this.ResumeLayout(false);
@@ -119,10 +122,10 @@
         private System.Windows.Forms.Button buttonMinimize;
         private System.Windows.Forms.Button buttonStartStop;
         private System.Windows.Forms.PictureBox camView;
-        private System.Windows.Forms.Label labelNoVideoSource;
-		private System.Windows.Forms.NotifyIcon trayIcon;
+		private System.Windows.Forms.Label labelNoVideoSource;
 		private System.Windows.Forms.Timer videoDrawer;
 		private System.Windows.Forms.Button buttonMaximize;
+		private System.Windows.Forms.Button buttonExit;
     }
 }
 
