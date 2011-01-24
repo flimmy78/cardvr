@@ -71,7 +71,11 @@ namespace CarDVR
 		private string GetProgramVersion()
 		{
 			string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-			return version.Substring(0, version.Length - 4);
+			
+			while (version.Substring(version.Length - 2, 2) == ".0")
+				version = version.Remove(version.Length - 2, 2);
+
+			return version;
 		}
 
 		private void ButtonStartStopEnable()

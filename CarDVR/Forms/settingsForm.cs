@@ -33,7 +33,7 @@ namespace CarDVR
 				Program.settings.GpsEnabled = false;
 			}
 
-			if (portsList.Count == 0)
+			if (portsList.Count == 0 && Program.settings.GpsEnabled)
 			{
 				// Check any serial port avaliable
 				Reporter.SeriousError("There is no avaliable serial port in your system.\nGPS won't be activated.");

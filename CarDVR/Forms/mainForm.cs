@@ -286,7 +286,7 @@ namespace CarDVR
 	   
 		void videoManager_NewFrame(object sender, NewFrameEventArgs eventArgs)
 		{
-			if (!Visible)
+			if (WindowState == FormWindowState.Minimized)
 				return;
 
 			lock (frameKeeper)
@@ -312,7 +312,7 @@ namespace CarDVR
 
 		private void videoDrawer_Tick(object sender, EventArgs e)
 		{
-			if (!Visible)
+			if (WindowState == FormWindowState.Minimized)
 				return;
 
 			lock (frameKeeper)

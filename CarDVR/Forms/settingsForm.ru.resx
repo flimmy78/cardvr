@@ -269,7 +269,7 @@
     <value>Сжатие</value>
   </data>
   <data name="labelSelectedCodec.Location" type="System.Drawing.Point, System.Drawing">
-    <value>117, 197</value>
+    <value>117, 181</value>
   </data>
   <data name="labelSelectedCodec.Size" type="System.Drawing.Size, System.Drawing">
     <value>24, 13</value>
@@ -1346,6 +1346,10 @@
         ////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////w==
 </value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Inherit</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Настройки</value>

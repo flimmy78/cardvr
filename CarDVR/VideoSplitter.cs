@@ -95,16 +95,23 @@ namespace CarDVR
 			lock (aviWatchDog)
 			{
 				preparedAvi.Close();
+				try
+				{
+					// was rotate
+					if (FileName == PreparedFileName)
+						return;
+
+					if (File.Exists(PreparedFileName))
+						File.Delete(PreparedFileName);
+				}
+				catch { }
 			}
 		}
 
 		public void CloseAll()
 		{
-			lock (aviWatchDog)
-			{
-				currentAvi.Close();
-				preparedAvi.Close();
-			}
+			CloseCurrent();
+			ClosePrepared();
 		}
 		#endregion
 
@@ -221,6 +228,7 @@ namespace CarDVR
 			avipair.FrameRate = FPS;
 
 			nextAviPrepared = false;
+			secondsElapsed = 0;
 			StartNewMovie(0);
 			timerSplit.Start();
 		}

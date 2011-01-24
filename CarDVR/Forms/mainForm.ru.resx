@@ -127,11 +127,18 @@
   <data name="buttonMinimize.Location" type="System.Drawing.Point, System.Drawing">
     <value>264, 148</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="buttonMinimize.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
   <data name="buttonMinimize.Text" xml:space="preserve">
     <value>Свернуть</value>
   </data>
   <data name="buttonStartStop.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 220</value>
+  </data>
+  <data name="buttonStartStop.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
   <data name="buttonStartStop.Text" xml:space="preserve">
     <value>Старт</value>
@@ -148,11 +155,17 @@
   <data name="buttonMaximize.Location" type="System.Drawing.Point, System.Drawing">
     <value>264, 80</value>
   </data>
+  <data name="buttonMaximize.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
   <data name="buttonMaximize.Text" xml:space="preserve">
     <value>Развернуть</value>
   </data>
   <data name="buttonExit.Location" type="System.Drawing.Point, System.Drawing">
     <value>264, 220</value>
+  </data>
+  <data name="buttonExit.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
   <data name="buttonExit.Text" xml:space="preserve">
     <value>Выход</value>

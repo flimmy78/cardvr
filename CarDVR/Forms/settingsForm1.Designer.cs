@@ -1614,10 +1614,24 @@ namespace CarDVR.Forms {
             }
         }
         
+        public static System.Windows.Forms.TabAppearance tabPageSettings_Appearance {
+            get {
+                object obj = ResourceManager.GetObject("tabPageSettings.Appearance", resourceCulture);
+                return ((System.Windows.Forms.TabAppearance)(obj));
+            }
+        }
+        
         public static System.Windows.Forms.DockStyle tabPageSettings_Dock {
             get {
                 object obj = ResourceManager.GetObject("tabPageSettings.Dock", resourceCulture);
                 return ((System.Windows.Forms.DockStyle)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size tabPageSettings_ItemSize {
+            get {
+                object obj = ResourceManager.GetObject("tabPageSettings.ItemSize", resourceCulture);
+                return ((System.Drawing.Size)(obj));
             }
         }
         

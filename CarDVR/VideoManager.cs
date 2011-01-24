@@ -5,6 +5,8 @@ using AForge.Video.DirectShow;
 using System.Drawing;
 using AForge.Video;
 using System.Windows.Forms;
+using System.Threading;
+using System.Diagnostics;
 
 namespace CarDVR
 {
@@ -25,12 +27,14 @@ namespace CarDVR
 		VideoSplitter splitter = new VideoSplitter();
 
 		System.Timers.Timer FpsDisplayer = new System.Timers.Timer();
-		System.Timers.Timer timerWriter = new System.Timers.Timer();
+		System.Threading.Thread writeThread = null;
+
+		int writeDelay = 0;
+		int writtenFrames = 0;
 
 		GpsReceiver gps;
 
 		public NewFrameEventHandler NewFrame;
-
 
 		public VideoManager(GpsReceiver gpsRcvr)
 		{
@@ -39,12 +43,66 @@ namespace CarDVR
 			FpsDisplayer.Interval = 1000;
 			FpsDisplayer.Elapsed += new System.Timers.ElapsedEventHandler(FpsDisplayer_Tick);
 			FpsDisplayer.Enabled = false;
-
-			//timerWriter.Interval = 40;
-			//timerWriter.Elapsed += new System.Timers.ElapsedEventHandler(timerWriter_Tick);
-			//timerWriter.Enabled = false;
 		}
 
+		public void WriteThreadProc()
+		{
+			Stopwatch watch = new Stopwatch();
+
+			long delay;
+			long last = 0;
+
+			while (true)
+			{
+				watch.Start();
+
+				lock (frameKeeper)
+				{
+					if (frame == null)
+						continue;
+
+					if (Program.settings.EnableRotate)
+					{
+						switch (Program.settings.RotateAngle)
+						{
+							case 90:
+								frame.RotateFlip(RotateFlipType.Rotate90FlipNone);
+								break;
+							case 180:
+								frame.RotateFlip(RotateFlipType.Rotate180FlipNone);
+								break;
+							case 270:
+								frame.RotateFlip(RotateFlipType.Rotate270FlipNone);
+								break;
+						}
+					}
+
+					using (Graphics graphics = Graphics.FromImage(frame))
+					{
+						string frameString = MakeFrameString();
+						graphics.DrawString(frameString, framefont, Brushes.Black, pointBlack);
+						graphics.DrawString(frameString, framefont, Brushes.White, pointWhite);
+					}
+
+					splitter.AddFrame(frame);
+					++writtenFrames;
+					++totalFrames;
+
+					if (NewFrame != null)
+						NewFrame(this, new NewFrameEventArgs(frame));
+
+				}
+
+				watch.Stop();
+
+				delay = writeDelay + last - watch.ElapsedMilliseconds;
+
+				if (delay > 0)
+					System.Threading.Thread.Sleep((int)delay);
+
+				last = watch.ElapsedMilliseconds;
+			}
+		}	 
 
 		public void Close()
 		{
@@ -91,10 +149,13 @@ namespace CarDVR
 
 				if (fps > Program.settings.VideoFps)
 					fps = Program.settings.VideoFps;
+
+				if (fps == 0)
+					fps = 25;
 				
 				webcam = new VideoCaptureDevice(Program.settings.VideoSourceId);
 				webcam.NewFrame += videoSource_NewFrame;
-				webcam.DesiredFrameRate = fps;
+				webcam.DesiredFrameRate = Program.settings.VideoFps > 0 ? Program.settings.VideoFps : fps;
 				webcam.DesiredFrameSize = new Size(Program.settings.VideoWidth, Program.settings.VideoHeight);
 
 				splitter.Codec = Program.settings.Codec;
@@ -104,52 +165,18 @@ namespace CarDVR
 				splitter.NumberOfFiles = Program.settings.AmountOfFiles;
 				splitter.Path = Program.settings.PathForVideo;
 
-				//if (splitter.FPS > 0)
-				//    timerWriter.Interval = 1000 / splitter.FPS;
+				writeDelay = 1000 / fps;
 			}
 		}
 
 		void videoSource_NewFrame(object sender, NewFrameEventArgs eventArgs)
 		{
-			++totalFrames;
-
 			lock (frameKeeper)
 			{
 				if (frame != null)
 					frame.Dispose();
 
 				frame = (Bitmap)eventArgs.Frame.Clone();
-				
-
-				if (Program.settings.EnableRotate)
-				{
-					switch (Program.settings.RotateAngle)
-					{
-						case 90:
-							frame.RotateFlip(RotateFlipType.Rotate90FlipNone);
-							break;
-						case 180:
-							frame.RotateFlip(RotateFlipType.Rotate180FlipNone);
-							break;
-						case 270:
-							frame.RotateFlip(RotateFlipType.Rotate270FlipNone);
-							break;
-					}
-				}
-
-				using (Graphics graphics = Graphics.FromImage(frame))
-				{
-					string frameString = MakeFrameString();
-					graphics.DrawString(frameString, framefont, Brushes.Black, pointBlack);
-					graphics.DrawString(frameString, framefont, Brushes.White, pointWhite);
-				}
-
-				splitter.AddFrame(frame);
-
-//				++writtenFrames;
-
-				if (NewFrame != null)
-					NewFrame(sender, new NewFrameEventArgs(frame));
 			}
 		}
 
@@ -157,15 +184,20 @@ namespace CarDVR
 		{
 			splitter.Start();
 			webcam.Start();
-			timerWriter.Enabled = true;
 
+			writeThread = new Thread(new ThreadStart(WriteThreadProc));
+			writeThread.Start();
+			
 			FpsDisplayer.Enabled = true;
 		}
 
 		public void Stop()
 		{
 			FpsDisplayer.Enabled = false;
-			timerWriter.Enabled = false;
+
+			writeThread.Abort();
+			writeThread.Join();
+			writeThread = null;
 
 			webcam.SignalToStop();
 			webcam.WaitForStop();
@@ -209,20 +241,6 @@ namespace CarDVR
 				lastFps = totalFrames - lastFrames;
 				lastFrames = totalFrames;
 			}
-		}
-
-		//public int writtenFrames = 0;
-
-		private void timerWriter_Tick(object sender, EventArgs e)
-		{
-			//lock (frameKeeper)
-			//{
-			//    if (frame == null)
-			//        return;
-
-			//    splitter.AddFrame(frame);
-			//    ++writtenFrames;
-			//}
 		}
 
 		public void ShowPpropertiesDialog(string moniker, Form parent)

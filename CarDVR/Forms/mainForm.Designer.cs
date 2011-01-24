@@ -106,7 +106,6 @@
 			this.Controls.Add(this.buttonStartStop);
 			this.Controls.Add(this.buttonMinimize);
 			this.Controls.Add(this.buttonSettings);
-			this.MinimizeBox = false;
 			this.Name = "MainForm";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.mainForm_FormClosing);
 			this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
