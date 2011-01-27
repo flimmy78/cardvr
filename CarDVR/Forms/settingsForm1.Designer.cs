@@ -498,6 +498,51 @@ namespace CarDVR.Forms {
             }
         }
         
+        public static bool dontDisplayWhenAppInactive_AutoSize {
+            get {
+                object obj = ResourceManager.GetObject("dontDisplayWhenAppInactive.AutoSize", resourceCulture);
+                return ((bool)(obj));
+            }
+        }
+        
+        public static System.Windows.Forms.ImeMode dontDisplayWhenAppInactive_ImeMode {
+            get {
+                object obj = ResourceManager.GetObject("dontDisplayWhenAppInactive.ImeMode", resourceCulture);
+                return ((System.Windows.Forms.ImeMode)(obj));
+            }
+        }
+        
+        public static System.Drawing.Point dontDisplayWhenAppInactive_Location {
+            get {
+                object obj = ResourceManager.GetObject("dontDisplayWhenAppInactive.Location", resourceCulture);
+                return ((System.Drawing.Point)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size dontDisplayWhenAppInactive_Size {
+            get {
+                object obj = ResourceManager.GetObject("dontDisplayWhenAppInactive.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        public static int dontDisplayWhenAppInactive_TabIndex {
+            get {
+                object obj = ResourceManager.GetObject("dontDisplayWhenAppInactive.TabIndex", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to don&apos;t display when inactive
+        ///(less CPU usage).
+        /// </summary>
+        public static string dontDisplayWhenAppInactive_Text {
+            get {
+                return ResourceManager.GetString("dontDisplayWhenAppInactive.Text", resourceCulture);
+            }
+        }
+        
         public static bool enableGps_AutoSize {
             get {
                 object obj = ResourceManager.GetObject("enableGps.AutoSize", resourceCulture);
@@ -1243,6 +1288,20 @@ namespace CarDVR.Forms {
             }
         }
         
+        public static int outputRate_Items10 {
+            get {
+                object obj = ResourceManager.GetObject("outputRate.Items10", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        public static int outputRate_Items11 {
+            get {
+                object obj = ResourceManager.GetObject("outputRate.Items11", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
         public static int outputRate_Items2 {
             get {
                 object obj = ResourceManager.GetObject("outputRate.Items2", resourceCulture);
@@ -1260,6 +1319,41 @@ namespace CarDVR.Forms {
         public static int outputRate_Items4 {
             get {
                 object obj = ResourceManager.GetObject("outputRate.Items4", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        public static int outputRate_Items5 {
+            get {
+                object obj = ResourceManager.GetObject("outputRate.Items5", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        public static int outputRate_Items6 {
+            get {
+                object obj = ResourceManager.GetObject("outputRate.Items6", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        public static int outputRate_Items7 {
+            get {
+                object obj = ResourceManager.GetObject("outputRate.Items7", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        public static int outputRate_Items8 {
+            get {
+                object obj = ResourceManager.GetObject("outputRate.Items8", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        public static int outputRate_Items9 {
+            get {
+                object obj = ResourceManager.GetObject("outputRate.Items9", resourceCulture);
                 return ((int)(obj));
             }
         }

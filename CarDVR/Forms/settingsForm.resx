@@ -124,8 +124,9 @@
   <data name="labelColors.TabIndex" type="System.Int32, mscorlib">
     <value>28</value>
   </data>
-  <data name="labelLanguage.TabIndex" type="System.Int32, mscorlib">
-    <value>23</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="buttonBrowse.Size" type="System.Drawing.Size, System.Drawing">
+    <value>25, 23</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
@@ -134,12 +135,8 @@
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="groupVideoArchive.Size" type="System.Drawing.Size, System.Drawing">
     <value>258, 69</value>
-  </data>
-  <data name="&gt;&gt;labelVideosource.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;amountOfFiles.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -150,8 +147,8 @@
   <data name="startWithFullWindowedVideo.Location" type="System.Drawing.Point, System.Drawing">
     <value>220, 16</value>
   </data>
-  <data name="tabStartOptions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>470, 202</value>
+  <data name="&gt;&gt;labelSelectedCodecTitle.Parent" xml:space="preserve">
+    <value>tabCompression</value>
   </data>
   <data name="textBoxPath.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -184,7 +181,7 @@
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;startWithWindows.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;outputRate.Name" xml:space="preserve">
     <value>outputRate</value>
@@ -201,11 +198,14 @@
   <data name="tabLocalization.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
+  <data name="&gt;&gt;enableRotate.Name" xml:space="preserve">
+    <value>enableRotate</value>
+  </data>
   <data name="labelColors.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 13</value>
   </data>
   <data name="outputRate.Items" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;tabVideoSource.Name" xml:space="preserve">
     <value>tabVideoSource</value>
@@ -236,6 +236,9 @@
   </data>
   <data name="&gt;&gt;tabCompression.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dontDisplayWhenAppInactive.Parent" xml:space="preserve">
+    <value>tabStartOptions</value>
   </data>
   <data name="&gt;&gt;enableRotate.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -282,11 +285,14 @@
   <data name="&gt;&gt;labelDelayAutostart.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tabPageSettings.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="outputRate.Items11" type="System.Int32, mscorlib">
+    <value>30</value>
   </data>
-  <data name="&gt;&gt;textBoxPath.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="dontDisplayWhenAppInactive.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;labelVideosource.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Settings</value>
@@ -302,6 +308,9 @@
   </data>
   <data name="labelMinutesOnEachFile.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="labelSelectedCodecTitle.Text" xml:space="preserve">
+    <value>selected codec:</value>
   </data>
   <data name="&gt;&gt;buttonBrowse.Name" xml:space="preserve">
     <value>buttonBrowse</value>
@@ -330,6 +339,9 @@
   <data name="&gt;&gt;buttonTextColor.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;dontDisplayWhenAppInactive.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;enableGps.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -350,9 +362,6 @@
   </data>
   <data name="&gt;&gt;tabStartOptions.Name" xml:space="preserve">
     <value>tabStartOptions</value>
-  </data>
-  <data name="buttonOk.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 62</value>
   </data>
   <data name="tabLocalization.Size" type="System.Drawing.Size, System.Drawing">
     <value>470, 202</value>
@@ -390,8 +399,8 @@
   <data name="labelDelayAutostart.Size" type="System.Drawing.Size, System.Drawing">
     <value>135, 13</value>
   </data>
-  <data name="&gt;&gt;tabPageSettings.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="buttonOk.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 62</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -422,9 +431,6 @@
   </data>
   <data name="&gt;&gt;labelMinutesOnEachFile.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="buttonOk.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 256</value>
@@ -504,6 +510,9 @@
   <data name="labelResolution.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>output rate</value>
+  </data>
   <data name="&gt;&gt;textBoxPath.Parent" xml:space="preserve">
     <value>tabOutput</value>
   </data>
@@ -564,8 +573,8 @@
   <data name="&gt;&gt;labelLanguage.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="&gt;&gt;comboLanguage.ZOrder" xml:space="preserve">
-    <value>4</value>
+  <data name="&gt;&gt;listCodecs.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;videoSource.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -580,7 +589,7 @@
     <value>9, 18</value>
   </data>
   <data name="outputRate.Items2" type="System.Int32, mscorlib">
-    <value>15</value>
+    <value>3</value>
   </data>
   <data name="labelStoreFiles.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -591,8 +600,8 @@
   <data name="labelResolution.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
   </data>
-  <data name="tabStartOptions.Text" xml:space="preserve">
-    <value>Start options</value>
+  <data name="dontDisplayWhenAppInactive.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="&gt;&gt;groupVideoArchive.Parent" xml:space="preserve">
     <value>tabOutput</value>
@@ -615,8 +624,8 @@
   <data name="startWithFullWindowedVideo.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
   </data>
-  <data name="&gt;&gt;labelSelectedCodecTitle.Parent" xml:space="preserve">
-    <value>tabCompression</value>
+  <data name="tabStartOptions.Text" xml:space="preserve">
+    <value>Start options</value>
   </data>
   <data name="startWithWindows.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -627,6 +636,9 @@
   <data name="button1.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
   </data>
+  <data name="&gt;&gt;comboLanguage.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
   <data name="&gt;&gt;amountOfFiles.Name" xml:space="preserve">
     <value>amountOfFiles</value>
   </data>
@@ -635,9 +647,6 @@
   </data>
   <data name="&gt;&gt;labelVideosource.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="&gt;&gt;groupVideoArchive.Name" xml:space="preserve">
-    <value>groupVideoArchive</value>
   </data>
   <data name="&gt;&gt;comboLanguage.Name" xml:space="preserve">
     <value>comboLanguage</value>
@@ -676,28 +685,37 @@
     <value>1</value>
   </data>
   <data name="&gt;&gt;delayBeforeStart.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="&gt;&gt;labelTestColor.Name" xml:space="preserve">
     <value>labelTestColor</value>
   </data>
-  <data name="outputRate.Items4" type="System.Int32, mscorlib">
-    <value>25</value>
+  <data name="outputRate.Items6" type="System.Int32, mscorlib">
+    <value>10</value>
   </data>
-  <data name="labelSelectedCodecTitle.Text" xml:space="preserve">
-    <value>selected codec:</value>
+  <data name="outputRate.Items7" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="outputRate.Items4" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="outputRate.Items5" type="System.Int32, mscorlib">
+    <value>7</value>
   </data>
   <data name="&gt;&gt;labelPath.Name" xml:space="preserve">
     <value>labelPath</value>
   </data>
   <data name="outputRate.Items3" type="System.Int32, mscorlib">
-    <value>20</value>
+    <value>4</value>
   </data>
   <data name="labelMinutesOnEachFile.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 20</value>
   </data>
   <data name="outputRate.Items1" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;textBoxPath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;buttonTextColor.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -710,6 +728,12 @@
   </data>
   <data name="&gt;&gt;labelMinutesOnEachFile.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="outputRate.Items8" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="outputRate.Items9" type="System.Int32, mscorlib">
+    <value>20</value>
   </data>
   <data name="tabVideoSource.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 36</value>
@@ -740,6 +764,9 @@
   </data>
   <data name="labelMinutesOnEachFile.Size" type="System.Drawing.Size, System.Drawing">
     <value>125, 13</value>
+  </data>
+  <data name="tabVideoSource.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
   <data name="labelColors.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -789,14 +816,17 @@
   <data name="buttonTextColor.Text" xml:space="preserve">
     <value>text</value>
   </data>
-  <data name="serialPortBaudRate.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="&gt;&gt;groupVideoArchive.Name" xml:space="preserve">
+    <value>groupVideoArchive</value>
+  </data>
+  <data name="&gt;&gt;dontDisplayWhenAppInactive.Name" xml:space="preserve">
+    <value>dontDisplayWhenAppInactive</value>
   </data>
   <data name="listCodecs.Size" type="System.Drawing.Size, System.Drawing">
     <value>453, 160</value>
   </data>
-  <data name="tabGps.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 36</value>
+  <data name="comboResolution.Location" type="System.Drawing.Point, System.Drawing">
+    <value>82, 52</value>
   </data>
   <data name="&gt;&gt;tabPageSettings.Parent" xml:space="preserve">
     <value>$this</value>
@@ -814,19 +844,19 @@
     <value>buttonOk</value>
   </data>
   <data name="&gt;&gt;labelDelayAutostart.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="labelStoreFiles.Text" xml:space="preserve">
     <value>files amount in archive</value>
   </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>output rate</value>
+  <data name="&gt;&gt;buttonOk.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;labelStoreFiles.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="tabVideoSource.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="videoSource.Location" type="System.Drawing.Point, System.Drawing">
+    <value>82, 15</value>
   </data>
   <data name="&gt;&gt;listCodecs.Name" xml:space="preserve">
     <value>listCodecs</value>
@@ -960,11 +990,15 @@
   <data name="startMinimized.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
   </data>
+  <data name="dontDisplayWhenAppInactive.Text" xml:space="preserve">
+    <value>don't display when inactive
+(less CPU usage)</value>
+  </data>
   <data name="tabCompression.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 36</value>
   </data>
-  <data name="buttonBrowse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>25, 23</value>
+  <data name="buttonSettings.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
   </data>
   <data name="tabVideoSource.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
@@ -1002,6 +1036,12 @@
   <data name="labelTestColor.Text" xml:space="preserve">
     <value>Sample</value>
   </data>
+  <data name="serialPortName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 39</value>
+  </data>
+  <data name="tabGps.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 36</value>
+  </data>
   <data name="&gt;&gt;labelSelectedCodec.Name" xml:space="preserve">
     <value>labelSelectedCodec</value>
   </data>
@@ -1014,8 +1054,8 @@
   <data name="labelVideosource.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 18</value>
   </data>
-  <data name="labelDegrees.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;dontDisplayWhenAppInactive.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>25</value>
@@ -1059,8 +1099,8 @@
   <data name="&gt;&gt;labelMinutesOnEachFile.Parent" xml:space="preserve">
     <value>groupVideoArchive</value>
   </data>
-  <data name="serialPortName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 39</value>
+  <data name="outputRate.Items10" type="System.Int32, mscorlib">
+    <value>25</value>
   </data>
   <data name="labelSelectedCodec.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1068,8 +1108,8 @@
   <data name="&gt;&gt;buttonBackColor.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;listCodecs.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="labelDegrees.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="&gt;&gt;buttonBrowse.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1107,14 +1147,17 @@
   <data name="comboLanguage.Location" type="System.Drawing.Point, System.Drawing">
     <value>89, 16</value>
   </data>
-  <data name="&gt;&gt;buttonOk.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="tabPageSettings.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
   <data name="&gt;&gt;buttonSettings.Name" xml:space="preserve">
     <value>buttonSettings</value>
   </data>
   <data name="&gt;&gt;buttonOk.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="serialPortBaudRate.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
   <data name="gbAutostart.TabIndex" type="System.Int32, mscorlib">
     <value>20</value>
@@ -1161,11 +1204,8 @@
   <data name="tabCompression.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="comboResolution.Location" type="System.Drawing.Point, System.Drawing">
-    <value>82, 52</value>
-  </data>
-  <data name="&gt;&gt;enableRotate.Name" xml:space="preserve">
-    <value>enableRotate</value>
+  <data name="dontDisplayWhenAppInactive.Location" type="System.Drawing.Point, System.Drawing">
+    <value>220, 39</value>
   </data>
   <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
     <value>tabLocalization</value>
@@ -1193,9 +1233,6 @@
   </data>
   <data name="&gt;&gt;panel1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="videoSource.Location" type="System.Drawing.Point, System.Drawing">
-    <value>82, 15</value>
   </data>
   <data name="buttonSettings.Location" type="System.Drawing.Point, System.Drawing">
     <value>331, 15</value>
@@ -1250,6 +1287,9 @@
   </data>
   <data name="labelLanguage.Text" xml:space="preserve">
     <value>language</value>
+  </data>
+  <data name="&gt;&gt;tabPageSettings.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="aviDuration.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -1324,7 +1364,7 @@
     <value>29</value>
   </data>
   <data name="&gt;&gt;startWithFullWindowedVideo.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;labelSelectedCodecTitle.Name" xml:space="preserve">
     <value>labelSelectedCodecTitle</value>
@@ -1334,6 +1374,9 @@
   </data>
   <data name="tabPageSettings.TabIndex" type="System.Int32, mscorlib">
     <value>24</value>
+  </data>
+  <data name="labelStoreFiles.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 45</value>
   </data>
   <data name="&gt;&gt;buttonBrowse.Parent" xml:space="preserve">
     <value>tabOutput</value>
@@ -1348,7 +1391,7 @@
     <value>89, 51</value>
   </data>
   <data name="&gt;&gt;autostartRecording.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;labelBaudRate.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1362,8 +1405,14 @@
   <data name="&gt;&gt;labelSelectedCodecTitle.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="dontDisplayWhenAppInactive.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
   <data name="&gt;&gt;labelColors.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="labelLanguage.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
   </data>
   <data name="&gt;&gt;tabCompression.Name" xml:space="preserve">
     <value>tabCompression</value>
@@ -1376,9 +1425,6 @@
   </data>
   <data name="enableGps.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 14</value>
-  </data>
-  <data name="buttonSettings.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
   </data>
   <data name="&gt;&gt;aviDuration.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -1398,11 +1444,14 @@
   <data name="&gt;&gt;labelLanguage.Parent" xml:space="preserve">
     <value>tabLocalization</value>
   </data>
+  <data name="dontDisplayWhenAppInactive.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 30</value>
+  </data>
   <data name="labelPath.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 13</value>
   </data>
   <data name="&gt;&gt;startMinimized.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;serialPortName.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -2447,8 +2496,8 @@
   <data name="enableRotate.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
   </data>
-  <data name="labelStoreFiles.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 45</value>
+  <data name="tabStartOptions.Size" type="System.Drawing.Size, System.Drawing">
+    <value>470, 202</value>
   </data>
   <data name="&gt;&gt;aviDuration.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

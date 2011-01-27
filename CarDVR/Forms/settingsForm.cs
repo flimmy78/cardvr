@@ -180,6 +180,8 @@ namespace CarDVR
 			comboLanguage.SelectedItem = Program.settings.Language;
 			labelTestColor.ForeColor = Color.FromArgb(Program.settings.InterfaceForeColor);
 			labelTestColor.BackColor = Color.FromArgb(Program.settings.InterfaceBackgroundColor);
+
+			dontDisplayWhenAppInactive.Checked = Program.settings.DontShowVideoWhenInactive;
 		}
 
 		public void ApplyFormToSettings()
@@ -241,6 +243,8 @@ namespace CarDVR
 
 			Program.settings.InterfaceForeColor = labelTestColor.ForeColor.ToArgb();
 			Program.settings.InterfaceBackgroundColor = labelTestColor.BackColor.ToArgb();
+
+			Program.settings.DontShowVideoWhenInactive = dontDisplayWhenAppInactive.Checked;
 		}
 
 		class CodecInfo
@@ -481,6 +485,7 @@ namespace CarDVR
 		public bool StartWithFullWindowedVideo { get; set; }
 		public int InterfaceForeColor { get; set; }
 		public int InterfaceBackgroundColor { get; set; }
+		public bool DontShowVideoWhenInactive { get; set; }
 
 		/// <summary>
 		/// Initialization constructor
@@ -507,6 +512,7 @@ namespace CarDVR
 			OutputRateFps = 25;
 			Language = DEFAULT_LANGUAGE;
 			Codec = DEFAULT_CODEC;
+			DontShowVideoWhenInactive = false;
 		}
 
 		/// <summary>

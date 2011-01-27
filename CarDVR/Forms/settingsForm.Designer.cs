@@ -63,6 +63,7 @@
 			this.labelLanguage = new System.Windows.Forms.Label();
 			this.tabPageSettings = new System.Windows.Forms.TabControl();
 			this.tabStartOptions = new System.Windows.Forms.TabPage();
+			this.dontDisplayWhenAppInactive = new System.Windows.Forms.CheckBox();
 			this.startWithFullWindowedVideo = new System.Windows.Forms.CheckBox();
 			this.tabVideoSource = new System.Windows.Forms.TabPage();
 			this.buttonSettings = new System.Windows.Forms.Button();
@@ -279,7 +280,19 @@
 			resources.ApplyResources(this.outputRate, "outputRate");
 			this.outputRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.outputRate.FormattingEnabled = true;
-			this.outputRate.Items.AddRange(new object[] {1,5,10,15,20,25,30});
+			this.outputRate.Items.AddRange(new object[] {
+            ((object)(resources.GetObject("outputRate.Items"))),
+            ((object)(resources.GetObject("outputRate.Items1"))),
+            ((object)(resources.GetObject("outputRate.Items2"))),
+            ((object)(resources.GetObject("outputRate.Items3"))),
+            ((object)(resources.GetObject("outputRate.Items4"))),
+            ((object)(resources.GetObject("outputRate.Items5"))),
+            ((object)(resources.GetObject("outputRate.Items6"))),
+            ((object)(resources.GetObject("outputRate.Items7"))),
+            ((object)(resources.GetObject("outputRate.Items8"))),
+            ((object)(resources.GetObject("outputRate.Items9"))),
+            ((object)(resources.GetObject("outputRate.Items10"))),
+            ((object)(resources.GetObject("outputRate.Items11")))});
 			this.outputRate.Name = "outputRate";
 			// 
 			// labelDelayAutostart
@@ -338,6 +351,7 @@
 			// tabStartOptions
 			// 
 			resources.ApplyResources(this.tabStartOptions, "tabStartOptions");
+			this.tabStartOptions.Controls.Add(this.dontDisplayWhenAppInactive);
 			this.tabStartOptions.Controls.Add(this.startWithFullWindowedVideo);
 			this.tabStartOptions.Controls.Add(this.startWithWindows);
 			this.tabStartOptions.Controls.Add(this.startMinimized);
@@ -346,6 +360,12 @@
 			this.tabStartOptions.Controls.Add(this.delayBeforeStart);
 			this.tabStartOptions.Name = "tabStartOptions";
 			this.tabStartOptions.UseVisualStyleBackColor = true;
+			// 
+			// dontDisplayWhenAppInactive
+			// 
+			resources.ApplyResources(this.dontDisplayWhenAppInactive, "dontDisplayWhenAppInactive");
+			this.dontDisplayWhenAppInactive.Name = "dontDisplayWhenAppInactive";
+			this.dontDisplayWhenAppInactive.UseVisualStyleBackColor = true;
 			// 
 			// startWithFullWindowedVideo
 			// 
@@ -551,5 +571,6 @@
 		private System.Windows.Forms.Button buttonTextColor;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Label labelTestColor;
+		private System.Windows.Forms.CheckBox dontDisplayWhenAppInactive;
     }
 }

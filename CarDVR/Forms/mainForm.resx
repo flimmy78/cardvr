@@ -1183,6 +1183,9 @@
   <data name="buttonSettings.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
+  <data name="buttonExit.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="labelNoVideoSource.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 13</value>
   </data>
@@ -1271,9 +1274,6 @@
   <data name="&gt;&gt;buttonSettings.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="buttonMaximize.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
   <data name="buttonStartStop.Text" xml:space="preserve">
     <value>Start</value>
   </data>
@@ -1313,11 +1313,11 @@
   <data name="buttonMinimize.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>MainForm</value>
+  </data>
   <data name="buttonExit.Text" xml:space="preserve">
     <value>Exit</value>
-  </data>
-  <data name="&gt;&gt;trayIcon.Name" xml:space="preserve">
-    <value>trayIcon</value>
   </data>
   <data name="&gt;&gt;buttonMinimize.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1349,8 +1349,8 @@
   <data name="buttonSettings.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="buttonExit.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="&gt;&gt;trayIcon.Name" xml:space="preserve">
+    <value>trayIcon</value>
   </data>
   <data name="buttonStartStop.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 222</value>
@@ -2413,8 +2413,8 @@
   <data name="&gt;&gt;buttonStartStop.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>MainForm</value>
+  <data name="buttonMaximize.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
   </data>
   <data name="&gt;&gt;buttonMaximize.Parent" xml:space="preserve">
     <value>$this</value>

@@ -283,36 +283,40 @@ namespace CarDVR
 		const int maxG = 10;
 		int cnt = maxG-1;
 		List<Bitmap> g = new List<Bitmap>(maxG);
+		bool isFormActive = true;
+
+		Queue<Bitmap> drawQueue = new Queue<Bitmap>();
+		object drawQueueHolder = new object();
 	   
 		void videoManager_NewFrame(object sender, NewFrameEventArgs eventArgs)
 		{
-			if (WindowState == FormWindowState.Minimized)
+			if (Program.settings.DontShowVideoWhenInactive && !isFormActive)
 				return;
 
 			lock (frameKeeper)
 			{
-				cnt++;
-				cnt = cnt % maxG;
+			    cnt++;
+			    cnt = cnt % maxG;
 
-				Bitmap b = g[cnt];
+			    Bitmap b = g[cnt];
 
-				while (b != null && b.Tag != null)
-				{
-					cnt++;
-					cnt = cnt % maxG;
-					b = g[cnt];
-				}
+			    while (b != null && b.Tag != null)
+			    {
+			        cnt++;
+			        cnt = cnt % maxG;
+			        b = g[cnt];
+			    }
 
-				if (b != null)
-					b.Dispose();
+			    if (b != null)
+			        b.Dispose();
 
-				g[cnt] = (Bitmap)eventArgs.Frame.Clone();
+			    g[cnt] = (Bitmap)eventArgs.Frame.Clone();
 			}
 		}
 
 		private void videoDrawer_Tick(object sender, EventArgs e)
 		{
-			if (WindowState == FormWindowState.Minimized)
+			if (Program.settings.DontShowVideoWhenInactive && !isFormActive)
 				return;
 
 			lock (frameKeeper)
@@ -372,6 +376,16 @@ namespace CarDVR
 		{
 			StopRecordingAndWaitForFileClosing();
 			this.Close();
+		}
+
+		private void MainForm_Activated(object sender, EventArgs e)
+		{
+			isFormActive = true;
+		}
+
+		private void MainForm_Deactivate(object sender, EventArgs e)
+		{
+			isFormActive = false;
 		}
 	}
 }

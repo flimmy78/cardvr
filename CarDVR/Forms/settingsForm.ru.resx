@@ -253,6 +253,13 @@
   <data name="tabStartOptions.Text" xml:space="preserve">
     <value>Настройки запуск</value>
   </data>
+  <data name="dontDisplayWhenAppInactive.Size" type="System.Drawing.Size, System.Drawing">
+    <value>201, 30</value>
+  </data>
+  <data name="dontDisplayWhenAppInactive.Text" xml:space="preserve">
+    <value>не отображать в неактивном окне
+(меньше использование CPU)</value>
+  </data>
   <data name="startWithFullWindowedVideo.Size" type="System.Drawing.Size, System.Drawing">
     <value>202, 17</value>
   </data>
@@ -1349,7 +1356,7 @@
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>Inherit</value>
+    <value>NoControl</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Настройки</value>

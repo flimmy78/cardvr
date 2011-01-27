@@ -107,6 +107,8 @@
 			this.Controls.Add(this.buttonMinimize);
 			this.Controls.Add(this.buttonSettings);
 			this.Name = "MainForm";
+			this.Activated += new System.EventHandler(this.MainForm_Activated);
+			this.Deactivate += new System.EventHandler(this.MainForm_Deactivate);
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.mainForm_FormClosing);
 			this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
 			((System.ComponentModel.ISupportInitialize)(this.camView)).EndInit();

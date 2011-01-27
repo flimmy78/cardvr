@@ -16,40 +16,79 @@ namespace CarDVR
 		private static readonly Point pointWhite = new Point(5, 5);
 		private static readonly Point pointBlack = new Point(6, 6);
 
+		private static readonly Point p1 = new Point(1, 1);
+		private static readonly Point p2 = new Point(4, 1);
+		private static readonly Point p3 = new Point(4, 4);
+		private static readonly Point p4 = new Point(1, 4);
+
+		private static readonly Point[] epicFailed = new Point[] { p1, p2, p3, p4};
+		Pen epicPen = new Pen(Brushes.Red, 2);
+
 		// TODO: make stand alone class FramesCounter
-		int lastFrames = 0, totalFrames = 0, lastFps = 0;
+		//int lastFrames = 0, totalFrames = 0, lastFps = 0;
 		object framesCountKeeper = new object();
 
 		VideoCaptureDevice webcam = null;
-		public Bitmap frame = null;
+		Bitmap frame = null;
 		public object frameKeeper = new object();
 
 		VideoSplitter splitter = new VideoSplitter();
 
-		System.Timers.Timer FpsDisplayer = new System.Timers.Timer();
+		//System.Timers.Timer FpsDisplayer = new System.Timers.Timer();
 		System.Threading.Thread writeThread = null;
 
 		int writeDelay = 0;
-		int writtenFrames = 0;
+		//int writtenFrames = 0;
 
 		GpsReceiver gps;
 
 		public NewFrameEventHandler NewFrame;
 
+		Queue<Bitmap> writingQueue = new Queue<Bitmap>();
+
+		object queueHolder = new object();
+		Thread queueThread;
+		AutoResetEvent writeEvent = new AutoResetEvent(false);
+
+		// Thread that compressing video stream
+		public void QueueProc()
+		{
+			while (true)
+			{
+				writeEvent.WaitOne();
+
+				while (true)
+				{
+					Bitmap fr;
+					lock (queueHolder)
+					{
+						if (writingQueue.Count == 0)
+							break;
+
+						fr = writingQueue.Dequeue();
+					}
+
+					splitter.AddFrame(fr);
+					fr.Dispose();
+					fr = null;
+				}
+			}
+		}
+
 		public VideoManager(GpsReceiver gpsRcvr)
 		{
 			gps = gpsRcvr;
 
-			FpsDisplayer.Interval = 1000;
-			FpsDisplayer.Elapsed += new System.Timers.ElapsedEventHandler(FpsDisplayer_Tick);
-			FpsDisplayer.Enabled = false;
+			//FpsDisplayer.Interval = 1000;
+			//FpsDisplayer.Elapsed += new System.Timers.ElapsedEventHandler(FpsDisplayer_Tick);
+			//FpsDisplayer.Enabled = false;
 		}
 
 		public void WriteThreadProc()
 		{
 			Stopwatch watch = new Stopwatch();
 
-			long delay;
+			long delay = 0;
 			long last = 0;
 
 			while (true)
@@ -82,17 +121,24 @@ namespace CarDVR
 						string frameString = MakeFrameString();
 						graphics.DrawString(frameString, framefont, Brushes.Black, pointBlack);
 						graphics.DrawString(frameString, framefont, Brushes.White, pointWhite);
+
+						if (delay < 0)
+							graphics.DrawPolygon(epicPen, epicFailed);
 					}
 
-					splitter.AddFrame(frame);
-					++writtenFrames;
-					++totalFrames;
+					//++writtenFrames;											 
+					//++totalFrames;
 
 					if (NewFrame != null)
 						NewFrame(this, new NewFrameEventArgs(frame));
 
+					lock (queueHolder)
+					{
+						writingQueue.Enqueue((Bitmap)frame.Clone());
+					}
+					writeEvent.Set();
 				}
-
+		 
 				watch.Stop();
 
 				delay = writeDelay + last - watch.ElapsedMilliseconds;
@@ -185,15 +231,22 @@ namespace CarDVR
 			splitter.Start();
 			webcam.Start();
 
+			queueThread = new Thread(new ThreadStart(QueueProc));
+			queueThread.Start();
+
 			writeThread = new Thread(new ThreadStart(WriteThreadProc));
 			writeThread.Start();
-			
-			FpsDisplayer.Enabled = true;
+
+			//FpsDisplayer.Enabled = true;
 		}
 
 		public void Stop()
 		{
-			FpsDisplayer.Enabled = false;
+			//FpsDisplayer.Enabled = false;
+
+			queueThread.Abort();
+			queueThread.Join();
+			queueThread = null;
 
 			writeThread.Abort();
 			writeThread.Join();
@@ -226,22 +279,22 @@ namespace CarDVR
 				}
 			}
 
-			lock (framesCountKeeper)
-			{
-				result += "\n" + totalFrames.ToString() + " | " + lastFps.ToString() + " FPS";
-			}
+			//lock (framesCountKeeper)
+			//{
+			//    result += "\n" + totalFrames.ToString() + " | " + lastFps.ToString() + " FPS";
+			//}
 
 			return result;
 		}
 
-		private void FpsDisplayer_Tick(object sender, EventArgs e)
-		{
-			lock (framesCountKeeper)
-			{
-				lastFps = totalFrames - lastFrames;
-				lastFrames = totalFrames;
-			}
-		}
+		//private void FpsDisplayer_Tick(object sender, EventArgs e)
+		//{
+		//    lock (framesCountKeeper)
+		//    {
+		//        lastFps = totalFrames - lastFrames;
+		//        lastFrames = totalFrames;
+		//    }
+		//}
 
 		public void ShowPpropertiesDialog(string moniker, Form parent)
 		{
