@@ -118,7 +118,10 @@ namespace CarDVR
 		}
 		#endregion
 
+		#region CheckFileFlushedBeforeClose
 		System.Timers.Timer disposeTimer = new System.Timers.Timer();
+		bool everythingisgood = false;
+
 		public void DisposeAll()
 		{
 			CloseAll();
@@ -139,13 +142,11 @@ namespace CarDVR
 						break;
 				}
 
-				Thread.Sleep(500);
+				Thread.Sleep(100);
 			}
 
 			disposeTimer.Enabled = false;
 		}
-
-		bool everythingisgood = false;
 
 		void disposeTimer_Elapsed(object sender, ElapsedEventArgs e)
 		{
@@ -161,11 +162,10 @@ namespace CarDVR
 					fs.Close();
 					everythingisgood = true;
 				}
-				catch
-				{
-				}
+				catch { }
 			}
 		}
+		#endregion
 	}
 
 	class VideoSplitter
@@ -202,9 +202,6 @@ namespace CarDVR
 
 		public void AddFrame(Bitmap frame)
 		{
-			//if (frame == null)
-			//    return;
-
 			lock (secondsWatchDog)
 			{
 				// before 10 seconds, open new avi
@@ -290,8 +287,12 @@ namespace CarDVR
 			{
 				Reporter.SeriousError
 				(
-					"Can't open output file " + filename + "\n" +
-					e.Message
+					string.Format
+					(
+						Resources.CantOpenOutputFile,
+						filename,
+						e.Message
+					)
 				);
 			}
 
@@ -306,7 +307,7 @@ namespace CarDVR
 				{
 					File.Delete(files[index].FullName);
 				}
-				catch (Exception) { }
+				catch  { }
 			}
 		}
 
