@@ -122,9 +122,9 @@ namespace CarDVR
 		{
 			gps = gpsRcvr;
 
-			FpsDisplayer.Interval = 1000;
-			FpsDisplayer.Elapsed += new System.Timers.ElapsedEventHandler(FpsDisplayer_Tick);
-			FpsDisplayer.Enabled = false;
+			//FpsDisplayer.Interval = 1000;
+			//FpsDisplayer.Elapsed += new System.Timers.ElapsedEventHandler(FpsDisplayer_Tick);
+			//FpsDisplayer.Enabled = false;
 		}
 
 		public void WriteThreadProc()
@@ -325,15 +325,15 @@ namespace CarDVR
 				switch (gps.State)
 				{
 					case GpsState.Active:
-						result += MainForm.resSpeed + " " + gps.Speed + " " +
-									MainForm.resKmh + " " +
-									MainForm.resSatellites + " " + gps.NumberOfSatellites.ToString() + "\n" + gps.Coordinates;
+						result += Resources.Speed + " " + gps.Speed + " " +
+									Resources.Kmh + " " +
+									Resources.Satellites + " " + gps.NumberOfSatellites.ToString() + "\n" + gps.Coordinates;
 						break;
 					case GpsState.NoSignal:
-						result += MainForm.resNoGpsSignal;
+						result += Resources.NoGpsSignal;
 						break;
 					case GpsState.NotActive:
-						result += MainForm.resGpsNotConnected;
+						result += Resources.GpsNotConnected;
 						break;
 				}
 			}
@@ -350,9 +350,6 @@ namespace CarDVR
 		{
 			lock (framesCountKeeper)
 			{
-				//lastFps = totalFrames - lastFrames;
-				//lastFrames = totalFrames;
-
 				fpsFromCamera = framesFromCamera - lastFramesFromCamera;
 				lastFramesFromCamera = framesFromCamera;
 

@@ -31,7 +31,7 @@ namespace CarDVR
 	// There's no synchronization, because Timer works in current thread
 	public class Reporter
 	{
-		public static void NonSeriousError(string text)
+		public static void UnseriousError(string text)
 		{
 			InitializeErrorCleaner();
 			longLivingNonSeriousError = text;

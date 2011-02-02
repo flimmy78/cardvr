@@ -76,6 +76,7 @@
 			this.tabOutput = new System.Windows.Forms.TabPage();
 			this.tabGps = new System.Windows.Forms.TabPage();
 			this.tabLocalization = new System.Windows.Forms.TabPage();
+			this.hideMouse = new System.Windows.Forms.CheckBox();
 			this.buttonBackColor = new System.Windows.Forms.Button();
 			this.labelColors = new System.Windows.Forms.Label();
 			this.buttonTextColor = new System.Windows.Forms.Button();
@@ -466,6 +467,7 @@
 			// tabLocalization
 			// 
 			resources.ApplyResources(this.tabLocalization, "tabLocalization");
+			this.tabLocalization.Controls.Add(this.hideMouse);
 			this.tabLocalization.Controls.Add(this.buttonBackColor);
 			this.tabLocalization.Controls.Add(this.labelColors);
 			this.tabLocalization.Controls.Add(this.buttonTextColor);
@@ -474,6 +476,12 @@
 			this.tabLocalization.Controls.Add(this.labelLanguage);
 			this.tabLocalization.Name = "tabLocalization";
 			this.tabLocalization.UseVisualStyleBackColor = true;
+			// 
+			// hideMouse
+			// 
+			resources.ApplyResources(this.hideMouse, "hideMouse");
+			this.hideMouse.Name = "hideMouse";
+			this.hideMouse.UseVisualStyleBackColor = true;
 			// 
 			// buttonBackColor
 			// 
@@ -504,6 +512,7 @@
 			// labelTestColor
 			// 
 			resources.ApplyResources(this.labelTestColor, "labelTestColor");
+			this.labelTestColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.labelTestColor.Name = "labelTestColor";
 			// 
 			// settingsForm
@@ -600,5 +609,6 @@
 		private System.Windows.Forms.CheckBox dontDisplayWhenAppInactive;
 		private System.Windows.Forms.NumericUpDown camFps;
 		private System.Windows.Forms.Label labelFrameRate;
+		private System.Windows.Forms.CheckBox hideMouse;
     }
 }

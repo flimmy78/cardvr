@@ -189,6 +189,8 @@ namespace CarDVR
 			// for first time
 			if (camFps.Value == camFps.Maximum && Program.settings.VideoFps > 0)
 				camFps.Value = Program.settings.VideoFps;
+
+			hideMouse.Checked = Program.settings.HideMouseCursor;
 		}
 
 		public void ApplyFormToSettings()
@@ -254,6 +256,7 @@ namespace CarDVR
 			Program.settings.DontShowVideoWhenInactive = dontDisplayWhenAppInactive.Checked;
 
 			Program.settings.Cam1FrameRate = (int)camFps.Value;
+			Program.settings.HideMouseCursor = hideMouse.Checked;
 		}
 
 		class CodecInfo
@@ -507,6 +510,7 @@ namespace CarDVR
 		public int InterfaceBackgroundColor { get; set; }
 		public bool DontShowVideoWhenInactive { get; set; }
 		public int Cam1FrameRate { get; set; }
+		public bool HideMouseCursor { get; set; }
 
 		/// <summary>
 		/// Initialization constructor

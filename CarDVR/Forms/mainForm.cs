@@ -27,39 +27,6 @@ namespace CarDVR
 			InitializeComponent();
 
 			AfterInitializeComponent();
-
-			for (int t = 0; t < maxG; ++t)
-				g.Add(null);
-		}
-
-		private void SafeVideoManagerInitialize()
-		{
-			try
-			{
-				videoManager.Initialize();
-			}
-			catch (NoWebcamException)
-			{
-				Reporter.SeriousError("Current webcam is not avalizble.");
-			}
-			catch (Exception e)
-			{
-				Reporter.SeriousError(e.Message);
-			}
-		}
-		
-		private void VideoInitialization()
-		{
-			try
-			{
-				videoManager.Initialize();
-
-				if (Program.settings.AutostartRecording && !string.IsNullOrEmpty(Program.settings.VideoSource))
-					StartStopRecording();
-			}
-			catch
-			{
-			}
 		}
 
 		private bool IsWebCamAvaliable()
@@ -112,26 +79,13 @@ namespace CarDVR
 					}
 					catch
 					{
-						Reporter.SeriousError("Current webcam is not avaliable.");
+						Reporter.SeriousError(Resources.CurrentWebCamNotAvaliable);
 					}
 				}
 
 				InitializeGps();
-			}
-		}
 
-		private void InitializeGps()
-		{
-			try
-			{
-				if (Program.settings.GpsEnabled)
-					gps.Initialize(Program.settings.GpsSerialPort, Program.settings.SerialPortBaudRate);
-				else
-					gps.Close();
-			}
-			catch (Exception e)
-			{
-				Reporter.NonSeriousError(e.Message);
+				CommonInitialization();
 			}
 		}
 
@@ -146,11 +100,11 @@ namespace CarDVR
 			}
 			catch (Exception e)
 			{
-				Reporter.NonSeriousError
+				Reporter.UnseriousError
 				(
 					string.Format
 					(
-						"Can't open GPS receiver on port '{0}'. GPS not active. Description: {1}",
+						Resources.CantOpenGpsOnPort,
 						Program.settings.GpsSerialPort,
 						e.Message
 					)
@@ -175,7 +129,7 @@ namespace CarDVR
 			videoManager.Start();
 			videoDrawer.Enabled = true;
 			
-			buttonStartStop.Text = resStop;
+			buttonStartStop.Text = Resources.Stop;
 			recordingState = RecordingState.Started;
 
 			ButtonStartStopEnable();
@@ -195,7 +149,7 @@ namespace CarDVR
 			// TODO: make class ImageDrawer (use empty)
 			camView.Image = new Bitmap(Program.settings.VideoWidth, Program.settings.VideoHeight);
 
-			buttonStartStop.Text = resStart;
+			buttonStartStop.Text = Resources.Start;
 			recordingState = RecordingState.Stopped;
 
 			ButtonStartStopEnable();
@@ -234,11 +188,6 @@ namespace CarDVR
 			StopRecordingAndWaitForFileClosing();
 		}
 
-		private void buttonMinimize_Click(object sender, EventArgs e)
-		{
-			this.WindowState = FormWindowState.Minimized;
-		}
-
 		private void AutostartDelayer_Handler(object sender, EventArgs e)
 		{
 			// TODO: make class BitmapDrawer
@@ -246,29 +195,6 @@ namespace CarDVR
 
 			ButtonStartStopEnable();
 			VideoInitialization();
-		}
-
-		public enum FillMode
-		{
-			Normal,
-			Full
-		}
-
-		private FillMode VideoWindowMode { get; set; }
-		private const int SpaceToButtons = 26;
-
-		private void MakeFullWindowVideo()
-		{
-			camView.Dock = DockStyle.Fill;
-			VideoWindowMode = FillMode.Full;
-		}
-
-		private void MakeSmallSizedVideo()
-		{
-			camView.Dock = DockStyle.None;
-			camView.Size = new Size(buttonSettings.Left - SpaceToButtons, buttonStartStop.Top - SpaceToButtons);
-			camView.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
-			VideoWindowMode = FillMode.Normal;
 		}
 
 		private void camView_Click(object sender, EventArgs e)
@@ -279,120 +205,22 @@ namespace CarDVR
 				MakeSmallSizedVideo();
 		}
 
-
-		const int maxG = 10;
-		int cnt = maxG-1;
-		List<Bitmap> g = new List<Bitmap>(maxG);
-		bool isFormActive = true;
-
-		Queue<Bitmap> drawQueue = new Queue<Bitmap>();
-		object drawQueueHolder = new object();
-	   
-		void videoManager_NewFrame(object sender, NewFrameEventArgs eventArgs)
-		{
-			if (Program.settings.DontShowVideoWhenInactive && !isFormActive)
-				return;
-
-			lock (frameKeeper)
-			{
-			    cnt++;
-			    cnt = cnt % maxG;
-
-			    Bitmap b = g[cnt];
-
-			    while (b != null && b.Tag != null)
-			    {
-			        cnt++;
-			        cnt = cnt % maxG;
-			        b = g[cnt];
-			    }
-
-			    if (b != null)
-			        b.Dispose();
-
-			    g[cnt] = (Bitmap)eventArgs.Frame.Clone();
-			}
-		}
-
-		private void videoDrawer_Tick(object sender, EventArgs e)
-		{
-			if (Program.settings.DontShowVideoWhenInactive && !isFormActive)
-				return;
-
-			lock (frameKeeper)
-			{
-				if (g[cnt] == null)
-					return;
-
-				if (camView.Image != null)
-					camView.Image.Tag = null;
-
-				camView.Image = g[cnt];
-				camView.Image.Tag = 1;
-			}
-		}
-
-		private void buttonMaximize_Click(object sender, EventArgs e)
-		{
-			if (WindowState == FormWindowState.Normal)
-			{
-				buttonMaximize.Text = resNormalize;
-				this.WindowState = FormWindowState.Maximized;
-			}
-			else if (WindowState == FormWindowState.Maximized)
-			{
-				buttonMaximize.Text = resMaximize;
-				this.WindowState = FormWindowState.Normal;
-			}
-		}
-
-		private void MainForm_SizeChanged(object sender, EventArgs e)
-		{
-			if (WindowState == FormWindowState.Normal)
-			{
-				buttonMaximize.Text = resMaximize;
-			}
-			else if (WindowState == FormWindowState.Maximized)
-			{
-				buttonMaximize.Text = resNormalize;
-			}
-		}
-
-		void SetColor(Control control, Color foreColor, Color backColor)
-		{
-			foreach (Control c in control.Controls)
-			{
-				SetColor(c, foreColor, backColor);
-			}
-			try
-			{
-				control.ForeColor = foreColor;
-				control.BackColor = backColor;
-			}
-			catch { }
-		}
-
 		private void buttonExit_Click(object sender, EventArgs e)
 		{
 			StopRecordingAndWaitForFileClosing();
 			this.Close();
 		}
 
-		private void MainForm_Activated(object sender, EventArgs e)
-		{
-			isFormActive = true;
-		}
-
-		private void MainForm_Deactivate(object sender, EventArgs e)
-		{
-			isFormActive = false;
-		}
-
 		private void timerFps_Tick(object sender, EventArgs e)
 		{
-			labelCamFpsValue.Text = videoManager.FpsFromCamera().ToString();
-			labelWrittenFpsValue.Text = videoManager.FpsWritten().ToString();
-			labelEmptyFpsValue.Text = videoManager.FpsEmptyFrames().ToString();
+			//labelCamFpsValue.Text = videoManager.FpsFromCamera().ToString();
+			//labelWrittenFpsValue.Text = videoManager.FpsWritten().ToString();
+			//labelEmptyFpsValue.Text = videoManager.FpsEmptyFrames().ToString();
+		}
+
+		private void videoDrawer_Tick(object sender, EventArgs e)
+		{
+			DrawFrameOnForm();
 		}
 	}
 }

@@ -6,24 +6,17 @@ using System.Globalization;
 using System.Threading;
 using System.Resources;
 using System.Drawing;
+using AForge.Video;
 
 namespace CarDVR
 {
 	public partial class MainForm : Form
 	{
-		object frameKeeper = new object();
-
-		private void SetLocalization(string language)
-		{
-			CultureInfo ci = new CultureInfo(language == "Russian" ? "ru-RU" : "en-US");
-			Thread.CurrentThread.CurrentUICulture = ci;
-		}
-
 		private void BeforeInitializeComponent()
 		{
 			Program.settings.Read();
 			SetLocalization(Program.settings.Language);
-			InitDynamicResources(Program.settings.Language);
+			Resources.InitDynamicResources(Program.settings.Language);
 			VideoWindowMode = FillMode.Normal;
 			videoManager.NewFrame += videoManager_NewFrame;
 		}
@@ -33,9 +26,6 @@ namespace CarDVR
 			Text = Application.ProductName + " v" + GetProgramVersion();
 
 			IsWebCamAvaliable();
-
-			if (Program.settings.StartWithFullWindowedVideo)
-				MakeFullWindowVideo();
 
 			if (Program.settings.AutostartRecording && Program.settings.DelayBeforeStart > 0)
 			{
@@ -51,12 +41,17 @@ namespace CarDVR
 				using (Graphics g = Graphics.FromImage(message))
 				{
 					Font framefont = new Font("Arial", 18, FontStyle.Bold);
-					string text = "On start delay";
-					g.DrawString(text, framefont, Brushes.Black, message.Width / 2 - text.Length / 2 * framefont.Size, message.Height / 2);
+					g.DrawString
+					(
+						Resources.OnStartDelay, 
+						framefont, 
+						Brushes.Black,
+						message.Width / 2 - Resources.OnStartDelay.Length / 2 * framefont.Size, 
+						message.Height / 2
+					);
 				}
 				camView.Image = message;
 
-				// Protect pressing button "start"
 				ButtonStartStopDisable();
 			}
 			else
@@ -65,7 +60,26 @@ namespace CarDVR
 			if (Program.settings.StartMinimized)
 				this.WindowState = FormWindowState.Minimized;
 
+			InitDrawingFrames();
+
+			if (Program.settings.StartWithFullWindowedVideo)
+				MakeFullWindowVideo();
+
+			CommonInitialization();
+		}
+
+		private void CommonInitialization()
+		{
+			if (Program.settings.HideMouseCursor)
+				Cursor.Hide();
+
 			SetColor(this, Color.FromArgb(Program.settings.InterfaceForeColor), Color.FromArgb(Program.settings.InterfaceBackgroundColor));
+		}
+	
+		private void SetLocalization(string language)
+		{
+			CultureInfo ci = new CultureInfo(language == "Russian" ? "ru-RU" : "en-US");
+			Thread.CurrentThread.CurrentUICulture = ci;
 		}
 
 		private string GetProgramVersion()
@@ -96,6 +110,54 @@ namespace CarDVR
 		private void ShowNoVideosourceWarning()
 		{
 			labelNoVideoSource.Visible = true;
+		}
+
+		private void SafeVideoManagerInitialize()
+		{
+			try
+			{
+				videoManager.Initialize();
+			}
+			catch (NoWebcamException)
+			{
+				Reporter.SeriousError(Resources.CurrentWebCamNotAvaliable);
+			}
+			catch (Exception e)
+			{
+				Reporter.SeriousError(e.Message);
+			}
+		}
+
+		private void InitializeGps()
+		{
+			try
+			{
+				if (Program.settings.GpsEnabled)
+					gps.Initialize(Program.settings.GpsSerialPort, Program.settings.SerialPortBaudRate);
+				else
+					gps.Close();
+			}
+			catch (Exception e)
+			{
+				Reporter.UnseriousError(e.Message);
+			}
+		}
+
+		private void VideoInitialization()
+		{
+			try
+			{
+				videoManager.Initialize();
+
+				if (Program.settings.AutostartRecording && !string.IsNullOrEmpty(Program.settings.VideoSource))
+					StartRecording();
+			}
+			catch { }
+		}
+
+		void videoManager_NewFrame(object sender, NewFrameEventArgs eventArgs)
+		{
+			PrepareFrameToDraw(eventArgs.Frame);
 		}
 	}
 }

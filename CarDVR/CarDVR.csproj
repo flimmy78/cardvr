@@ -82,12 +82,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>mainForm.en.resx</DependentUpon>
     </Compile>
+    <Compile Include="Forms\mainFormDesign.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\mainFormDraw.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\mainFormInitialization.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\mainFormResources.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\mainFormResources.cs" />
     <Compile Include="Forms\settingsForm1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

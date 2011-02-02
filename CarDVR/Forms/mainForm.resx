@@ -124,14 +124,18 @@
   <data name="&gt;&gt;labelEmptyFpsValue.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;labelWrittenFps.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;buttonSettings.Name" xml:space="preserve">
-    <value>buttonSettings</value>
-  </data>
   <data name="&gt;&gt;buttonMaximize.Parent" xml:space="preserve">
     <value>$this</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="labelWrittenFpsValue.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="labelEmptyFps.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelCamFps.Text" xml:space="preserve">
+    <value>Cam fps</value>
   </data>
   <data name="&gt;&gt;labelCamFpsValue.Name" xml:space="preserve">
     <value>labelCamFpsValue</value>
@@ -139,17 +143,16 @@
   <data name="&gt;&gt;labelNoVideoSource.Name" xml:space="preserve">
     <value>labelNoVideoSource</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="labelWrittenFpsValue.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="buttonExit.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="buttonExit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 62</value>
   </data>
   <data name="labelWrittenFps.Text" xml:space="preserve">
     <value>Written fps</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="labelEmptyFpsValue.Location" type="System.Drawing.Point, System.Drawing">
     <value>184, 268</value>
   </data>
@@ -168,11 +171,11 @@
   <data name="buttonMinimize.Size" type="System.Drawing.Size, System.Drawing">
     <value>90, 62</value>
   </data>
+  <data name="labelNoVideoSource.Location" type="System.Drawing.Point, System.Drawing">
+    <value>114, 217</value>
+  </data>
   <data name="labelEmptyFps.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
-  </data>
-  <data name="labelWrittenFpsValue.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
   </data>
   <data name="labelEmptyFps.Location" type="System.Drawing.Point, System.Drawing">
     <value>117, 268</value>
@@ -189,9 +192,6 @@
   <data name="&gt;&gt;buttonMaximize.Name" xml:space="preserve">
     <value>buttonMaximize</value>
   </data>
-  <data name="&gt;&gt;buttonExit.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Car DVR</value>
   </data>
@@ -205,7 +205,7 @@
     <value>Top, Right</value>
   </data>
   <data name="&gt;&gt;buttonExit.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;buttonSettings.Parent" xml:space="preserve">
     <value>$this</value>
@@ -233,6 +233,9 @@
   </data>
   <data name="labelCamFps.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="&gt;&gt;labelNoVideoSource.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="&gt;&gt;labelCamFps.ZOrder" xml:space="preserve">
     <value>6</value>
@@ -294,20 +297,14 @@
   <data name="camView.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>StretchImage</value>
   </data>
-  <data name="buttonStartStop.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 222</value>
-  </data>
-  <data name="buttonExit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 62</value>
+  <data name="&gt;&gt;labelWrittenFps.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="buttonSettings.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
   <data name="labelWrittenFpsValue.Size" type="System.Drawing.Size, System.Drawing">
     <value>13, 13</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;videoDrawer.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -339,11 +336,11 @@
   <data name="&gt;&gt;labelEmptyFpsValue.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;labelNoVideoSource.ZOrder" xml:space="preserve">
-    <value>9</value>
+  <data name="buttonStartStop.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 222</value>
   </data>
-  <data name="&gt;&gt;buttonMaximize.ZOrder" xml:space="preserve">
-    <value>8</value>
+  <data name="&gt;&gt;buttonExit.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="camView.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -366,11 +363,14 @@
   <data name="&gt;&gt;buttonExit.Name" xml:space="preserve">
     <value>buttonExit</value>
   </data>
-  <data name="buttonStartStop.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 62</value>
+  <data name="&gt;&gt;buttonSettings.Name" xml:space="preserve">
+    <value>buttonSettings</value>
   </data>
   <data name="buttonMinimize.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 151</value>
+  </data>
+  <data name="camView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>230, 201</value>
   </data>
   <data name="labelCamFpsValue.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -385,7 +385,7 @@
     <value>0</value>
   </data>
   <data name="&gt;&gt;buttonStartStop.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;labelEmptyFps.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -397,13 +397,16 @@
     <value>90, 62</value>
   </data>
   <data name="&gt;&gt;buttonSettings.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>6</value>
   </data>
   <data name="&gt;&gt;timerFps.Name" xml:space="preserve">
     <value>timerFps</value>
   </data>
   <data name="labelEmptyFpsValue.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
+  </data>
+  <data name="&gt;&gt;buttonMaximize.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;buttonMinimize.Name" xml:space="preserve">
     <value>buttonMinimize</value>
@@ -414,6 +417,9 @@
   <data name="buttonStartStop.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
+  <data name="buttonStartStop.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 62</value>
+  </data>
   <data name="labelEmptyFpsValue.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -422,6 +428,9 @@
   </data>
   <data name="labelEmptyFps.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
+  </data>
+  <data name="buttonExit.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
   <data name="buttonSettings.Location" type="System.Drawing.Point, System.Drawing">
     <value>256, 12</value>
@@ -1472,8 +1481,8 @@
   <data name="&gt;&gt;buttonSettings.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="labelNoVideoSource.Location" type="System.Drawing.Point, System.Drawing">
-    <value>114, 217</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="buttonMaximize.Location" type="System.Drawing.Point, System.Drawing">
     <value>256, 81</value>
@@ -1483,9 +1492,6 @@
   </data>
   <data name="&gt;&gt;labelEmptyFps.Name" xml:space="preserve">
     <value>labelEmptyFps</value>
-  </data>
-  <data name="labelEmptyFps.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="buttonMinimize.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1511,8 +1517,8 @@
   <data name="&gt;&gt;camView.Type" xml:space="preserve">
     <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="camView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>230, 201</value>
+  <data name="labelEmptyFps.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
   </data>
   <data name="&gt;&gt;labelWrittenFpsValue.Parent" xml:space="preserve">
     <value>$this</value>
@@ -1545,7 +1551,7 @@
     <value>58, 13</value>
   </data>
   <data name="&gt;&gt;buttonMinimize.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>5</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>357, 296</value>
@@ -1556,9 +1562,6 @@
   <data name="labelCamFpsValue.Size" type="System.Drawing.Size, System.Drawing">
     <value>13, 13</value>
   </data>
-  <data name="labelCamFps.Text" xml:space="preserve">
-    <value>Cam fps</value>
-  </data>
   <data name="labelCamFpsValue.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1567,9 +1570,6 @@
   </data>
   <data name="labelCamFps.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
-  </data>
-  <data name="labelEmptyFps.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
   </data>
   <data name="labelNoVideoSource.Text" xml:space="preserve">
     <value>No video source selected</value>

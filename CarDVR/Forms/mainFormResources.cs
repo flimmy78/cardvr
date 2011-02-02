@@ -5,45 +5,54 @@ using System.Windows.Forms;
 
 namespace CarDVR
 {
-	public partial class MainForm : Form
+	public class Resources
 	{
-		public static string resSpeed;
-		public static string resKmh;
-		public static string resSatellites;
-		public static string resNoGpsSignal;
-		public static string resGpsNotConnected;
-		public static string resStop;
-		public static string resStart;
-		public static string resMaximize;
-		public static string resNormalize;
+		public static string Speed;
+		public static string Kmh;
+		public static string Satellites;
+		public static string NoGpsSignal;
+		public static string GpsNotConnected;
+		public static string Stop;
+		public static string Start;
+		public static string Maximize;
+		public static string Normalize;
+		public static string OnStartDelay;
+		public static string CurrentWebCamNotAvaliable;
+		public static string CantOpenGpsOnPort;
 
-		private void InitRussianResources()
+		static private void InitRussianResources()
 		{
-			resSpeed = "Скорость:";
-			resKmh = "км/ч";
-			resSatellites = "Спутников:";
-			resNoGpsSignal = "Нет сигнала GPS";
-			resGpsNotConnected = "GPS не подключен";
-			resStop = "Стоп";
-			resStart = "Старт";
-			resMaximize = "Развернуть";
-			resNormalize = "Вернуть";
+			Speed = "Скорость:";
+			Kmh = "км/ч";
+			Satellites = "Спутников:";
+			NoGpsSignal = "Нет сигнала GPS";
+			GpsNotConnected = "GPS не подключен";
+			Stop = "Стоп";
+			Start = "Старт";
+			Maximize = "Развернуть";
+			Normalize = "Вернуть";
+			OnStartDelay = "Задержка запуска";
+			CurrentWebCamNotAvaliable = "Выбранная веб камера не доступна";
+			CantOpenGpsOnPort = "Не удается открыть GPS приемник на порту '{0}'. GPS не активен. Описание: {1}";
 		}
 
-		private void InitEnglishResources()
+		static private void InitEnglishResources()
 		{
-			resSpeed = "Speed:";
-			resKmh = "km/h";
-			resSatellites = "Satellites:";
-			resNoGpsSignal = "No GPS signal";
-			resGpsNotConnected = "GPS not connected";
-			resStop = "Stop";
-			resStart = "Start";
-			resMaximize = "Maximize";
-			resNormalize = "Normalize";
+			Speed = "Speed:";
+			Kmh = "km/h";
+			Satellites = "Satellites:";
+			NoGpsSignal = "No GPS signal";
+			GpsNotConnected = "GPS not connected";
+			Stop = "Stop";
+			Start = "Start";
+			Maximize = "Maximize";
+			Normalize = "Normalize";
+			OnStartDelay = "On start delay";
+			CurrentWebCamNotAvaliable = "Current webcam is not avaliable";
+			CantOpenGpsOnPort = "Can't open GPS receiver on port '{0}'. GPS not active. Description: {1}";
 		}			 
 			
-		private void InitDynamicResources(string language)
+		static public void InitDynamicResources(string language)
 		{
 			if (language == "English")
 				InitEnglishResources();

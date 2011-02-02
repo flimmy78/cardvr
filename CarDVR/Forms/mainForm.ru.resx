@@ -146,6 +146,9 @@
   <data name="camView.Size" type="System.Drawing.Size, System.Drawing">
     <value>235, 198</value>
   </data>
+  <data name="labelNoVideoSource.Location" type="System.Drawing.Point, System.Drawing">
+    <value>112, 245</value>
+  </data>
   <data name="labelNoVideoSource.Size" type="System.Drawing.Size, System.Drawing">
     <value>144, 13</value>
   </data>
@@ -169,24 +172,6 @@
   </data>
   <data name="buttonExit.Text" xml:space="preserve">
     <value>Выход</value>
-  </data>
-  <data name="labelCamFps.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 13</value>
-  </data>
-  <data name="labelCamFps.Text" xml:space="preserve">
-    <value>Камера</value>
-  </data>
-  <data name="labelWrittenFps.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 13</value>
-  </data>
-  <data name="labelWrittenFps.Text" xml:space="preserve">
-    <value>Записано</value>
-  </data>
-  <data name="labelEmptyFps.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 13</value>
-  </data>
-  <data name="labelEmptyFps.Text" xml:space="preserve">
-    <value>Старых</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>365, 288</value>

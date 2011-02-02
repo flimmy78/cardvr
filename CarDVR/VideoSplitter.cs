@@ -44,7 +44,7 @@ namespace CarDVR
 				}
 				catch (Exception e)
 				{
-					Reporter.NonSeriousError(e.Message);
+					Reporter.UnseriousError(e.Message);
 					// frame was not added (may be shutdown)
 				}
 			}

@@ -698,6 +698,43 @@ namespace CarDVR.Forms {
             }
         }
         
+        public static bool hideMouse_AutoSize {
+            get {
+                object obj = ResourceManager.GetObject("hideMouse.AutoSize", resourceCulture);
+                return ((bool)(obj));
+            }
+        }
+        
+        public static System.Drawing.Point hideMouse_Location {
+            get {
+                object obj = ResourceManager.GetObject("hideMouse.Location", resourceCulture);
+                return ((System.Drawing.Point)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size hideMouse_Size {
+            get {
+                object obj = ResourceManager.GetObject("hideMouse.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        public static int hideMouse_TabIndex {
+            get {
+                object obj = ResourceManager.GetObject("hideMouse.TabIndex", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to hide mouse cursor.
+        /// </summary>
+        public static string hideMouse_Text {
+            get {
+                return ResourceManager.GetString("hideMouse.Text", resourceCulture);
+            }
+        }
+        
         public static bool label1_AutoSize {
             get {
                 object obj = ResourceManager.GetObject("label1.AutoSize", resourceCulture);
