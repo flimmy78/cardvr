@@ -25,7 +25,18 @@ namespace CarDVR
 		Pen epicPen = new Pen(Brushes.Red, 2);
 
 		// TODO: make stand alone class FramesCounter
-		//int lastFrames = 0, totalFrames = 0, lastFps = 0;
+		int framesFromCamera = 0;
+		int lastFramesFromCamera = 0;
+		int fpsFromCamera = 0;
+
+		int framesWritten = 0;
+		int lastFramesWritter = 0;
+		int fpsWritten = 0;
+
+		int emptyFramesWritten = 0;
+		int lastEmptyFramesWritten = 0;
+		int fpsEmptyFrames = 0;
+
 		object framesCountKeeper = new object();
 
 		VideoCaptureDevice webcam = null;
@@ -34,11 +45,13 @@ namespace CarDVR
 
 		VideoSplitter splitter = new VideoSplitter();
 
-		//System.Timers.Timer FpsDisplayer = new System.Timers.Timer();
+		System.Timers.Timer FpsDisplayer = new System.Timers.Timer();
 		System.Threading.Thread writeThread = null;
 
 		int writeDelay = 0;
 		//int writtenFrames = 0;
+		bool frameWritten = false;
+		int nullframecounter = 0;
 
 		GpsReceiver gps;
 
@@ -59,18 +72,48 @@ namespace CarDVR
 
 				while (true)
 				{
-					Bitmap fr;
+					Bitmap fr = null;
+					int addEmptyFrames = 0;
 					lock (queueHolder)
 					{
 						if (writingQueue.Count == 0)
 							break;
 
-						fr = writingQueue.Dequeue();
+						if (Program.settings.OutputRateFps > 2 && writingQueue.Count > Program.settings.OutputRateFps / 2)
+						{
+							addEmptyFrames = writingQueue.Count;
+							writingQueue.Clear();														
+						}
+						else
+						{
+							fr = writingQueue.Dequeue();
+						}
+					}
+
+					if (addEmptyFrames > 0)
+					{
+						while (addEmptyFrames > 0)
+						{
+							splitter.AddFrame(null);
+							--addEmptyFrames;
+							++emptyFramesWritten;
+						}
+						continue;
 					}
 
 					splitter.AddFrame(fr);
-					fr.Dispose();
-					fr = null;
+
+					if (fr != null)
+					{
+						++framesWritten;
+
+						fr.Dispose();
+						fr = null;
+					}
+					else
+					{
+						++emptyFramesWritten;
+					}
 				}
 			}
 		}
@@ -79,9 +122,9 @@ namespace CarDVR
 		{
 			gps = gpsRcvr;
 
-			//FpsDisplayer.Interval = 1000;
-			//FpsDisplayer.Elapsed += new System.Timers.ElapsedEventHandler(FpsDisplayer_Tick);
-			//FpsDisplayer.Enabled = false;
+			FpsDisplayer.Interval = 1000;
+			FpsDisplayer.Elapsed += new System.Timers.ElapsedEventHandler(FpsDisplayer_Tick);
+			FpsDisplayer.Enabled = false;
 		}
 
 		public void WriteThreadProc()
@@ -134,7 +177,16 @@ namespace CarDVR
 
 					lock (queueHolder)
 					{
-						writingQueue.Enqueue((Bitmap)frame.Clone());
+						if (frameWritten)
+						{
+							++nullframecounter;
+							writingQueue.Enqueue(null);
+						}
+						else
+						{
+							writingQueue.Enqueue((Bitmap)frame.Clone());
+							frameWritten = true;
+						}
 					}
 					writeEvent.Set();
 				}
@@ -201,17 +253,19 @@ namespace CarDVR
 				
 				webcam = new VideoCaptureDevice(Program.settings.VideoSourceId);
 				webcam.NewFrame += videoSource_NewFrame;
-				webcam.DesiredFrameRate = Program.settings.VideoFps > 0 ? Program.settings.VideoFps : fps;
+				webcam.DesiredFrameRate = Program.settings.Cam1FrameRate > 0 ? Program.settings.Cam1FrameRate : fps;
 				webcam.DesiredFrameSize = new Size(Program.settings.VideoWidth, Program.settings.VideoHeight);
 
+				int writeFps = Program.settings.OutputRateFps != 0 ? Program.settings.OutputRateFps : fps;
+
 				splitter.Codec = Program.settings.Codec;
-				splitter.FPS = fps;
+				splitter.FPS = writeFps; // (Program.settings.Cam1FrameRate > 0 && Program.settings.Cam1FrameRate < fps ? Program.settings.Cam1FrameRate : fps);
 				splitter.VideoSize = Program.settings.GetVideoSize();
 				splitter.FileDuration = Program.settings.AviDuration;
 				splitter.NumberOfFiles = Program.settings.AmountOfFiles;
 				splitter.Path = Program.settings.PathForVideo;
 
-				writeDelay = 1000 / fps;
+				writeDelay = 1000 / (writeFps);
 			}
 		}
 
@@ -223,6 +277,9 @@ namespace CarDVR
 					frame.Dispose();
 
 				frame = (Bitmap)eventArgs.Frame.Clone();
+				frameWritten = false;
+
+				++framesFromCamera;
 			}
 		}
 
@@ -237,12 +294,12 @@ namespace CarDVR
 			writeThread = new Thread(new ThreadStart(WriteThreadProc));
 			writeThread.Start();
 
-			//FpsDisplayer.Enabled = true;
+			FpsDisplayer.Enabled = true;
 		}
 
 		public void Stop()
 		{
-			//FpsDisplayer.Enabled = false;
+			FpsDisplayer.Enabled = false;
 
 			queueThread.Abort();
 			queueThread.Join();
@@ -254,7 +311,9 @@ namespace CarDVR
 
 			webcam.SignalToStop();
 			webcam.WaitForStop();
-			splitter.Stop();			
+			splitter.Stop();
+
+			writingQueue.Clear();
 		}
 
 		private string MakeFrameString()
@@ -287,14 +346,56 @@ namespace CarDVR
 			return result;
 		}
 
-		//private void FpsDisplayer_Tick(object sender, EventArgs e)
-		//{
-		//    lock (framesCountKeeper)
-		//    {
-		//        lastFps = totalFrames - lastFrames;
-		//        lastFrames = totalFrames;
-		//    }
-		//}
+		private void FpsDisplayer_Tick(object sender, EventArgs e)
+		{
+			lock (framesCountKeeper)
+			{
+				//lastFps = totalFrames - lastFrames;
+				//lastFrames = totalFrames;
+
+				fpsFromCamera = framesFromCamera - lastFramesFromCamera;
+				lastFramesFromCamera = framesFromCamera;
+
+				fpsWritten = framesWritten - lastFramesWritter;
+				lastFramesWritter = framesWritten;
+
+				fpsEmptyFrames = emptyFramesWritten - lastEmptyFramesWritten;
+				lastEmptyFramesWritten = emptyFramesWritten;
+			}
+		}
+
+		public int FpsFromCamera()
+		{
+			int value = 0;
+
+			lock (framesCountKeeper)
+			{
+				value = fpsFromCamera;
+			}
+			return value;
+		}
+
+		public int FpsWritten()
+		{
+			int value = 0;
+
+			lock (framesCountKeeper)
+			{
+				value = fpsWritten;
+			}
+			return value;
+		}
+
+		public int FpsEmptyFrames()
+		{
+			int value = 0;
+
+			lock (framesCountKeeper)
+			{
+				value = fpsEmptyFrames;
+			}
+			return value;
+		}
 
 		public void ShowPpropertiesDialog(string moniker, Form parent)
 		{

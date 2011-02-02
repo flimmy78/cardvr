@@ -182,6 +182,13 @@ namespace CarDVR
 			labelTestColor.BackColor = Color.FromArgb(Program.settings.InterfaceBackgroundColor);
 
 			dontDisplayWhenAppInactive.Checked = Program.settings.DontShowVideoWhenInactive;
+
+			if (Program.settings.Cam1FrameRate > 0)
+				camFps.Value = Program.settings.Cam1FrameRate;
+
+			// for first time
+			if (camFps.Value == camFps.Maximum && Program.settings.VideoFps > 0)
+				camFps.Value = Program.settings.VideoFps;
 		}
 
 		public void ApplyFormToSettings()
@@ -245,6 +252,8 @@ namespace CarDVR
 			Program.settings.InterfaceBackgroundColor = labelTestColor.BackColor.ToArgb();
 
 			Program.settings.DontShowVideoWhenInactive = dontDisplayWhenAppInactive.Checked;
+
+			Program.settings.Cam1FrameRate = (int)camFps.Value;
 		}
 
 		class CodecInfo
@@ -395,6 +404,17 @@ namespace CarDVR
 
 			if (!CheckDirectoryForWrite(textBoxPath.Text))
 				e.Cancel = true;
+
+			//CheckWebcamFps();
+		}
+
+		private void CheckWebcamFps()
+		{
+			if (Program.settings.Cam1FrameRate > Program.settings.VideoFps)
+			{
+				if (MessageBox.Show("Maximal frame rate in this mode is " + Program.settings.VideoFps.ToString() + " fps. Do you want to set it as cam fps?", "Warning", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+					camFps.Value = Program.settings.VideoFps;
+			}
 		}
 
 		private void listCodecs_SelectedValueChanged(object sender, EventArgs e)
@@ -486,6 +506,7 @@ namespace CarDVR
 		public int InterfaceForeColor { get; set; }
 		public int InterfaceBackgroundColor { get; set; }
 		public bool DontShowVideoWhenInactive { get; set; }
+		public int Cam1FrameRate { get; set; }
 
 		/// <summary>
 		/// Initialization constructor
@@ -513,6 +534,7 @@ namespace CarDVR
 			Language = DEFAULT_LANGUAGE;
 			Codec = DEFAULT_CODEC;
 			DontShowVideoWhenInactive = false;
+			Cam1FrameRate = 0;
 		}
 
 		/// <summary>

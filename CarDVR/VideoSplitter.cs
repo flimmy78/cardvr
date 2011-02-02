@@ -37,7 +37,10 @@ namespace CarDVR
 			{
 				try
 				{
-					currentAvi.AddFrame(frame);
+					if (frame == null)
+						currentAvi.AddEmptyFrame();
+					else
+						currentAvi.AddFrame(frame);
 				}
 				catch (Exception e)
 				{
@@ -199,8 +202,8 @@ namespace CarDVR
 
 		public void AddFrame(Bitmap frame)
 		{
-			if (frame == null)
-				return;
+			//if (frame == null)
+			//    return;
 
 			lock (secondsWatchDog)
 			{

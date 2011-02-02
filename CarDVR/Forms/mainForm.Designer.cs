@@ -38,6 +38,13 @@
 			this.videoDrawer = new System.Windows.Forms.Timer(this.components);
 			this.buttonMaximize = new System.Windows.Forms.Button();
 			this.buttonExit = new System.Windows.Forms.Button();
+			this.timerFps = new System.Windows.Forms.Timer(this.components);
+			this.labelCamFps = new System.Windows.Forms.Label();
+			this.labelCamFpsValue = new System.Windows.Forms.Label();
+			this.labelWrittenFpsValue = new System.Windows.Forms.Label();
+			this.labelWrittenFps = new System.Windows.Forms.Label();
+			this.labelEmptyFpsValue = new System.Windows.Forms.Label();
+			this.labelEmptyFps = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.camView)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -94,12 +101,54 @@
 			this.buttonExit.UseVisualStyleBackColor = true;
 			this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
 			// 
+			// timerFps
+			// 
+			this.timerFps.Enabled = true;
+			this.timerFps.Interval = 1000;
+			this.timerFps.Tick += new System.EventHandler(this.timerFps_Tick);
+			// 
+			// labelCamFps
+			// 
+			resources.ApplyResources(this.labelCamFps, "labelCamFps");
+			this.labelCamFps.Name = "labelCamFps";
+			// 
+			// labelCamFpsValue
+			// 
+			resources.ApplyResources(this.labelCamFpsValue, "labelCamFpsValue");
+			this.labelCamFpsValue.Name = "labelCamFpsValue";
+			// 
+			// labelWrittenFpsValue
+			// 
+			resources.ApplyResources(this.labelWrittenFpsValue, "labelWrittenFpsValue");
+			this.labelWrittenFpsValue.Name = "labelWrittenFpsValue";
+			// 
+			// labelWrittenFps
+			// 
+			resources.ApplyResources(this.labelWrittenFps, "labelWrittenFps");
+			this.labelWrittenFps.Name = "labelWrittenFps";
+			// 
+			// labelEmptyFpsValue
+			// 
+			resources.ApplyResources(this.labelEmptyFpsValue, "labelEmptyFpsValue");
+			this.labelEmptyFpsValue.Name = "labelEmptyFpsValue";
+			// 
+			// labelEmptyFps
+			// 
+			resources.ApplyResources(this.labelEmptyFps, "labelEmptyFps");
+			this.labelEmptyFps.Name = "labelEmptyFps";
+			// 
 			// MainForm
 			// 
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
 			this.Controls.Add(this.camView);
+			this.Controls.Add(this.labelEmptyFpsValue);
+			this.Controls.Add(this.labelEmptyFps);
+			this.Controls.Add(this.labelWrittenFpsValue);
+			this.Controls.Add(this.labelWrittenFps);
+			this.Controls.Add(this.labelCamFpsValue);
+			this.Controls.Add(this.labelCamFps);
 			this.Controls.Add(this.buttonExit);
 			this.Controls.Add(this.buttonMaximize);
 			this.Controls.Add(this.labelNoVideoSource);
@@ -127,6 +176,13 @@
 		private System.Windows.Forms.Timer videoDrawer;
 		private System.Windows.Forms.Button buttonMaximize;
 		private System.Windows.Forms.Button buttonExit;
+		private System.Windows.Forms.Timer timerFps;
+		private System.Windows.Forms.Label labelCamFps;
+		private System.Windows.Forms.Label labelCamFpsValue;
+		private System.Windows.Forms.Label labelWrittenFpsValue;
+		private System.Windows.Forms.Label labelWrittenFps;
+		private System.Windows.Forms.Label labelEmptyFpsValue;
+		private System.Windows.Forms.Label labelEmptyFps;
     }
 }
 

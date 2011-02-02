@@ -66,6 +66,8 @@
 			this.dontDisplayWhenAppInactive = new System.Windows.Forms.CheckBox();
 			this.startWithFullWindowedVideo = new System.Windows.Forms.CheckBox();
 			this.tabVideoSource = new System.Windows.Forms.TabPage();
+			this.camFps = new System.Windows.Forms.NumericUpDown();
+			this.labelFrameRate = new System.Windows.Forms.Label();
 			this.buttonSettings = new System.Windows.Forms.Button();
 			this.tabCompression = new System.Windows.Forms.TabPage();
 			this.labelSelectedCodec = new System.Windows.Forms.Label();
@@ -88,6 +90,7 @@
 			this.tabPageSettings.SuspendLayout();
 			this.tabStartOptions.SuspendLayout();
 			this.tabVideoSource.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.camFps)).BeginInit();
 			this.tabCompression.SuspendLayout();
 			this.tabOutput.SuspendLayout();
 			this.tabGps.SuspendLayout();
@@ -376,6 +379,8 @@
 			// tabVideoSource
 			// 
 			resources.ApplyResources(this.tabVideoSource, "tabVideoSource");
+			this.tabVideoSource.Controls.Add(this.camFps);
+			this.tabVideoSource.Controls.Add(this.labelFrameRate);
 			this.tabVideoSource.Controls.Add(this.buttonSettings);
 			this.tabVideoSource.Controls.Add(this.comboResolution);
 			this.tabVideoSource.Controls.Add(this.labelVideosource);
@@ -383,6 +388,26 @@
 			this.tabVideoSource.Controls.Add(this.labelResolution);
 			this.tabVideoSource.Name = "tabVideoSource";
 			this.tabVideoSource.UseVisualStyleBackColor = true;
+			// 
+			// camFps
+			// 
+			resources.ApplyResources(this.camFps, "camFps");
+			this.camFps.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.camFps.Name = "camFps";
+			this.camFps.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			// 
+			// labelFrameRate
+			// 
+			resources.ApplyResources(this.labelFrameRate, "labelFrameRate");
+			this.labelFrameRate.Name = "labelFrameRate";
 			// 
 			// buttonSettings
 			// 
@@ -506,6 +531,7 @@
 			this.tabStartOptions.PerformLayout();
 			this.tabVideoSource.ResumeLayout(false);
 			this.tabVideoSource.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.camFps)).EndInit();
 			this.tabCompression.ResumeLayout(false);
 			this.tabCompression.PerformLayout();
 			this.tabOutput.ResumeLayout(false);
@@ -572,5 +598,7 @@
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Label labelTestColor;
 		private System.Windows.Forms.CheckBox dontDisplayWhenAppInactive;
+		private System.Windows.Forms.NumericUpDown camFps;
+		private System.Windows.Forms.Label labelFrameRate;
     }
 }

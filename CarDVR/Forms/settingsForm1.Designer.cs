@@ -389,6 +389,27 @@ namespace CarDVR.Forms {
             }
         }
         
+        public static System.Drawing.Point camFps_Location {
+            get {
+                object obj = ResourceManager.GetObject("camFps.Location", resourceCulture);
+                return ((System.Drawing.Point)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size camFps_Size {
+            get {
+                object obj = ResourceManager.GetObject("camFps.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        public static int camFps_TabIndex {
+            get {
+                object obj = ResourceManager.GetObject("camFps.TabIndex", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
         public static System.Drawing.Point colorDialog_TrayLocation {
             get {
                 object obj = ResourceManager.GetObject("colorDialog.TrayLocation", resourceCulture);
@@ -896,6 +917,50 @@ namespace CarDVR.Forms {
         public static string labelDelayAutostart_Text {
             get {
                 return ResourceManager.GetString("labelDelayAutostart.Text", resourceCulture);
+            }
+        }
+        
+        public static bool labelFrameRate_AutoSize {
+            get {
+                object obj = ResourceManager.GetObject("labelFrameRate.AutoSize", resourceCulture);
+                return ((bool)(obj));
+            }
+        }
+        
+        public static System.Windows.Forms.ImeMode labelFrameRate_ImeMode {
+            get {
+                object obj = ResourceManager.GetObject("labelFrameRate.ImeMode", resourceCulture);
+                return ((System.Windows.Forms.ImeMode)(obj));
+            }
+        }
+        
+        public static System.Drawing.Point labelFrameRate_Location {
+            get {
+                object obj = ResourceManager.GetObject("labelFrameRate.Location", resourceCulture);
+                return ((System.Drawing.Point)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size labelFrameRate_Size {
+            get {
+                object obj = ResourceManager.GetObject("labelFrameRate.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        public static int labelFrameRate_TabIndex {
+            get {
+                object obj = ResourceManager.GetObject("labelFrameRate.TabIndex", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to frame rate.
+        /// </summary>
+        public static string labelFrameRate_Text {
+            get {
+                return ResourceManager.GetString("labelFrameRate.Text", resourceCulture);
             }
         }
         

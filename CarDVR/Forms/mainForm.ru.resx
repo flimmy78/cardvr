@@ -170,6 +170,24 @@
   <data name="buttonExit.Text" xml:space="preserve">
     <value>Выход</value>
   </data>
+  <data name="labelCamFps.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 13</value>
+  </data>
+  <data name="labelCamFps.Text" xml:space="preserve">
+    <value>Камера</value>
+  </data>
+  <data name="labelWrittenFps.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 13</value>
+  </data>
+  <data name="labelWrittenFps.Text" xml:space="preserve">
+    <value>Записано</value>
+  </data>
+  <data name="labelEmptyFps.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 13</value>
+  </data>
+  <data name="labelEmptyFps.Text" xml:space="preserve">
+    <value>Старых</value>
+  </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>365, 288</value>
   </data>

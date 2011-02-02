@@ -211,12 +211,6 @@
   <data name="labelDegrees.Text" xml:space="preserve">
     <value>град</value>
   </data>
-  <data name="gbAutostart.Size" type="System.Drawing.Size, System.Drawing">
-    <value>258, 70</value>
-  </data>
-  <data name="gbAutostart.Text" xml:space="preserve">
-    <value>настройки записи</value>
-  </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 48</value>
   </data>
@@ -231,6 +225,12 @@
   </data>
   <data name="outputRate.Location" type="System.Drawing.Point, System.Drawing">
     <value>108, 44</value>
+  </data>
+  <data name="gbAutostart.Size" type="System.Drawing.Size, System.Drawing">
+    <value>258, 70</value>
+  </data>
+  <data name="gbAutostart.Text" xml:space="preserve">
+    <value>настройки записи</value>
   </data>
   <data name="labelDelayAutostart.Size" type="System.Drawing.Size, System.Drawing">
     <value>205, 13</value>
@@ -250,9 +250,6 @@
   <data name="labelLanguage.Text" xml:space="preserve">
     <value>язык интерфейса</value>
   </data>
-  <data name="tabStartOptions.Text" xml:space="preserve">
-    <value>Настройки запуск</value>
-  </data>
   <data name="dontDisplayWhenAppInactive.Size" type="System.Drawing.Size, System.Drawing">
     <value>201, 30</value>
   </data>
@@ -266,14 +263,20 @@
   <data name="startWithFullWindowedVideo.Text" xml:space="preserve">
     <value>запускать с полно-оконным видео</value>
   </data>
-  <data name="tabVideoSource.Text" xml:space="preserve">
-    <value>Источник</value>
+  <data name="tabStartOptions.Text" xml:space="preserve">
+    <value>Настройки запуск</value>
+  </data>
+  <data name="labelFrameRate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 13</value>
+  </data>
+  <data name="labelFrameRate.Text" xml:space="preserve">
+    <value>кадров</value>
   </data>
   <data name="buttonSettings.Text" xml:space="preserve">
     <value>Настройки</value>
   </data>
-  <data name="tabCompression.Text" xml:space="preserve">
-    <value>Сжатие</value>
+  <data name="tabVideoSource.Text" xml:space="preserve">
+    <value>Источник</value>
   </data>
   <data name="labelSelectedCodec.Location" type="System.Drawing.Point, System.Drawing">
     <value>117, 181</value>
@@ -290,11 +293,11 @@
   <data name="labelSelectedCodecTitle.Text" xml:space="preserve">
     <value>выбранный кодек:</value>
   </data>
+  <data name="tabCompression.Text" xml:space="preserve">
+    <value>Сжатие</value>
+  </data>
   <data name="tabOutput.Text" xml:space="preserve">
     <value>Видео</value>
-  </data>
-  <data name="tabLocalization.Text" xml:space="preserve">
-    <value>Интерфейс</value>
   </data>
   <data name="buttonBackColor.Location" type="System.Drawing.Point, System.Drawing">
     <value>315, 52</value>
@@ -314,11 +317,14 @@
   <data name="buttonTextColor.Text" xml:space="preserve">
     <value>текст</value>
   </data>
+  <data name="labelTestColor.Text" xml:space="preserve">
+    <value>Пример</value>
+  </data>
   <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
     <value>119, 51</value>
   </data>
-  <data name="labelTestColor.Text" xml:space="preserve">
-    <value>Пример</value>
+  <data name="tabLocalization.Text" xml:space="preserve">
+    <value>Интерфейс</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1353,10 +1359,6 @@
         ////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////w==
 </value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Настройки</value>

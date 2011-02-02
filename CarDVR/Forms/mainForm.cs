@@ -387,5 +387,12 @@ namespace CarDVR
 		{
 			isFormActive = false;
 		}
+
+		private void timerFps_Tick(object sender, EventArgs e)
+		{
+			labelCamFpsValue.Text = videoManager.FpsFromCamera().ToString();
+			labelWrittenFpsValue.Text = videoManager.FpsWritten().ToString();
+			labelEmptyFpsValue.Text = videoManager.FpsEmptyFrames().ToString();
+		}
 	}
 }
