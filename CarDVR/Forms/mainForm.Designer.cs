@@ -38,7 +38,6 @@
 			this.videoDrawer = new System.Windows.Forms.Timer(this.components);
 			this.buttonMaximize = new System.Windows.Forms.Button();
 			this.buttonExit = new System.Windows.Forms.Button();
-			this.timerFps = new System.Windows.Forms.Timer(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.camView)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -95,11 +94,6 @@
 			this.buttonExit.UseVisualStyleBackColor = true;
 			this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
 			// 
-			// timerFps
-			// 
-			this.timerFps.Interval = 1000;
-			this.timerFps.Tick += new System.EventHandler(this.timerFps_Tick);
-			// 
 			// MainForm
 			// 
 			resources.ApplyResources(this, "$this");
@@ -133,7 +127,6 @@
 		private System.Windows.Forms.Timer videoDrawer;
 		private System.Windows.Forms.Button buttonMaximize;
 		private System.Windows.Forms.Button buttonExit;
-		private System.Windows.Forms.Timer timerFps;
     }
 }
 

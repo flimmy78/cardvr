@@ -131,7 +131,7 @@
   <data name="labelWrittenFpsValue.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
-  <data name="labelEmptyFps.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="labelWrittenFps.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="labelCamFps.Text" xml:space="preserve">
@@ -198,6 +198,9 @@
   <data name="labelWrittenFps.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="labelCamFpsValue.Location" type="System.Drawing.Point, System.Drawing">
+    <value>184, 235</value>
+  </data>
   <data name="buttonExit.Text" xml:space="preserve">
     <value>Exit</value>
   </data>
@@ -233,9 +236,6 @@
   </data>
   <data name="labelCamFps.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
-  </data>
-  <data name="&gt;&gt;labelNoVideoSource.ZOrder" xml:space="preserve">
-    <value>3</value>
   </data>
   <data name="&gt;&gt;labelCamFps.ZOrder" xml:space="preserve">
     <value>6</value>
@@ -336,8 +336,8 @@
   <data name="&gt;&gt;labelEmptyFpsValue.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="buttonStartStop.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 222</value>
+  <data name="&gt;&gt;labelNoVideoSource.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="&gt;&gt;buttonExit.Parent" xml:space="preserve">
     <value>$this</value>
@@ -374,6 +374,9 @@
   </data>
   <data name="labelCamFpsValue.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
+  </data>
+  <data name="buttonStartStop.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 222</value>
   </data>
   <data name="&gt;&gt;buttonMinimize.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1493,6 +1496,9 @@
   <data name="&gt;&gt;labelEmptyFps.Name" xml:space="preserve">
     <value>labelEmptyFps</value>
   </data>
+  <data name="labelEmptyFps.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="buttonMinimize.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
@@ -1523,9 +1529,6 @@
   <data name="&gt;&gt;labelWrittenFpsValue.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="labelCamFpsValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>184, 235</value>
-  </data>
   <data name="labelNoVideoSource.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 13</value>
   </data>
@@ -1537,9 +1540,6 @@
   </data>
   <data name="&gt;&gt;labelEmptyFpsValue.Name" xml:space="preserve">
     <value>labelEmptyFpsValue</value>
-  </data>
-  <data name="labelWrittenFps.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="labelWrittenFpsValue.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>

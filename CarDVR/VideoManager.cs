@@ -12,7 +12,8 @@ namespace CarDVR
 {
 	public class VideoManager
 	{
-		private static readonly Font framefont = new Font("Arial", 8, FontStyle.Bold);
+		private static string FONT_NAME = "Arial";
+		private static Font framefont = new Font(FONT_NAME, 8, FontStyle.Bold);
 		private static readonly Point pointWhite = new Point(5, 5);
 		private static readonly Point pointBlack = new Point(6, 6);
 
@@ -121,10 +122,6 @@ namespace CarDVR
 		public VideoManager(GpsReceiver gpsRcvr)
 		{
 			gps = gpsRcvr;
-
-			//FpsDisplayer.Interval = 1000;
-			//FpsDisplayer.Elapsed += new System.Timers.ElapsedEventHandler(FpsDisplayer_Tick);
-			//FpsDisplayer.Enabled = false;
 		}
 
 		public void WriteThreadProc()
@@ -138,58 +135,10 @@ namespace CarDVR
 			{
 				watch.Start();
 
-				lock (frameKeeper)
-				{
-					if (frame == null)
-						continue;
+				if (!EnqueuedEmptyFrameInsteadOfObsolete())
+					PrepareFrameToEnqueue(delay);
 
-					if (Program.settings.EnableRotate)
-					{
-						switch (Program.settings.RotateAngle)
-						{
-							case 90:
-								frame.RotateFlip(RotateFlipType.Rotate90FlipNone);
-								break;
-							case 180:
-								frame.RotateFlip(RotateFlipType.Rotate180FlipNone);
-								break;
-							case 270:
-								frame.RotateFlip(RotateFlipType.Rotate270FlipNone);
-								break;
-						}
-					}
-
-					using (Graphics graphics = Graphics.FromImage(frame))
-					{
-						string frameString = MakeFrameString();
-						graphics.DrawString(frameString, framefont, Brushes.Black, pointBlack);
-						graphics.DrawString(frameString, framefont, Brushes.White, pointWhite);
-
-						if (delay < 0)
-							graphics.DrawPolygon(epicPen, epicFailed);
-					}
-
-					//++writtenFrames;											 
-					//++totalFrames;
-
-					if (NewFrame != null)
-						NewFrame(this, new NewFrameEventArgs(frame));
-
-					lock (queueHolder)
-					{
-						if (frameWritten)
-						{
-							++nullframecounter;
-							writingQueue.Enqueue(null);
-						}
-						else
-						{
-							writingQueue.Enqueue((Bitmap)frame.Clone());
-							frameWritten = true;
-						}
-					}
-					writeEvent.Set();
-				}
+				writeEvent.Set();
 		 
 				watch.Stop();
 
@@ -200,7 +149,73 @@ namespace CarDVR
 
 				last = watch.ElapsedMilliseconds;
 			}
-		}	 
+		}
+
+		private bool EnqueuedEmptyFrameInsteadOfObsolete()
+		{
+			lock (queueHolder)
+			{
+				if (frameWritten)
+				{
+					++nullframecounter;
+					writingQueue.Enqueue(null);
+					return true;
+				}
+			}
+			return false;
+		}
+
+		private void PrepareFrameToEnqueue(long oldDelay)
+		{
+			lock (frameKeeper)
+			{
+				if (frame == null)
+					return;
+
+				if (Program.settings.EnableRotate)
+				{
+					switch (Program.settings.RotateAngle)
+					{
+						case 90:
+							frame.RotateFlip(RotateFlipType.Rotate90FlipNone);
+							break;
+						case 180:
+							frame.RotateFlip(RotateFlipType.Rotate180FlipNone);
+							break;
+						case 270:
+							frame.RotateFlip(RotateFlipType.Rotate270FlipNone);
+							break;
+					}
+				}
+
+				using (Graphics graphics = Graphics.FromImage(frame))
+				{
+					string frameString = MakeFrameString();
+					graphics.DrawString(frameString, framefont, Brushes.Black, pointBlack);
+					graphics.DrawString(frameString, framefont, Brushes.White, pointWhite);
+
+					if (oldDelay < 0)
+						graphics.DrawPolygon(epicPen, epicFailed);
+				}
+
+				if (NewFrame != null)
+					NewFrame(this, new NewFrameEventArgs(frame));
+
+				lock (queueHolder)
+				{
+					//if (frameWritten)
+					//{
+					//    ++nullframecounter;
+					//    writingQueue.Enqueue(null);
+					//}
+					//else
+					{
+						writingQueue.Enqueue((Bitmap)frame.Clone());
+						frameWritten = true;
+					}
+				}
+			}
+		}
 
 		public void Close()
 		{
@@ -266,6 +281,11 @@ namespace CarDVR
 				splitter.Path = Program.settings.PathForVideo;
 
 				writeDelay = 1000 / (writeFps);
+
+				int maxFrameSize = Program.settings.VideoWidth > Program.settings.VideoHeight 
+									? Program.settings.VideoWidth : Program.settings.VideoHeight;
+				int fontSize = maxFrameSize <= 800 ? 8 : maxFrameSize / 90;
+				framefont = new Font(FONT_NAME, fontSize, FontStyle.Bold);
 			}
 		}
 

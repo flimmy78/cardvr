@@ -14,8 +14,8 @@ namespace CarDVR
 {
 	public partial class MainForm : Form
 	{
-		private static RecordingState recordingState = RecordingState.Stopped;
 		private AutostartDelayer autostartDelayer;
+		private static RecordingState recordingState = RecordingState.Stopped;
 
 		static GpsReceiver gps = new GpsReceiver();
 		public VideoManager videoManager = new VideoManager(gps);
@@ -209,13 +209,6 @@ namespace CarDVR
 		{
 			StopRecordingAndWaitForFileClosing();
 			this.Close();
-		}
-
-		private void timerFps_Tick(object sender, EventArgs e)
-		{
-			//labelCamFpsValue.Text = videoManager.FpsFromCamera().ToString();
-			//labelWrittenFpsValue.Text = videoManager.FpsWritten().ToString();
-			//labelEmptyFpsValue.Text = videoManager.FpsEmptyFrames().ToString();
 		}
 
 		private void videoDrawer_Tick(object sender, EventArgs e)
