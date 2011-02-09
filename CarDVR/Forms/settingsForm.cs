@@ -17,7 +17,19 @@ namespace CarDVR
 	{
 		FilterInfoCollection videoDevices;
 
-		public void ApplySettingsToForm()
+		public void Prepare()
+		{
+			LoadFromRegistry();
+			ApplySettingsToForm();
+		}
+
+		public void ProcessResult()
+		{
+			ApplyFormToSettings();
+			SaveToRegistry();
+		}
+
+		void ApplySettingsToForm()
 		{
 			List<string> portsList = new List<string>();
 
@@ -193,7 +205,7 @@ namespace CarDVR
 			hideMouse.Checked = Program.settings.HideMouseCursor;
 		}
 
-		public void ApplyFormToSettings()
+		void ApplyFormToSettings()
 		{
 			Program.settings.GpsEnabled = enableGps.Checked;
 			Program.settings.EnableRotate = enableRotate.Checked;
@@ -336,6 +348,8 @@ namespace CarDVR
 			}
 
 			listCodecs.EndUpdate();
+
+			Prepare();
 		}
 
 		private void buttonOk_Click(object sender, EventArgs e)

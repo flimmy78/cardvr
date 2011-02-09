@@ -7,6 +7,7 @@ using System.Security.Permissions;
 using System.Security.AccessControl;
 using System.IO;
 using System.Security.Principal;
+using System.Drawing;
 
 namespace CarDVR
 {
@@ -151,6 +152,23 @@ namespace CarDVR
 			}
 
 			key.Close();
+		}
+	}
+
+	class FormColorSetter
+	{
+		public static void Do(Control control, Color foreColor, Color backColor)
+		{
+			foreach (Control c in control.Controls)
+			{
+				Do(c, foreColor, backColor);
+			}
+			try
+			{
+				control.ForeColor = foreColor;
+				control.BackColor = backColor;
+			}
+			catch { }
 		}
 	}
 }

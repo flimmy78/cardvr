@@ -14,53 +14,29 @@ namespace CarDVR
 {
 	public partial class MainForm : Form
 	{
-		private AutostartDelayer autostartDelayer;
+		private AutoStartDelayer autoStartDelayer;
 		private static RecordingState recordingState = RecordingState.Stopped;
 
 		static GpsReceiver gps = new GpsReceiver();
 		public VideoManager videoManager = new VideoManager(gps);
 
-		public MainForm()
-		{
-			BeforeInitializeComponent();
-
-			InitializeComponent();
-
-			AfterInitializeComponent();
-		}
-
-		private bool IsWebCamAvaliable()
-		{
-			if (!string.IsNullOrEmpty(Program.settings.VideoSource) && 
-				videoManager.SureThatWebcamExists(Program.settings.VideoSourceId))
-			{
-				ButtonStartStopEnable();
-				HideNoVideosourceWarning();
-				return true;
-			}
-
-			ButtonStartStopDisable();
-			ShowNoVideosourceWarning();
-
-			return false;
-		}
-
 		private void buttonSettings_Click(object sender, EventArgs e)
 		{
 			using (settingsForm settingsForm = new settingsForm())
 			{
-				settingsForm.LoadFromRegistry();
-				settingsForm.ApplySettingsToForm();
-				SetColor(settingsForm, Color.FromArgb(Program.settings.InterfaceForeColor), Color.FromArgb(Program.settings.InterfaceBackgroundColor));
+				FormColorSetter.Do
+				(
+					settingsForm, 
+					Color.FromArgb(Program.settings.InterfaceForeColor), 
+					Color.FromArgb(Program.settings.InterfaceBackgroundColor)
+				);
 
 				if (settingsForm.ShowDialog() == DialogResult.Cancel)
 					return;
 
-				settingsForm.ApplyFormToSettings();
-				settingsForm.SaveToRegistry();
+				settingsForm.ProcessResult();
 
 				AutorunHelper.SetEnabled(Program.settings.StartWithWindows);
-
 				IsWebCamAvaliable();
 
 				// reinit video source

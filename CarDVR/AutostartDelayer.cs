@@ -5,13 +5,13 @@ using System.Windows.Forms;
 
 namespace CarDVR
 {
-	class AutostartDelayer
+	class AutoStartDelayer
 	{
 		private Timer timer = new Timer();
 
-		public AutostartDelayer(int pause, EventHandler callback)
+		public AutoStartDelayer(int pause, EventHandler callback)
 		{
-			timer.Interval = Program.settings.DelayBeforeStart * 1000;
+			timer.Interval = pause;
 			timer.Enabled = true;
 			timer.Tick += new EventHandler(timer_Tick);
 			timer.Tick += new EventHandler(callback);

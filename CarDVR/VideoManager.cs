@@ -12,8 +12,8 @@ namespace CarDVR
 {
 	public class VideoManager
 	{
-		private static string FONT_NAME = "Arial";
-		private static Font framefont = new Font(FONT_NAME, 8, FontStyle.Bold);
+		private static string FONT_NAME_ARIAL = "Arial";
+		private static Font framefont = new Font(FONT_NAME_ARIAL, 8, FontStyle.Bold);
 		private static readonly Point pointWhite = new Point(5, 5);
 		private static readonly Point pointBlack = new Point(6, 6);
 
@@ -285,7 +285,7 @@ namespace CarDVR
 				int maxFrameSize = Program.settings.VideoWidth > Program.settings.VideoHeight 
 									? Program.settings.VideoWidth : Program.settings.VideoHeight;
 				int fontSize = maxFrameSize <= 800 ? 8 : maxFrameSize / 90;
-				framefont = new Font(FONT_NAME, fontSize, FontStyle.Bold);
+				framefont = new Font(FONT_NAME_ARIAL, fontSize, FontStyle.Bold);
 			}
 		}
 

@@ -16,6 +16,7 @@ namespace CarDVR
 		private void InitDrawingFrames()
 		{
 			drawingFrames.Clear();
+
 			for (int t = 0; t < maxFrames; ++t)
 				drawingFrames.Add(null);
 		}

@@ -35,7 +35,7 @@ namespace CarDVR
 			OnStartDelay = "Задержка запуска";
 			CurrentWebCamNotAvaliable = "Выбранная веб камера не доступна";
 			CantOpenGpsOnPort = "Не удается открыть GPS приемник на порту '{0}'. GPS не активен. Описание: {1}";
-			CantOpenOutputFile = "Can't open output file {0}\n{1}";			
+			CantOpenOutputFile = "Не удается открыть для записи файл {0}\n{1}";
 		}
 
 		static private void InitEnglishResources()
@@ -52,7 +52,7 @@ namespace CarDVR
 			OnStartDelay = "On start delay";
 			CurrentWebCamNotAvaliable = "Current webcam is not avaliable";
 			CantOpenGpsOnPort = "Can't open GPS receiver on port '{0}'. GPS not active. Description: {1}";
-			CantOpenOutputFile = "Не удается открыть для записи файл {0}\n{1}";
+			CantOpenOutputFile = "Can't open output file {0}\n{1}";			
 		}			 
 			
 		static public void InitDynamicResources(string language)

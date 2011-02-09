@@ -12,6 +12,15 @@ namespace CarDVR
 {
 	public partial class MainForm : Form
 	{
+		public MainForm()
+		{
+			BeforeInitializeComponent();
+
+			InitializeComponent();
+
+			AfterInitializeComponent();
+		}
+
 		private void BeforeInitializeComponent()
 		{
 			Program.settings.Read();
@@ -23,17 +32,17 @@ namespace CarDVR
 
 		private void AfterInitializeComponent()
 		{
-			Text = Application.ProductName + " v" + GetProgramVersion();
+			Text = string.Format("{0} v{1}", Application.ProductName, GetProgramVersion());
 
 			IsWebCamAvaliable();
 
 			if (Program.settings.AutostartRecording && Program.settings.DelayBeforeStart > 0)
 			{
-				autostartDelayer = new AutostartDelayer
-									(
-										Program.settings.DelayBeforeStart * 1000,
-										AutostartDelayer_Handler
-									);
+				autoStartDelayer = new AutoStartDelayer
+				(
+					Program.settings.DelayBeforeStart * 1000,
+					AutostartDelayer_Handler
+				);
 
 				// TODO: make class BitmapDrawer
 				Bitmap message = new Bitmap(Program.settings.VideoWidth, Program.settings.VideoHeight);
@@ -68,12 +77,35 @@ namespace CarDVR
 			CommonInitialization();
 		}
 
+		private bool IsWebCamAvaliable()
+		{
+			if
+			(
+				!string.IsNullOrEmpty(Program.settings.VideoSource) &&
+				videoManager.SureThatWebcamExists(Program.settings.VideoSourceId)
+			)
+			{
+				ButtonStartStopEnable();
+				HideNoVideosourceWarning();
+				return true;
+			}
+
+			ButtonStartStopDisable();
+			ShowNoVideosourceWarning();
+			return false;
+		}
+
 		private void CommonInitialization()
 		{
 			if (Program.settings.HideMouseCursor)
 				Cursor.Hide();
 
-			SetColor(this, Color.FromArgb(Program.settings.InterfaceForeColor), Color.FromArgb(Program.settings.InterfaceBackgroundColor));
+			FormColorSetter.Do
+			(
+				this, 
+				Color.FromArgb(Program.settings.InterfaceForeColor), 
+				Color.FromArgb(Program.settings.InterfaceBackgroundColor)
+			);
 		}
 	
 		private void SetLocalization(string language)

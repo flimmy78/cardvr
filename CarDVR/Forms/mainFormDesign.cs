@@ -44,20 +44,6 @@ namespace CarDVR
 			}
 		}
 
-		void SetColor(Control control, Color foreColor, Color backColor)
-		{
-			foreach (Control c in control.Controls)
-			{
-				SetColor(c, foreColor, backColor);
-			}
-			try
-			{
-				control.ForeColor = foreColor;
-				control.BackColor = backColor;
-			}
-			catch { }
-		}
-
 		private void MainForm_Activated(object sender, EventArgs e)
 		{
 			isFormActive = true;
