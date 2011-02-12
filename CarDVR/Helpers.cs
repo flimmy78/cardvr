@@ -24,6 +24,10 @@ namespace CarDVR
 	{
 	}
 
+	class VideoStartException : Exception
+	{
+	}
+
 	// Simple error reporter / error holder
 	// 
 	// Serious errors always be shown in MessageBox,

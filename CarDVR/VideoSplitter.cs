@@ -8,7 +8,7 @@ using AForge.Video.VFW;
 
 namespace CarDVR
 {
-	// Pair of two AVIWriters, opening in own threads
+	// Pair of two AVIWriters, working in own threads
 	class AVIWritersPair
 	{
 		private AVIWriter currentAvi = new AVIWriter();
@@ -31,7 +31,7 @@ namespace CarDVR
 		#endregion
 
 		#region Operations
-		public void AddToCurrent(Bitmap frame)
+		public void AddFrame(Bitmap frame)
 		{
 			lock (aviWatchDog)
 			{
@@ -45,12 +45,11 @@ namespace CarDVR
 				catch (Exception e)
 				{
 					Reporter.UnseriousError(e.Message);
-					// frame was not added (may be shutdown)
 				}
 			}
 		}
 
-		public void Replace()
+		public void MakePreparedWriterActive()
 		{
 			lock (aviWatchDog)
 			{
@@ -59,6 +58,11 @@ namespace CarDVR
 				preparedAvi = tmp;
 				FileName = PreparedFileName;
 			}
+		}
+
+		private bool IsDonePrepare()
+		{
+			return FileName == PreparedFileName;
 		}
 		#endregion
 
@@ -100,8 +104,7 @@ namespace CarDVR
 				preparedAvi.Close();
 				try
 				{
-					// was rotate
-					if (FileName == PreparedFileName)
+					if (IsDonePrepare())
 						return;
 
 					if (File.Exists(PreparedFileName))
@@ -120,7 +123,7 @@ namespace CarDVR
 
 		#region CheckFileFlushedBeforeClose
 		System.Timers.Timer disposeTimer = new System.Timers.Timer();
-		bool everythingisgood = false;
+		bool everythingIsGood = false;
 
 		public void DisposeAll()
 		{
@@ -129,7 +132,7 @@ namespace CarDVR
 			currentAvi.Dispose();
 			preparedAvi.Dispose();
 
-			everythingisgood = false;
+			everythingIsGood = false;
 			disposeTimer.Interval = 1000;
 			disposeTimer.Elapsed += new ElapsedEventHandler(disposeTimer_Elapsed);
 			disposeTimer.Enabled = true;
@@ -138,7 +141,7 @@ namespace CarDVR
 			{
 				lock (this)
 				{
-					if (everythingisgood)
+					if (everythingIsGood)
 						break;
 				}
 
@@ -152,7 +155,7 @@ namespace CarDVR
 		{
 			lock (this)
 			{
-				if (everythingisgood)
+				if (everythingIsGood)
 					return;
 
  				FileInfo info = new FileInfo(FileName);
@@ -160,7 +163,7 @@ namespace CarDVR
 				{
 					FileStream fs = info.OpenWrite();
 					fs.Close();
-					everythingisgood = true;
+					everythingIsGood = true;
 				}
 				catch { }
 			}
@@ -176,6 +179,8 @@ namespace CarDVR
 		private object secondsWatchDog = new object();
 		private object aviWatchDog = new object();
 		private AVIWritersPair avipair = new AVIWritersPair();
+		private const int PREPARE_BEFORE = 10;
+		private enum VideoType { Current, Prepared }
 
 		public string Path { get; set; }
 		public int FileDuration { get; set; }
@@ -186,7 +191,6 @@ namespace CarDVR
 		
 		public VideoSplitter()
 		{
-			// default settings
 			FileDuration = 10 * 60;
 			NumberOfFiles = 10;
 
@@ -197,29 +201,29 @@ namespace CarDVR
 
 		void timerSplit_Elapsed(object sender, ElapsedEventArgs e)
 		{
-			++secondsElapsed;
-		}
-
-		public void AddFrame(Bitmap frame)
-		{
 			lock (secondsWatchDog)
 			{
-				// before 10 seconds, open new avi
-				if (!nextAviPrepared && (secondsElapsed % FileDuration) == (FileDuration - 9))
+				++secondsElapsed;
+
+				int secondsOfCurrentFile = secondsElapsed % FileDuration;
+
+				if (nextAviPrepared && secondsOfCurrentFile == 0)
+				{
+					nextAviPrepared = false;
+					avipair.MakePreparedWriterActive();
+					new Thread(ClosePreparedAvi).Start();
+				} 
+				else if (!nextAviPrepared && secondsOfCurrentFile == (FileDuration - PREPARE_BEFORE))
 				{
 					nextAviPrepared = true;
 					new Thread(PrepareNewMovie).Start();
 				}
-
-				if (nextAviPrepared && (secondsElapsed % FileDuration) == 0)
-				{
-					nextAviPrepared = false;
-					avipair.Replace();
-					new Thread(ClosePreparedAvi).Start();
-				}
 			}
+		}
 
-			avipair.AddToCurrent(frame);
+		public void AddFrame(Bitmap frame)
+		{
+			avipair.AddFrame(frame);
 		}
 
 		public void Start()
@@ -229,7 +233,8 @@ namespace CarDVR
 
 			nextAviPrepared = false;
 			secondsElapsed = 0;
-			StartNewMovie(0);
+
+			OpenVideo(VideoType.Current);
 			timerSplit.Start();
 		}
 
@@ -237,16 +242,6 @@ namespace CarDVR
 		{
 			timerSplit.Enabled = false;
 			CloseAll();
-		}
-
-		private void PrepareNewMovie()
-		{
-			StartNewMovie(1);
-		}
-
-		private void CloseCurrentAvi()
-		{
-			avipair.CloseCurrent();
 		}
 
 		private void ClosePreparedAvi()
@@ -264,22 +259,35 @@ namespace CarDVR
 			avipair.DisposeAll();
 		}
 
-		private void StartNewMovie(int oneOfAvi)
+		private void PrepareNewMovie()
 		{
-			// if preparing, next avi will started after 10 seconds
-			string filename = oneOfAvi == 1 ? DateTime.Now.AddSeconds(9).ToString() : DateTime.Now.ToString();
+			OpenVideo(VideoType.Prepared);
+		}
 
-			filename = Path + "\\CarDVR_" +
-				filename.Replace(':', '_').Replace(' ', '_').Replace('.', '_') + ".avi";
-
+		private void OpenVideo(VideoType kind)
+		{
+			string filename = MakeAviFileName(kind);
 			try
 			{
-				AVIWriter avi = oneOfAvi == 0 ? avipair.GetCurrent() : avipair.GetPrepared();
+				AVIWriter avi;
 
-				if (oneOfAvi == 0)
-					avipair.FileName = filename;
-				else
-					avipair.PreparedFileName = filename;
+				switch (kind)
+				{
+					case VideoType.Current:
+					{
+						avi = avipair.GetCurrent();
+						avipair.FileName = filename;
+						break;
+					}
+					case VideoType.Prepared:
+					{
+						avi = avipair.GetPrepared();
+						avipair.PreparedFileName = filename;
+						break;
+					}
+					default:
+						throw new VideoStartException();
+				}					
 
 				avi.Open(filename, VideoSize.Width, VideoSize.Height);
 			}
@@ -296,6 +304,17 @@ namespace CarDVR
 				);
 			}
 
+			DeleteOldFile();
+		}
+
+		private string MakeAviFileName(VideoType type)
+		{
+			string timeString = type == VideoType.Current ? DateTime.Now.ToString() : DateTime.Now.AddSeconds(PREPARE_BEFORE).ToString();
+			return Path + "\\CarDVR_" + timeString.Replace(':', '_').Replace(' ', '_').Replace('.', '_') + ".avi";
+		}
+
+		private void DeleteOldFile()
+		{
 			DirectoryInfo dir = new DirectoryInfo(Program.settings.PathForVideo);
 			FileInfo[] files = dir.GetFiles("*.avi");
 
@@ -307,7 +326,7 @@ namespace CarDVR
 				{
 					File.Delete(files[index].FullName);
 				}
-				catch  { }
+				catch { }
 			}
 		}
 
