@@ -147,7 +147,7 @@
     <value>235, 198</value>
   </data>
   <data name="labelNoVideoSource.Location" type="System.Drawing.Point, System.Drawing">
-    <value>112, 245</value>
+    <value>12, 12</value>
   </data>
   <data name="labelNoVideoSource.Size" type="System.Drawing.Size, System.Drawing">
     <value>144, 13</value>

@@ -50,7 +50,6 @@ namespace CarDVR
 		System.Threading.Thread writeThread = null;
 
 		int writeDelay = 0;
-		//int writtenFrames = 0;
 		bool frameWritten = false;
 		int nullframecounter = 0;
 
@@ -63,6 +62,11 @@ namespace CarDVR
 		object queueHolder = new object();
 		Thread queueThread;
 		AutoResetEvent writeEvent = new AutoResetEvent(false);
+
+		public VideoManager(GpsReceiver gpsRcvr)
+		{
+			gps = gpsRcvr;
+		}
 
 		// Thread that compressing video stream
 		public void QueueProc()
@@ -117,11 +121,6 @@ namespace CarDVR
 					}
 				}
 			}
-		}
-
-		public VideoManager(GpsReceiver gpsRcvr)
-		{
-			gps = gpsRcvr;
 		}
 
 		public void WriteThreadProc()
@@ -203,16 +202,8 @@ namespace CarDVR
 
 				lock (queueHolder)
 				{
-					//if (frameWritten)
-					//{
-					//    ++nullframecounter;
-					//    writingQueue.Enqueue(null);
-					//}
-					//else
-					{
-						writingQueue.Enqueue((Bitmap)frame.Clone());
-						frameWritten = true;
-					}
+					writingQueue.Enqueue((Bitmap)frame.Clone());
+					frameWritten = true;
 				}
 			}
 		}
@@ -357,11 +348,6 @@ namespace CarDVR
 						break;
 				}
 			}
-
-			//lock (framesCountKeeper)
-			//{
-			//    result += "\n" + totalFrames.ToString() + " | " + lastFps.ToString() + " FPS";
-			//}
 
 			return result;
 		}

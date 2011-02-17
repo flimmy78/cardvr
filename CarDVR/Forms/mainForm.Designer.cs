@@ -38,6 +38,7 @@
 			this.videoDrawer = new System.Windows.Forms.Timer(this.components);
 			this.buttonMaximize = new System.Windows.Forms.Button();
 			this.buttonExit = new System.Windows.Forms.Button();
+			this.buttonBackup = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.camView)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -94,15 +95,23 @@
 			this.buttonExit.UseVisualStyleBackColor = true;
 			this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
 			// 
+			// buttonBackup
+			// 
+			resources.ApplyResources(this.buttonBackup, "buttonBackup");
+			this.buttonBackup.Name = "buttonBackup";
+			this.buttonBackup.UseVisualStyleBackColor = true;
+			this.buttonBackup.Click += new System.EventHandler(this.buttonBackup_Click);
+			// 
 			// MainForm
 			// 
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
+			this.Controls.Add(this.labelNoVideoSource);
 			this.Controls.Add(this.camView);
+			this.Controls.Add(this.buttonBackup);
 			this.Controls.Add(this.buttonExit);
 			this.Controls.Add(this.buttonMaximize);
-			this.Controls.Add(this.labelNoVideoSource);
 			this.Controls.Add(this.buttonStartStop);
 			this.Controls.Add(this.buttonMinimize);
 			this.Controls.Add(this.buttonSettings);
@@ -127,6 +136,7 @@
 		private System.Windows.Forms.Timer videoDrawer;
 		private System.Windows.Forms.Button buttonMaximize;
 		private System.Windows.Forms.Button buttonExit;
+		private System.Windows.Forms.Button buttonBackup;
     }
 }
 
