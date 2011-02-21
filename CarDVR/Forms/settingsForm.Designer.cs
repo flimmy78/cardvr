@@ -74,6 +74,11 @@
 			this.labelSelectedCodecTitle = new System.Windows.Forms.Label();
 			this.listCodecs = new System.Windows.Forms.ListBox();
 			this.tabOutput = new System.Windows.Forms.TabPage();
+			this.backupFilesAmount = new System.Windows.Forms.NumericUpDown();
+			this.labelBackupFiles = new System.Windows.Forms.Label();
+			this.buttonBrowseBackup = new System.Windows.Forms.Button();
+			this.label3 = new System.Windows.Forms.Label();
+			this.pathForBackup = new System.Windows.Forms.TextBox();
 			this.tabGps = new System.Windows.Forms.TabPage();
 			this.tabLocalization = new System.Windows.Forms.TabPage();
 			this.hideMouse = new System.Windows.Forms.CheckBox();
@@ -94,6 +99,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.camFps)).BeginInit();
 			this.tabCompression.SuspendLayout();
 			this.tabOutput.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.backupFilesAmount)).BeginInit();
 			this.tabGps.SuspendLayout();
 			this.tabLocalization.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -118,9 +124,9 @@
 			// 
 			// videoSource
 			// 
+			resources.ApplyResources(this.videoSource, "videoSource");
 			this.videoSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.videoSource.FormattingEnabled = true;
-			resources.ApplyResources(this.videoSource, "videoSource");
 			this.videoSource.Name = "videoSource";
 			// 
 			// labelBaudRate
@@ -130,16 +136,16 @@
 			// 
 			// serialPortBaudRate
 			// 
+			resources.ApplyResources(this.serialPortBaudRate, "serialPortBaudRate");
 			this.serialPortBaudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.serialPortBaudRate.FormattingEnabled = true;
-			resources.ApplyResources(this.serialPortBaudRate, "serialPortBaudRate");
 			this.serialPortBaudRate.Name = "serialPortBaudRate";
 			// 
 			// serialPortName
 			// 
+			resources.ApplyResources(this.serialPortName, "serialPortName");
 			this.serialPortName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.serialPortName.FormattingEnabled = true;
-			resources.ApplyResources(this.serialPortName, "serialPortName");
 			this.serialPortName.Name = "serialPortName";
 			// 
 			// enableGps
@@ -221,9 +227,9 @@
 			// 
 			// comboResolution
 			// 
+			resources.ApplyResources(this.comboResolution, "comboResolution");
 			this.comboResolution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboResolution.FormattingEnabled = true;
-			resources.ApplyResources(this.comboResolution, "comboResolution");
 			this.comboResolution.Name = "comboResolution";
 			this.comboResolution.DropDown += new System.EventHandler(this.comboResolution_DropDown);
 			// 
@@ -241,9 +247,9 @@
 			// 
 			// comboRotateAngle
 			// 
+			resources.ApplyResources(this.comboRotateAngle, "comboRotateAngle");
 			this.comboRotateAngle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboRotateAngle.FormattingEnabled = true;
-			resources.ApplyResources(this.comboRotateAngle, "comboRotateAngle");
 			this.comboRotateAngle.Name = "comboRotateAngle";
 			// 
 			// enableRotate
@@ -259,13 +265,13 @@
 			// 
 			// gbAutostart
 			// 
+			resources.ApplyResources(this.gbAutostart, "gbAutostart");
 			this.gbAutostart.Controls.Add(this.label2);
 			this.gbAutostart.Controls.Add(this.label1);
 			this.gbAutostart.Controls.Add(this.outputRate);
 			this.gbAutostart.Controls.Add(this.labelDegrees);
 			this.gbAutostart.Controls.Add(this.comboRotateAngle);
 			this.gbAutostart.Controls.Add(this.enableRotate);
-			resources.ApplyResources(this.gbAutostart, "gbAutostart");
 			this.gbAutostart.Name = "gbAutostart";
 			this.gbAutostart.TabStop = false;
 			// 
@@ -281,6 +287,7 @@
 			// 
 			// outputRate
 			// 
+			resources.ApplyResources(this.outputRate, "outputRate");
 			this.outputRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.outputRate.FormattingEnabled = true;
 			this.outputRate.Items.AddRange(new object[] {
@@ -296,7 +303,6 @@
             ((object)(resources.GetObject("outputRate.Items9"))),
             ((object)(resources.GetObject("outputRate.Items10"))),
             ((object)(resources.GetObject("outputRate.Items11")))});
-			resources.ApplyResources(this.outputRate, "outputRate");
 			this.outputRate.Name = "outputRate";
 			// 
 			// labelDelayAutostart
@@ -316,23 +322,23 @@
 			// 
 			// groupVideoArchive
 			// 
+			resources.ApplyResources(this.groupVideoArchive, "groupVideoArchive");
 			this.groupVideoArchive.Controls.Add(this.labelMinutesOnEachFile);
 			this.groupVideoArchive.Controls.Add(this.aviDuration);
 			this.groupVideoArchive.Controls.Add(this.labelStoreFiles);
 			this.groupVideoArchive.Controls.Add(this.amountOfFiles);
-			resources.ApplyResources(this.groupVideoArchive, "groupVideoArchive");
 			this.groupVideoArchive.Name = "groupVideoArchive";
 			this.groupVideoArchive.TabStop = false;
 			// 
 			// comboLanguage
 			// 
+			resources.ApplyResources(this.comboLanguage, "comboLanguage");
 			this.comboLanguage.DisplayMember = "English";
 			this.comboLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboLanguage.FormattingEnabled = true;
 			this.comboLanguage.Items.AddRange(new object[] {
             resources.GetString("comboLanguage.Items"),
             resources.GetString("comboLanguage.Items1")});
-			resources.ApplyResources(this.comboLanguage, "comboLanguage");
 			this.comboLanguage.Name = "comboLanguage";
 			// 
 			// labelLanguage
@@ -354,6 +360,7 @@
 			// 
 			// tabStartOptions
 			// 
+			resources.ApplyResources(this.tabStartOptions, "tabStartOptions");
 			this.tabStartOptions.Controls.Add(this.dontDisplayWhenAppInactive);
 			this.tabStartOptions.Controls.Add(this.startWithFullWindowedVideo);
 			this.tabStartOptions.Controls.Add(this.startWithWindows);
@@ -361,7 +368,6 @@
 			this.tabStartOptions.Controls.Add(this.autostartRecording);
 			this.tabStartOptions.Controls.Add(this.labelDelayAutostart);
 			this.tabStartOptions.Controls.Add(this.delayBeforeStart);
-			resources.ApplyResources(this.tabStartOptions, "tabStartOptions");
 			this.tabStartOptions.Name = "tabStartOptions";
 			this.tabStartOptions.UseVisualStyleBackColor = true;
 			// 
@@ -379,6 +385,7 @@
 			// 
 			// tabVideoSource
 			// 
+			resources.ApplyResources(this.tabVideoSource, "tabVideoSource");
 			this.tabVideoSource.Controls.Add(this.camFps);
 			this.tabVideoSource.Controls.Add(this.labelFrameRate);
 			this.tabVideoSource.Controls.Add(this.buttonSettings);
@@ -386,7 +393,6 @@
 			this.tabVideoSource.Controls.Add(this.labelVideosource);
 			this.tabVideoSource.Controls.Add(this.videoSource);
 			this.tabVideoSource.Controls.Add(this.labelResolution);
-			resources.ApplyResources(this.tabVideoSource, "tabVideoSource");
 			this.tabVideoSource.Name = "tabVideoSource";
 			this.tabVideoSource.UseVisualStyleBackColor = true;
 			// 
@@ -419,10 +425,10 @@
 			// 
 			// tabCompression
 			// 
+			resources.ApplyResources(this.tabCompression, "tabCompression");
 			this.tabCompression.Controls.Add(this.labelSelectedCodec);
 			this.tabCompression.Controls.Add(this.labelSelectedCodecTitle);
 			this.tabCompression.Controls.Add(this.listCodecs);
-			resources.ApplyResources(this.tabCompression, "tabCompression");
 			this.tabCompression.Name = "tabCompression";
 			this.tabCompression.UseVisualStyleBackColor = true;
 			// 
@@ -438,34 +444,77 @@
 			// 
 			// listCodecs
 			// 
-			this.listCodecs.FormattingEnabled = true;
 			resources.ApplyResources(this.listCodecs, "listCodecs");
+			this.listCodecs.FormattingEnabled = true;
 			this.listCodecs.Name = "listCodecs";
 			this.listCodecs.SelectedValueChanged += new System.EventHandler(this.listCodecs_SelectedValueChanged);
 			// 
 			// tabOutput
 			// 
+			resources.ApplyResources(this.tabOutput, "tabOutput");
+			this.tabOutput.Controls.Add(this.backupFilesAmount);
+			this.tabOutput.Controls.Add(this.labelBackupFiles);
+			this.tabOutput.Controls.Add(this.buttonBrowseBackup);
+			this.tabOutput.Controls.Add(this.label3);
+			this.tabOutput.Controls.Add(this.pathForBackup);
 			this.tabOutput.Controls.Add(this.groupVideoArchive);
 			this.tabOutput.Controls.Add(this.gbAutostart);
 			this.tabOutput.Controls.Add(this.buttonBrowse);
 			this.tabOutput.Controls.Add(this.labelPath);
 			this.tabOutput.Controls.Add(this.textBoxPath);
-			resources.ApplyResources(this.tabOutput, "tabOutput");
 			this.tabOutput.Name = "tabOutput";
 			this.tabOutput.UseVisualStyleBackColor = true;
 			// 
+			// backupFilesAmount
+			// 
+			resources.ApplyResources(this.backupFilesAmount, "backupFilesAmount");
+			this.backupFilesAmount.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.backupFilesAmount.Name = "backupFilesAmount";
+			this.backupFilesAmount.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
+			// labelBackupFiles
+			// 
+			resources.ApplyResources(this.labelBackupFiles, "labelBackupFiles");
+			this.labelBackupFiles.Name = "labelBackupFiles";
+			// 
+			// buttonBrowseBackup
+			// 
+			resources.ApplyResources(this.buttonBrowseBackup, "buttonBrowseBackup");
+			this.buttonBrowseBackup.Name = "buttonBrowseBackup";
+			this.buttonBrowseBackup.UseVisualStyleBackColor = true;
+			this.buttonBrowseBackup.Click += new System.EventHandler(this.buttonBrowseBackup_Click);
+			// 
+			// label3
+			// 
+			resources.ApplyResources(this.label3, "label3");
+			this.label3.Name = "label3";
+			// 
+			// pathForBackup
+			// 
+			resources.ApplyResources(this.pathForBackup, "pathForBackup");
+			this.pathForBackup.Name = "pathForBackup";
+			// 
 			// tabGps
 			// 
+			resources.ApplyResources(this.tabGps, "tabGps");
 			this.tabGps.Controls.Add(this.labelBaudRate);
 			this.tabGps.Controls.Add(this.serialPortName);
 			this.tabGps.Controls.Add(this.serialPortBaudRate);
 			this.tabGps.Controls.Add(this.enableGps);
-			resources.ApplyResources(this.tabGps, "tabGps");
 			this.tabGps.Name = "tabGps";
 			this.tabGps.UseVisualStyleBackColor = true;
 			// 
 			// tabLocalization
 			// 
+			resources.ApplyResources(this.tabLocalization, "tabLocalization");
 			this.tabLocalization.Controls.Add(this.hideMouse);
 			this.tabLocalization.Controls.Add(this.buttonBackColor);
 			this.tabLocalization.Controls.Add(this.labelColors);
@@ -473,7 +522,6 @@
 			this.tabLocalization.Controls.Add(this.panel1);
 			this.tabLocalization.Controls.Add(this.comboLanguage);
 			this.tabLocalization.Controls.Add(this.labelLanguage);
-			resources.ApplyResources(this.tabLocalization, "tabLocalization");
 			this.tabLocalization.Name = "tabLocalization";
 			this.tabLocalization.UseVisualStyleBackColor = true;
 			// 
@@ -504,15 +552,15 @@
 			// 
 			// panel1
 			// 
+			resources.ApplyResources(this.panel1, "panel1");
 			this.panel1.BackColor = System.Drawing.SystemColors.Control;
 			this.panel1.Controls.Add(this.labelTestColor);
-			resources.ApplyResources(this.panel1, "panel1");
 			this.panel1.Name = "panel1";
 			// 
 			// labelTestColor
 			// 
-			this.labelTestColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			resources.ApplyResources(this.labelTestColor, "labelTestColor");
+			this.labelTestColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.labelTestColor.Name = "labelTestColor";
 			// 
 			// settingsForm
@@ -545,6 +593,7 @@
 			this.tabCompression.PerformLayout();
 			this.tabOutput.ResumeLayout(false);
 			this.tabOutput.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.backupFilesAmount)).EndInit();
 			this.tabGps.ResumeLayout(false);
 			this.tabGps.PerformLayout();
 			this.tabLocalization.ResumeLayout(false);
@@ -610,5 +659,10 @@
 		private System.Windows.Forms.NumericUpDown camFps;
 		private System.Windows.Forms.Label labelFrameRate;
 		private System.Windows.Forms.CheckBox hideMouse;
+		private System.Windows.Forms.Button buttonBrowseBackup;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.TextBox pathForBackup;
+		private System.Windows.Forms.Label labelBackupFiles;
+		private System.Windows.Forms.NumericUpDown backupFilesAmount;
     }
 }

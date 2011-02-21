@@ -203,6 +203,9 @@ namespace CarDVR
 				camFps.Value = Program.settings.VideoFps;
 
 			hideMouse.Checked = Program.settings.HideMouseCursor;
+
+			pathForBackup.Text = Program.settings.BackupPath;
+			backupFilesAmount.Value = Program.settings.BackupFilesAmount;
 		}
 
 		void ApplyFormToSettings()
@@ -269,6 +272,9 @@ namespace CarDVR
 
 			Program.settings.Cam1FrameRate = (int)camFps.Value;
 			Program.settings.HideMouseCursor = hideMouse.Checked;
+
+			Program.settings.BackupPath = pathForBackup.Text;
+			Program.settings.BackupFilesAmount = (int)backupFilesAmount.Value;
 		}
 
 		class CodecInfo
@@ -484,6 +490,15 @@ namespace CarDVR
 
 			labelTestColor.BackColor = colorDialog.Color;
 		}
+
+		private void buttonBrowseBackup_Click(object sender, EventArgs e)
+		{
+			using (FolderBrowserDialog dlg = new FolderBrowserDialog())
+			{
+				if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+					pathForBackup.Text = dlg.SelectedPath;
+			}
+		}
 	}
 
 	public class SettingsImpl
@@ -525,6 +540,8 @@ namespace CarDVR
 		public bool DontShowVideoWhenInactive { get; set; }
 		public int Cam1FrameRate { get; set; }
 		public bool HideMouseCursor { get; set; }
+		public string BackupPath { get; set; }
+		public int BackupFilesAmount { get; set; }
 
 		/// <summary>
 		/// Initialization constructor
@@ -553,6 +570,8 @@ namespace CarDVR
 			Codec = DEFAULT_CODEC;
 			DontShowVideoWhenInactive = false;
 			Cam1FrameRate = 0;
+			BackupPath = string.Empty;
+			BackupFilesAmount = 1;
 		}
 
 		/// <summary>

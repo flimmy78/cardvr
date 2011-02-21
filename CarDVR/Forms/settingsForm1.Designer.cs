@@ -139,6 +139,27 @@ namespace CarDVR.Forms {
             }
         }
         
+        public static System.Drawing.Point backupFilesAmount_Location {
+            get {
+                object obj = ResourceManager.GetObject("backupFilesAmount.Location", resourceCulture);
+                return ((System.Drawing.Point)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size backupFilesAmount_Size {
+            get {
+                object obj = ResourceManager.GetObject("backupFilesAmount.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        public static int backupFilesAmount_TabIndex {
+            get {
+                object obj = ResourceManager.GetObject("backupFilesAmount.TabIndex", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
         public static System.Windows.Forms.AnchorStyles button1_Anchor {
             get {
                 object obj = ResourceManager.GetObject("button1.Anchor", resourceCulture);
@@ -268,6 +289,57 @@ namespace CarDVR.Forms {
         public static string buttonBrowse_Text {
             get {
                 return ResourceManager.GetString("buttonBrowse.Text", resourceCulture);
+            }
+        }
+        
+        public static System.Windows.Forms.AnchorStyles buttonBrowseBackup_Anchor {
+            get {
+                object obj = ResourceManager.GetObject("buttonBrowseBackup.Anchor", resourceCulture);
+                return ((System.Windows.Forms.AnchorStyles)(obj));
+            }
+        }
+        
+        public static System.Windows.Forms.FlatStyle buttonBrowseBackup_FlatStyle {
+            get {
+                object obj = ResourceManager.GetObject("buttonBrowseBackup.FlatStyle", resourceCulture);
+                return ((System.Windows.Forms.FlatStyle)(obj));
+            }
+        }
+        
+        public static System.Windows.Forms.ImeMode buttonBrowseBackup_ImeMode {
+            get {
+                object obj = ResourceManager.GetObject("buttonBrowseBackup.ImeMode", resourceCulture);
+                return ((System.Windows.Forms.ImeMode)(obj));
+            }
+        }
+        
+        public static System.Drawing.Point buttonBrowseBackup_Location {
+            get {
+                object obj = ResourceManager.GetObject("buttonBrowseBackup.Location", resourceCulture);
+                return ((System.Drawing.Point)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size buttonBrowseBackup_Size {
+            get {
+                object obj = ResourceManager.GetObject("buttonBrowseBackup.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        public static int buttonBrowseBackup_TabIndex {
+            get {
+                object obj = ResourceManager.GetObject("buttonBrowseBackup.TabIndex", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ....
+        /// </summary>
+        public static string buttonBrowseBackup_Text {
+            get {
+                return ResourceManager.GetString("buttonBrowseBackup.Text", resourceCulture);
             }
         }
         
@@ -806,6 +878,87 @@ namespace CarDVR.Forms {
         public static string label2_Text {
             get {
                 return ResourceManager.GetString("label2.Text", resourceCulture);
+            }
+        }
+        
+        public static bool label3_AutoSize {
+            get {
+                object obj = ResourceManager.GetObject("label3.AutoSize", resourceCulture);
+                return ((bool)(obj));
+            }
+        }
+        
+        public static System.Windows.Forms.ImeMode label3_ImeMode {
+            get {
+                object obj = ResourceManager.GetObject("label3.ImeMode", resourceCulture);
+                return ((System.Windows.Forms.ImeMode)(obj));
+            }
+        }
+        
+        public static System.Drawing.Point label3_Location {
+            get {
+                object obj = ResourceManager.GetObject("label3.Location", resourceCulture);
+                return ((System.Drawing.Point)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size label3_Size {
+            get {
+                object obj = ResourceManager.GetObject("label3.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        public static int label3_TabIndex {
+            get {
+                object obj = ResourceManager.GetObject("label3.TabIndex", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to path for quick backup.
+        /// </summary>
+        public static string label3_Text {
+            get {
+                return ResourceManager.GetString("label3.Text", resourceCulture);
+            }
+        }
+        
+        public static bool labelBackupFiles_AutoSize {
+            get {
+                object obj = ResourceManager.GetObject("labelBackupFiles.AutoSize", resourceCulture);
+                return ((bool)(obj));
+            }
+        }
+        
+        public static System.Drawing.Point labelBackupFiles_Location {
+            get {
+                object obj = ResourceManager.GetObject("labelBackupFiles.Location", resourceCulture);
+                return ((System.Drawing.Point)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size labelBackupFiles_Size {
+            get {
+                object obj = ResourceManager.GetObject("labelBackupFiles.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        public static int labelBackupFiles_TabIndex {
+            get {
+                object obj = ResourceManager.GetObject("labelBackupFiles.TabIndex", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to files amount to backup.
+        /// </summary>
+        public static string labelBackupFiles_Text {
+            get {
+                return ResourceManager.GetString("labelBackupFiles.Text", resourceCulture);
             }
         }
         
@@ -1498,6 +1651,34 @@ namespace CarDVR.Forms {
         public static int panel1_TabIndex {
             get {
                 object obj = ResourceManager.GetObject("panel1.TabIndex", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        public static System.Windows.Forms.AnchorStyles pathForBackup_Anchor {
+            get {
+                object obj = ResourceManager.GetObject("pathForBackup.Anchor", resourceCulture);
+                return ((System.Windows.Forms.AnchorStyles)(obj));
+            }
+        }
+        
+        public static System.Drawing.Point pathForBackup_Location {
+            get {
+                object obj = ResourceManager.GetObject("pathForBackup.Location", resourceCulture);
+                return ((System.Drawing.Point)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size pathForBackup_Size {
+            get {
+                object obj = ResourceManager.GetObject("pathForBackup.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        public static int pathForBackup_TabIndex {
+            get {
+                object obj = ResourceManager.GetObject("pathForBackup.TabIndex", resourceCulture);
                 return ((int)(obj));
             }
         }

@@ -155,16 +155,22 @@
     <value>включить</value>
   </data>
   <data name="labelMinutesOnEachFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 13</value>
+    <value>112, 13</value>
   </data>
   <data name="labelMinutesOnEachFile.Text" xml:space="preserve">
-    <value>длительность 1 файла (мин.)</value>
+    <value>длительность файла</value>
+  </data>
+  <data name="aviDuration.Location" type="System.Drawing.Point, System.Drawing">
+    <value>155, 15</value>
+  </data>
+  <data name="amountOfFiles.Location" type="System.Drawing.Point, System.Drawing">
+    <value>155, 46</value>
   </data>
   <data name="labelStoreFiles.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 13</value>
+    <value>106, 13</value>
   </data>
   <data name="labelStoreFiles.Text" xml:space="preserve">
-    <value>количество файлов в архиве</value>
+    <value>количество файлов</value>
   </data>
   <data name="labelPath.Size" type="System.Drawing.Size, System.Drawing">
     <value>145, 13</value>
@@ -210,9 +216,6 @@
   </data>
   <data name="labelDegrees.Text" xml:space="preserve">
     <value>град</value>
-  </data>
-  <data name="gbAutostart.Size" type="System.Drawing.Size, System.Drawing">
-    <value>258, 70</value>
   </data>
   <data name="gbAutostart.Text" xml:space="preserve">
     <value>настройки записи</value>
@@ -307,6 +310,24 @@
   </data>
   <data name="tabOutput.Text" xml:space="preserve">
     <value>Видео</value>
+  </data>
+  <data name="backupFilesAmount.Location" type="System.Drawing.Point, System.Drawing">
+    <value>121, 169</value>
+  </data>
+  <data name="labelBackupFiles.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 173</value>
+  </data>
+  <data name="labelBackupFiles.Size" type="System.Drawing.Size, System.Drawing">
+    <value>107, 13</value>
+  </data>
+  <data name="labelBackupFiles.Text" xml:space="preserve">
+    <value>копировать файлов</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 13</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>путь для копии архива</value>
   </data>
   <data name="tabLocalization.Text" xml:space="preserve">
     <value>Интерфейс</value>

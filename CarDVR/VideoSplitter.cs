@@ -304,7 +304,7 @@ namespace CarDVR
 				);
 			}
 
-			DeleteOldFile();
+			DeleteOldFiles();
 		}
 
 		private string MakeAviFileName(VideoType type)
@@ -313,28 +313,17 @@ namespace CarDVR
 			return Path + "\\CarDVR_" + timeString.Replace(':', '_').Replace(' ', '_').Replace('.', '_') + ".avi";
 		}
 
-		private void DeleteOldFile()
+		private void DeleteOldFiles()
 		{
-			DirectoryInfo dir = new DirectoryInfo(Program.settings.PathForVideo);
-			FileInfo[] files = dir.GetFiles("*.avi");
+			FileInfo[] files = FileInfoSorter.Get(Program.settings.PathForVideo);
 
-			Array.Sort<FileInfo>(files, new FileInfoComparer());
-
-			for (int index = Program.settings.AmountOfFiles; index < files.Length; ++index)
+			for (int index = Program.settings.AmountOfFiles + 1; index < files.Length; ++index)
 			{
 				try
 				{
 					File.Delete(files[index].FullName);
 				}
 				catch { }
-			}
-		}
-
-		private class FileInfoComparer : IComparer<FileInfo>
-		{
-			public int Compare(FileInfo x, FileInfo y)
-			{
-				return -x.CreationTime.CompareTo(y.CreationTime);
 			}
 		}
 	}

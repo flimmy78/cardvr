@@ -159,11 +159,6 @@ namespace CarDVR
 			StartStopRecording();
 		}
 
-		private void mainForm_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			StopRecordingAndWaitForFileClosing();
-		}
-
 		private void AutostartDelayer_Handler(object sender, EventArgs e)
 		{
 			// TODO: make class BitmapDrawer
@@ -181,6 +176,11 @@ namespace CarDVR
 				MakeSmallSizedVideo();
 		}
 
+		private void mainForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			StopRecordingAndWaitForFileClosing();
+		}
+
 		private void buttonExit_Click(object sender, EventArgs e)
 		{
 			StopRecordingAndWaitForFileClosing();
@@ -194,7 +194,44 @@ namespace CarDVR
 
 		private void buttonBackup_Click(object sender, EventArgs e)
 		{
+			buttonBackup.Enabled = false;
+			FileInfo[] files = null;
 
+			if (recordingState == RecordingState.Started)
+			{
+				StopRecording();
+				files = FileInfoSorter.Get(Program.settings.PathForVideo);
+				StartRecording();
+			}
+			else
+				files = FileInfoSorter.Get(Program.settings.PathForVideo);
+
+			VideoBackuper backuper = new VideoBackuper
+			(
+				files,
+				BackupFinished
+			);
+
+			backuper.Do();
+		}
+
+		private void BackupFinished(object sender, EventArgs args)
+		{
+			if (InvokeRequired)
+			{
+				BeginInvoke(new EventHandler(BackupFinished), new object[] { sender, args });
+				return;
+			}
+
+			VideoBackuper backuper = sender as VideoBackuper;
+
+			int count = 0;
+			if (backuper != null)
+			{
+				count = backuper.GetFilesCopied();
+			}
+			
+			buttonBackup.Enabled = true;			
 		}
 	}
 }
