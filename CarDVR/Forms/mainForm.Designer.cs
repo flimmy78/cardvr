@@ -39,7 +39,12 @@
 			this.buttonMaximize = new System.Windows.Forms.Button();
 			this.buttonExit = new System.Windows.Forms.Button();
 			this.buttonBackup = new System.Windows.Forms.Button();
+			this.statusBar = new System.Windows.Forms.StatusStrip();
+			this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.statusPogress = new System.Windows.Forms.ToolStripProgressBar();
+			this.infoDisplayer = new System.Windows.Forms.Timer(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.camView)).BeginInit();
+			this.statusBar.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// buttonSettings
@@ -102,11 +107,35 @@
 			this.buttonBackup.UseVisualStyleBackColor = true;
 			this.buttonBackup.Click += new System.EventHandler(this.buttonBackup_Click);
 			// 
+			// statusBar
+			// 
+			this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabel,
+            this.statusPogress});
+			resources.ApplyResources(this.statusBar, "statusBar");
+			this.statusBar.Name = "statusBar";
+			// 
+			// statusLabel
+			// 
+			this.statusLabel.Name = "statusLabel";
+			resources.ApplyResources(this.statusLabel, "statusLabel");
+			// 
+			// statusPogress
+			// 
+			this.statusPogress.Name = "statusPogress";
+			resources.ApplyResources(this.statusPogress, "statusPogress");
+			// 
+			// infoDisplayer
+			// 
+			this.infoDisplayer.Interval = 1000;
+			this.infoDisplayer.Tick += new System.EventHandler(this.infoDisplayer_Tick);
+			// 
 			// MainForm
 			// 
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
+			this.Controls.Add(this.statusBar);
 			this.Controls.Add(this.labelNoVideoSource);
 			this.Controls.Add(this.camView);
 			this.Controls.Add(this.buttonBackup);
@@ -121,6 +150,8 @@
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.mainForm_FormClosing);
 			this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
 			((System.ComponentModel.ISupportInitialize)(this.camView)).EndInit();
+			this.statusBar.ResumeLayout(false);
+			this.statusBar.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -137,6 +168,10 @@
 		private System.Windows.Forms.Button buttonMaximize;
 		private System.Windows.Forms.Button buttonExit;
 		private System.Windows.Forms.Button buttonBackup;
+		private System.Windows.Forms.StatusStrip statusBar;
+		private System.Windows.Forms.ToolStripStatusLabel statusLabel;
+		private System.Windows.Forms.ToolStripProgressBar statusPogress;
+		private System.Windows.Forms.Timer infoDisplayer;
     }
 }
 

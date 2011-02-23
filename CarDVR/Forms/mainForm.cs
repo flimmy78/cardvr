@@ -20,6 +20,53 @@ namespace CarDVR
 		static GpsReceiver gps = new GpsReceiver();
 		public VideoManager videoManager = new VideoManager(gps);
 
+		enum StatusState
+		{
+			Ready,
+			RecordingInfo,
+			CopyingInfo
+		}
+
+		int GetStatusBarStatePriority(StatusState state)
+		{
+			switch (state)
+			{
+				case StatusState.Ready:
+					return 0;
+				case StatusState.RecordingInfo:
+					return 1;
+				case StatusState.CopyingInfo:
+					return 2;
+				default:
+					return 100;
+			}
+		}
+
+		void SetStatusBarStatus(StatusState state, string text, int progress)
+		{
+			// need to terminate copy thread before the prog ends
+			try
+			{
+				if (GetStatusBarStatePriority(state) >= GetStatusBarStatePriority(statusBarState) || state == StatusState.Ready)
+				{
+					statusBarState = state;
+
+					statusLabel.Text = text;
+					statusPogress.Visible = progress > 0;
+
+					if (state == StatusState.CopyingInfo &&  progress == 0)
+					{
+						statusBarState = StatusState.Ready;						
+					}
+
+					statusPogress.Value = progress;
+				}
+			}
+			catch { }
+		}
+
+		StatusState statusBarState = StatusState.Ready;
+
 		private void buttonSettings_Click(object sender, EventArgs e)
 		{
 			using (settingsForm settingsForm = new settingsForm())
@@ -108,6 +155,8 @@ namespace CarDVR
 			buttonStartStop.Text = Resources.Stop;
 			recordingState = RecordingState.Started;
 
+			infoDisplayer.Enabled = true;
+
 			ButtonStartStopEnable();
 		}
 
@@ -127,6 +176,10 @@ namespace CarDVR
 
 			buttonStartStop.Text = Resources.Start;
 			recordingState = RecordingState.Stopped;
+
+			infoDisplayer.Enabled = false;
+
+			SetStatusBarStatus(StatusState.Ready, Resources.Ready, 0);
 
 			ButtonStartStopEnable();
 		}
@@ -209,10 +262,22 @@ namespace CarDVR
 			VideoBackuper backuper = new VideoBackuper
 			(
 				files,
+				BackupProgressChanged,
 				BackupFinished
 			);
 
 			backuper.Do();
+		}
+
+		private void BackupProgressChanged(object sender, ProgressEventArgs args)
+		{
+			if (InvokeRequired)
+			{
+				BeginInvoke(new ProgressEventHandler(BackupProgressChanged), new object[] { sender, args });
+				return;
+			}
+
+			SetStatusBarStatus(StatusState.CopyingInfo, args.Text, args.Progress);
 		}
 
 		private void BackupFinished(object sender, EventArgs args)
@@ -230,8 +295,28 @@ namespace CarDVR
 			{
 				count = backuper.GetFilesCopied();
 			}
+
+			SetStatusBarStatus(StatusState.Ready, Resources.Ready, 0);
 			
 			buttonBackup.Enabled = true;			
+		}
+
+		private void infoDisplayer_Tick(object sender, EventArgs e)
+		{
+			string info = string.Format
+			(
+				Resources.RecordingInfo,
+				videoManager.FpsFromCamera().ToString(),
+				videoManager.FpsWritten().ToString(),
+				videoManager.FpsEmptyFrames().ToString()
+			);
+
+			SetStatusBarStatus
+			(
+				StatusState.RecordingInfo,
+				info, 
+				0
+			);
 		}
 	}
 }

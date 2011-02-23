@@ -66,6 +66,8 @@ namespace CarDVR
 		public VideoManager(GpsReceiver gpsRcvr)
 		{
 			gps = gpsRcvr;
+			FpsDisplayer.Elapsed += new System.Timers.ElapsedEventHandler(FpsDisplayer_Tick);
+			FpsDisplayer.Interval = 1000;
 		}
 
 		// Thread that compressing video stream

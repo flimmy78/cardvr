@@ -12,10 +12,25 @@ namespace CarDVR
 		BackupAllButCurrent
 	};
 
+	class ProgressEventArgs : EventArgs
+	{
+		public ProgressEventArgs(int progress, string text)
+		{
+			Progress = progress;
+			Text = text;
+		}
+
+		public int Progress;
+		public string Text;
+	}
+
+	delegate void ProgressEventHandler(object sender, ProgressEventArgs args);
+
 	class VideoBackuper
 	{
 		int copied_ = 0;
-		EventHandler callback_ = null;
+		ProgressEventHandler progressCallback_ = null;
+		EventHandler finishCallback_ = null;
 		FileInfo[] files_ = null;
 
 		public int GetFilesCopied()
@@ -23,10 +38,11 @@ namespace CarDVR
 			return copied_;
 		}
 
-		public VideoBackuper(FileInfo[] files, EventHandler callback)
+		public VideoBackuper(FileInfo[] files, ProgressEventHandler progressCallback, EventHandler finishCallback)
 		{
 			files_ = files;
-			callback_ = callback;
+			progressCallback_ = progressCallback;
+			finishCallback_ = finishCallback;
 		}
 
 		private void CopyThread()
@@ -38,14 +54,24 @@ namespace CarDVR
 			{
 				try
 				{
+					if (progressCallback_ != null && Program.settings.BackupFilesAmount != 0)
+					{
+						progressCallback_
+						(
+							this,
+							new ProgressEventArgs(index * 100 / Program.settings.BackupFilesAmount,
+							string.Format(Resources.CopyingFile, files_[index].Name))
+						);
+					}
+
 					File.Copy(files_[index].FullName, destination + files_[index].Name);
 					++copied_;
 				}
 				catch { }
 			}
 
-			if (callback_ != null)
-				callback_(this, EventArgs.Empty);
+			if (finishCallback_ != null)
+				finishCallback_(this, EventArgs.Empty);
 		}
 
 		public void Do()

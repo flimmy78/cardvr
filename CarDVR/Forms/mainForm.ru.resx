@@ -162,7 +162,7 @@
     <value>Развернуть</value>
   </data>
   <data name="buttonExit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>264, 220</value>
+    <value>263, 220</value>
   </data>
   <data name="buttonExit.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -170,11 +170,26 @@
   <data name="buttonExit.Text" xml:space="preserve">
     <value>Выход</value>
   </data>
+  <data name="buttonBackup.Location" type="System.Drawing.Point, System.Drawing">
+    <value>134, 220</value>
+  </data>
   <data name="buttonBackup.Text" xml:space="preserve">
     <value>Копировать</value>
   </data>
+  <data name="statusBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 292</value>
+  </data>
+  <data name="statusBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>365, 22</value>
+  </data>
+  <data name="statusLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 17</value>
+  </data>
+  <data name="statusLabel.Text" xml:space="preserve">
+    <value>Готов</value>
+  </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>365, 288</value>
+    <value>365, 314</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

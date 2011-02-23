@@ -58,6 +58,7 @@ namespace CarDVR
 		{
 			camView.Dock = DockStyle.Fill;
 			VideoWindowMode = FillMode.Full;
+			statusBar.Visible = false;
 		}
 
 		private void MakeSmallSizedVideo()
@@ -66,6 +67,7 @@ namespace CarDVR
 			camView.Size = new Size(buttonSettings.Left - SpaceToButtons, buttonStartStop.Top - SpaceToButtons);
 			camView.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
 			VideoWindowMode = FillMode.Normal;
+			statusBar.Visible = true;
 		}
 
 		private void buttonMinimize_Click(object sender, EventArgs e)

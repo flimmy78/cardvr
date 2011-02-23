@@ -20,6 +20,9 @@ namespace CarDVR
 		public static string CurrentWebCamNotAvaliable;
 		public static string CantOpenGpsOnPort;
 		public static string CantOpenOutputFile;
+		public static string CopyingFile;
+		public static string Ready;
+		public static string RecordingInfo;
 
 		static private void InitRussianResources()
 		{
@@ -36,6 +39,9 @@ namespace CarDVR
 			CurrentWebCamNotAvaliable = "Выбранная веб камера не доступна";
 			CantOpenGpsOnPort = "Не удается открыть GPS приемник на порту '{0}'. GPS не активен. Описание: {1}";
 			CantOpenOutputFile = "Не удается открыть для записи файл {0}\n{1}";
+			CopyingFile = "Копируется {0}";
+			Ready = "Готов";
+			RecordingInfo = "Запись: Камера {0}, Уникальных {1}, Копий {2} (кадров/с)";
 		}
 
 		static private void InitEnglishResources()
@@ -52,7 +58,10 @@ namespace CarDVR
 			OnStartDelay = "On start delay";
 			CurrentWebCamNotAvaliable = "Current webcam is not avaliable";
 			CantOpenGpsOnPort = "Can't open GPS receiver on port '{0}'. GPS not active. Description: {1}";
-			CantOpenOutputFile = "Can't open output file {0}\n{1}";			
+			CantOpenOutputFile = "Can't open output file {0}\n{1}";
+			CopyingFile = "Copying {0}";
+			Ready = "Ready";
+			RecordingInfo = "Recording: Cam {0}, Unique {1}, Copies {2} (FPS)";
 		}			 
 			
 		static public void InitDynamicResources(string language)
