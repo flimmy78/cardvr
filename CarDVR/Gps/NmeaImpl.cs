@@ -49,7 +49,7 @@ namespace Gps
 
 		bool IsGpggaCommand()
 		{
-			return parameters[(int)GPGGA.Name] == "$GGGA";
+			return parameters[(int)GPGGA.Name] == "$GPGGA";
 		}
 
 		bool IsGprmcCommand()
