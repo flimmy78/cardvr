@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CarDVR
+namespace Gps
 {
 	public enum GpsState
 	{

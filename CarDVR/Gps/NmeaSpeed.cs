@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Globalization;
 
-namespace CarDVR
+namespace Gps
 {
 	/// <summary>
 	/// This Class converts NMEA knots to km/h
 	/// </summary>
-	public class NmeaSpeed
+	public class NmeaSpeedCalculator
 	{
 		private static readonly double KMpHPerKnot = 1.852;
 

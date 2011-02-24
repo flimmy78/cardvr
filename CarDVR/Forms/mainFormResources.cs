@@ -23,6 +23,7 @@ namespace CarDVR
 		public static string CopyingFile;
 		public static string Ready;
 		public static string RecordingInfo;
+		public static string WaitingBeforeStart;
 
 		static private void InitRussianResources()
 		{
@@ -42,6 +43,7 @@ namespace CarDVR
 			CopyingFile = "Копируется {0}";
 			Ready = "Готов";
 			RecordingInfo = "Запись: Камера {0}, Уникальных {1}, Копий {2} (кадров/с)";
+			WaitingBeforeStart = "Ожидание перед началом работы";
 		}
 
 		static private void InitEnglishResources()
@@ -62,6 +64,7 @@ namespace CarDVR
 			CopyingFile = "Copying {0}";
 			Ready = "Ready";
 			RecordingInfo = "Recording: Cam {0}, Unique {1}, Copies {2} (FPS)";
+			WaitingBeforeStart = "Waiting before start";
 		}			 
 			
 		static public void InitDynamicResources(string language)

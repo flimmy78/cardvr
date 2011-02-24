@@ -10,6 +10,8 @@ using System.Threading;
 using System.Resources;
 using System.Globalization;
 
+using Gps;
+
 namespace CarDVR
 {
 	public partial class MainForm : Form
@@ -23,6 +25,7 @@ namespace CarDVR
 		enum StatusState
 		{
 			Ready,
+			WaitingBeforeStart,
 			RecordingInfo,
 			CopyingInfo
 		}
@@ -33,16 +36,18 @@ namespace CarDVR
 			{
 				case StatusState.Ready:
 					return 0;
-				case StatusState.RecordingInfo:
+				case StatusState.WaitingBeforeStart:
 					return 1;
-				case StatusState.CopyingInfo:
+				case StatusState.RecordingInfo:
 					return 2;
+				case StatusState.CopyingInfo:
+					return 3;
 				default:
 					return 100;
 			}
 		}
 
-		void SetStatusBarStatus(StatusState state, string text, int progress)
+		void SetStatusBarStatus(StatusState state, string text, int progress = 0)
 		{
 			// need to terminate copy thread before the prog ends
 			try
@@ -179,7 +184,7 @@ namespace CarDVR
 
 			infoDisplayer.Enabled = false;
 
-			SetStatusBarStatus(StatusState.Ready, Resources.Ready, 0);
+			SetStatusBarStatus(StatusState.Ready, Resources.Ready);
 
 			ButtonStartStopEnable();
 		}
@@ -214,8 +219,11 @@ namespace CarDVR
 
 		private void AutostartDelayer_Handler(object sender, EventArgs e)
 		{
-			// TODO: make class BitmapDrawer
-			camView.Image = new Bitmap(Program.settings.VideoWidth, Program.settings.VideoHeight);
+			camView.Image = ImageDrawer.GetEmptyImage();
+			SetStatusBarStatus(StatusState.Ready, Resources.Ready);
+
+			if (!IsWebCamAvaliable())
+				return;
 
 			ButtonStartStopEnable();
 			VideoInitialization();
@@ -296,7 +304,7 @@ namespace CarDVR
 				count = backuper.GetFilesCopied();
 			}
 
-			SetStatusBarStatus(StatusState.Ready, Resources.Ready, 0);
+			SetStatusBarStatus(StatusState.Ready, Resources.Ready);
 			
 			buttonBackup.Enabled = true;			
 		}

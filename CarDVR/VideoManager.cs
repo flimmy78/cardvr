@@ -8,6 +8,8 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
 
+using Gps;
+
 namespace CarDVR
 {
 	public class VideoManager

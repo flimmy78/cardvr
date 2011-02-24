@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CarDVR
+namespace Gps
 {
 	/// <summary>
 	/// This interface create abstraction above different Gps Protocol formats
 	/// </summary>
-	public interface GpsFormat
+	public interface GpsStandard
 	{
 		void Initialize();
 		void Parse(string line);

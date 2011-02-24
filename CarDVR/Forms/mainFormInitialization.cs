@@ -44,22 +44,9 @@ namespace CarDVR
 					AutostartDelayer_Handler
 				);
 
-				// TODO: make class BitmapDrawer
-				Bitmap message = new Bitmap(Program.settings.VideoWidth, Program.settings.VideoHeight);
+				SetStatusBarStatus(StatusState.WaitingBeforeStart, Resources.WaitingBeforeStart);
 
-				using (Graphics g = Graphics.FromImage(message))
-				{
-					Font framefont = new Font("Arial", 18, FontStyle.Bold);
-					g.DrawString
-					(
-						Resources.OnStartDelay, 
-						framefont, 
-						Brushes.Black,
-						message.Width / 2 - Resources.OnStartDelay.Length / 2 * framefont.Size, 
-						message.Height / 2
-					);
-				}
-				camView.Image = message;
+				camView.Image = ImageDrawer.CreateImage(800, 600, Resources.OnStartDelay);
 
 				ButtonStartStopDisable();
 			}

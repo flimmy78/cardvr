@@ -1,14 +1,14 @@
 ﻿using System;
 using System.IO.Ports;
 
-namespace CarDVR
+namespace Gps
 {
 	/// <summary>
 	/// Receives info from GPS device. Only NMEA format implemented.
 	/// </summary>
 	public class GpsReceiver
 	{
-		public GpsFormat gps = new NmeaImpl();
+		public GpsStandard gps = new NmeaImpl();
 		public GpsState State { get; set; }
 
 		private SerialPort com = new SerialPort();

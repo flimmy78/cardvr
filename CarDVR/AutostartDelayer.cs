@@ -7,10 +7,12 @@ namespace CarDVR
 {
 	class AutoStartDelayer
 	{
-		private Timer timer = new Timer();
+		Timer timer = new Timer();
+		EventHandler callback_;
 
 		public AutoStartDelayer(int pause, EventHandler callback)
 		{
+			callback_ = callback;
 			timer.Interval = pause;
 			timer.Enabled = true;
 			timer.Tick += new EventHandler(timer_Tick);
@@ -21,6 +23,7 @@ namespace CarDVR
 		{
 			timer.Enabled = false;
 			timer.Tick -= timer_Tick;
+			timer.Tick -= callback_;
 		}
 	}
 }

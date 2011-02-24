@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CarDVR
+namespace Gps
 {
 	/// <summary>
 	/// This class implements GpsFormat interface and declares NMEA Gps Protocol
 	/// </summary>
-	class NmeaImpl : GpsFormat
+	class NmeaImpl : GpsStandard
 	{
 		private string latitude = string.Empty;
 		private string longitude = string.Empty;
@@ -16,39 +16,82 @@ namespace CarDVR
 		private int fixTaken = 0;
 		private int fixedSatellites = 0;
 
+		private string[] parameters;
+
+		enum GPGGA
+		{
+			Name = 0,
+			LatitudeValue = 2,
+			Latitude = 3,
+			LongitudeValue = 4,
+			Longitude = 5,
+			FixTaken = 6,
+			FixedSattelites = 7,
+			MaximalRequired = 8,
+		}
+
+		enum GPRMC
+		{
+			Name = 0,
+			Velocity = 7,
+			MaximalRequired = 8,
+		}
+
+		string GetParameter(GPGGA param)
+		{
+			return parameters[(int)param];
+		}
+
+		string GetParameter(GPRMC param)
+		{
+			return parameters[(int)param];
+		}
+
+		bool IsGpggaCommand()
+		{
+			return parameters[(int)GPGGA.Name] == "$GGGA";
+		}
+
+		bool IsGprmcCommand()
+		{
+			return parameters[(int)GPRMC.Name] == "$GPRMC";
+		}
+
 		public void Parse(string line)
 		{
-			string[] parameters = line.Split(',');
+			parameters = line.Split(',');
 
 			if (parameters.Length == 0)
 				return;
 
-			if (parameters[0] == "$GPRMC")
-				ParseRMC(ref parameters);
-			else if (parameters[0] == "$GPGGA")
-				ParseGGA(ref parameters);
+			if (IsGprmcCommand()) 
+				ParseRMC();
+			else if (IsGpggaCommand()) 
+				ParseGGA();
 		}
 
-		void ParseGGA(ref string[] parameters)
+		void ParseGGA()
 		{
-			if (parameters.Length <= 7)
+			if (parameters.Length+1 < (int)GPGGA.MaximalRequired)
 				return;
 
-			if (!int.TryParse(parameters[6], out fixTaken))
+			if (!int.TryParse(GetParameter(GPGGA.FixTaken), out fixTaken))
 				fixTaken = 0;
 
-			if (!int.TryParse(parameters[7], out fixedSatellites))
+			if (!int.TryParse(GetParameter(GPGGA.FixedSattelites), out fixedSatellites))
 				fixedSatellites = 0;
 
 			if (fixTaken == 1)
 			{
-				latitude = parameters[3] + " ";
-				string latitudeValue = parameters[2];
+				latitude = GetParameter(GPGGA.Latitude) + " ";
+				string latitudeValue = GetParameter(GPGGA.LatitudeValue);
+
 				if (!string.IsNullOrEmpty(latitudeValue))
 					latitude += latitudeValue.Insert(2, " ");
 
-				longitude = parameters[5] + " ";
-				string longitudeValue = parameters[4];
+				longitude = GetParameter(GPGGA.Longitude) + " ";
+				string longitudeValue = GetParameter(GPGGA.LongitudeValue);
+
 				if (!string.IsNullOrEmpty(longitudeValue))
 					longitude += longitudeValue.Insert(3, " ");
 
@@ -57,12 +100,15 @@ namespace CarDVR
 			}
 		}
 
-		void ParseRMC(ref string[] parameters)
+		void ParseRMC()
 		{
-			string velocity = string.Empty;
+			if (parameters.Length + 1 < (int)GPRMC.MaximalRequired)
+			{
+				speed = string.Empty;
+				return;
+			}
 
-			if (parameters.Length > 7)
-				velocity = parameters[7];
+			string velocity = GetParameter(GPRMC.Velocity);
 
 			if (string.IsNullOrEmpty(velocity))
 			{
@@ -72,7 +118,7 @@ namespace CarDVR
 
 			try
 			{
-				speed = NmeaSpeed.Convert(velocity).ToString();
+				speed = NmeaSpeedCalculator.Convert(velocity).ToString();
 			}
 			catch
 			{
