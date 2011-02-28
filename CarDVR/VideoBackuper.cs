@@ -50,6 +50,25 @@ namespace CarDVR
 			copied_ = 0;
 			string destination = Program.settings.BackupPath + "/";
 
+			try
+			{
+				Directory.CreateDirectory(destination);
+			}
+			catch (Exception e)
+			{
+				Reporter.SeriousError
+				(
+					string.Format
+					(
+						Resources.CantCreateDirectory,
+						destination,
+						e.Message
+					)
+				);
+				DoFinish();
+				return;
+			}
+
 			for (int index = 0; index < Program.settings.BackupFilesAmount && index < files_.Length; ++index)
 			{
 				try
@@ -70,6 +89,11 @@ namespace CarDVR
 				catch { }
 			}
 
+			DoFinish();
+		}
+
+		private void DoFinish()
+		{
 			if (finishCallback_ != null)
 				finishCallback_(this, EventArgs.Empty);
 		}

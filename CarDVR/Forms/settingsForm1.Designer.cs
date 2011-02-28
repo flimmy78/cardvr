@@ -160,6 +160,36 @@ namespace CarDVR.Forms {
             }
         }
         
+        public static System.Drawing.Point backupHotkey_Location {
+            get {
+                object obj = ResourceManager.GetObject("backupHotkey.Location", resourceCulture);
+                return ((System.Drawing.Point)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size backupHotkey_Size {
+            get {
+                object obj = ResourceManager.GetObject("backupHotkey.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        public static int backupHotkey_TabIndex {
+            get {
+                object obj = ResourceManager.GetObject("backupHotkey.TabIndex", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string backupHotkey_Text {
+            get {
+                return ResourceManager.GetString("backupHotkey.Text", resourceCulture);
+            }
+        }
+        
         public static System.Windows.Forms.AnchorStyles button1_Anchor {
             get {
                 object obj = ResourceManager.GetObject("button1.Anchor", resourceCulture);
@@ -959,6 +989,43 @@ namespace CarDVR.Forms {
         public static string labelBackupFiles_Text {
             get {
                 return ResourceManager.GetString("labelBackupFiles.Text", resourceCulture);
+            }
+        }
+        
+        public static bool labelBackupHotkey_AutoSize {
+            get {
+                object obj = ResourceManager.GetObject("labelBackupHotkey.AutoSize", resourceCulture);
+                return ((bool)(obj));
+            }
+        }
+        
+        public static System.Drawing.Point labelBackupHotkey_Location {
+            get {
+                object obj = ResourceManager.GetObject("labelBackupHotkey.Location", resourceCulture);
+                return ((System.Drawing.Point)(obj));
+            }
+        }
+        
+        public static System.Drawing.Size labelBackupHotkey_Size {
+            get {
+                object obj = ResourceManager.GetObject("labelBackupHotkey.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        public static int labelBackupHotkey_TabIndex {
+            get {
+                object obj = ResourceManager.GetObject("labelBackupHotkey.TabIndex", resourceCulture);
+                return ((int)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to backup hotkey.
+        /// </summary>
+        public static string labelBackupHotkey_Text {
+            get {
+                return ResourceManager.GetString("labelBackupHotkey.Text", resourceCulture);
             }
         }
         

@@ -255,6 +255,11 @@ namespace CarDVR
 
 		private void buttonBackup_Click(object sender, EventArgs e)
 		{
+			DoBackup();
+		}
+
+		private void DoBackup()
+		{
 			buttonBackup.Enabled = false;
 			FileInfo[] files = null;
 
@@ -325,6 +330,16 @@ namespace CarDVR
 				info, 
 				0
 			);
+		}
+		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+		{
+			int buHotkey = Program.settings.BackupHotkey;
+			if (buHotkey != 0 && buHotkey == (int)keyData)
+			{
+				DoBackup();
+				return true;
+			}
+			return base.ProcessCmdKey(ref msg, keyData);
 		}
 	}
 }

@@ -206,6 +206,8 @@ namespace CarDVR
 
 			pathForBackup.Text = Program.settings.BackupPath;
 			backupFilesAmount.Value = Program.settings.BackupFilesAmount;
+			backupHotkey.Hotkey = (Keys)(Program.settings.BackupHotkey & 65535);
+			backupHotkey.HotkeyModifiers = (Keys)(Program.settings.BackupHotkey - (Program.settings.BackupHotkey & 65535));
 		}
 
 		void ApplyFormToSettings()
@@ -275,6 +277,7 @@ namespace CarDVR
 
 			Program.settings.BackupPath = pathForBackup.Text;
 			Program.settings.BackupFilesAmount = (int)backupFilesAmount.Value;
+			Program.settings.BackupHotkey = (int)(backupHotkey.HotkeyModifiers | backupHotkey.Hotkey);
 		}
 
 		class CodecInfo
@@ -499,6 +502,17 @@ namespace CarDVR
 					pathForBackup.Text = dlg.SelectedPath;
 			}
 		}
+
+		private void settingsForm_Shown(object sender, EventArgs e)
+		{
+			Cursor.Show();
+		}
+
+		private void settingsForm_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			if (hideMouse.Checked)
+				Cursor.Hide();
+		}
 	}
 
 	public class SettingsImpl
@@ -542,6 +556,7 @@ namespace CarDVR
 		public bool HideMouseCursor { get; set; }
 		public string BackupPath { get; set; }
 		public int BackupFilesAmount { get; set; }
+		public int BackupHotkey { get; set; }
 
 		/// <summary>
 		/// Initialization constructor
@@ -572,6 +587,7 @@ namespace CarDVR
 			Cam1FrameRate = 0;
 			BackupPath = string.Empty;
 			BackupFilesAmount = 1;
+			BackupHotkey = 0;
 		}
 
 		/// <summary>
