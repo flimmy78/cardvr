@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CarDVR</RootNamespace>
     <AssemblyName>CarDVR</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -172,7 +172,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
@@ -192,6 +191,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\main.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ServiceTester\CarDvrPipes.csproj">
+      <Project>{DA28CA12-313E-4961-AF6D-ABBFA47BACCF}</Project>
+      <Name>CarDvrPipes</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -8,10 +8,14 @@ using System.Resources;
 using System.Drawing;
 using AForge.Video;
 
+using CarDvrPipes;
+
 namespace CarDVR
 {
 	public partial class MainForm : Form
 	{
+        PipesClient pipe = null;
+
 		public MainForm()
 		{
 			BeforeInitializeComponent();
@@ -19,6 +23,9 @@ namespace CarDVR
 			InitializeComponent();
 
 			AfterInitializeComponent();
+
+            pipe = new PipesClient();
+            pipe.Start();
 		}
 
 		private void BeforeInitializeComponent()

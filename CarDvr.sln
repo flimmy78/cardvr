@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarDVR", "CarDVR\CarDVR.csproj", "{C6F8A72F-2722-4DFD-BD85-544D58F3C202}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarDvrService", "CarDvrService\CarDvrService.csproj", "{A72FEA47-B4D2-4394-A333-E2FEE6FD130E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarDvrPipes", "ServiceTester\CarDvrPipes.csproj", "{DA28CA12-313E-4961-AF6D-ABBFA47BACCF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +17,14 @@ Global
 		{C6F8A72F-2722-4DFD-BD85-544D58F3C202}.Debug|x86.Build.0 = Debug|x86
 		{C6F8A72F-2722-4DFD-BD85-544D58F3C202}.Release|x86.ActiveCfg = Release|x86
 		{C6F8A72F-2722-4DFD-BD85-544D58F3C202}.Release|x86.Build.0 = Release|x86
+		{A72FEA47-B4D2-4394-A333-E2FEE6FD130E}.Debug|x86.ActiveCfg = Debug|x86
+		{A72FEA47-B4D2-4394-A333-E2FEE6FD130E}.Debug|x86.Build.0 = Debug|x86
+		{A72FEA47-B4D2-4394-A333-E2FEE6FD130E}.Release|x86.ActiveCfg = Release|x86
+		{A72FEA47-B4D2-4394-A333-E2FEE6FD130E}.Release|x86.Build.0 = Release|x86
+		{DA28CA12-313E-4961-AF6D-ABBFA47BACCF}.Debug|x86.ActiveCfg = Debug|x86
+		{DA28CA12-313E-4961-AF6D-ABBFA47BACCF}.Debug|x86.Build.0 = Debug|x86
+		{DA28CA12-313E-4961-AF6D-ABBFA47BACCF}.Release|x86.ActiveCfg = Release|x86
+		{DA28CA12-313E-4961-AF6D-ABBFA47BACCF}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
