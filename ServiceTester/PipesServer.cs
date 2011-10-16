@@ -65,7 +65,11 @@ namespace CarDvrPipes
         {
             int timeout = 0;
 			byte[] informationRequest = new Packets.Request(Packets.Ident.BasicInformation).toBytes();
-			Packets.BasicInformation bi = new Packets.BasicInformation(false, 0, 0);
+			byte[] result = new byte[Packets.Constants.MaximalPossiblePacketLength];
+
+			int[] packetSizes = new int[(int)Packets.Ident.Max+1];
+			for (Packets.Ident packetType = Packets.Ident.BasicInformation; packetType != Packets.Ident.Max; packetType++)
+				packetSizes[(int)packetType] = Packets.Instance.Make(packetType).size();
 
             while (true)
             {
@@ -78,29 +82,20 @@ namespace CarDvrPipes
 
                     if (pipeStream.CanRead)
                     {
-						byte[] result = new byte[bi.size()];
+						int bytesAmount = pipeStream.Read(result, 0, result.Length);
 
-                        if (bi.size() == pipeStream.Read(result, 0, result.Length))
-                        {
-							if (result[0] == (byte)Packets.Ident.BasicInformation)
+						for (Packets.Ident packetType = Packets.Ident.BasicInformation; packetType != Packets.Ident.Max; packetType++)
+						{
+							if (packetSizes[(int)packetType] == bytesAmount)
 							{
 								if (gotPacketEvent != null)
 									gotPacketEvent(this, new PacketEventArgs(new Packets.BasicInformation(result)));
+
+								break;
 							}
+						}
 
-							//if (result[0] == (byte)Packets.Ident.BasicInformation)
-							//{
-							//    System.Media.SoundPlayer player = new System.Media.SoundPlayer();
-
-							//    player.SoundLocation = @"C:\Dev\cardvr\CarDVR\voice\test.wav";
-							//    player.Play();
-
-							//    // wait for 10 secs
-							//    Thread.Sleep(10000);
-							//}
-
-							Thread.Sleep(10000);
-                        }
+						Thread.Sleep(10000);
                     }
                     if (timeout >= readingTimeOut)
                     {

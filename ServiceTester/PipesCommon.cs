@@ -12,9 +12,29 @@ namespace CarDvrPipes
 
 	namespace Packets
 	{
+		public class Constants
+		{
+			public const int MaximalPossiblePacketLength = 1024;
+		}
+
+		public class Instance
+		{
+			public static IPacket Make(Ident id)
+			{
+				switch (id)
+				{
+					case Ident.BasicInformation:
+						return new BasicInformation(false, 0, 0);
+				}
+
+				return null;
+			}
+		}
+
 		public enum Ident
 		{
 			BasicInformation = 1,
+			Max
 		}
 
 		public interface IPacket
