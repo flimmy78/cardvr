@@ -12,34 +12,56 @@ namespace CarDvrPipes
         const int maxPipeInstances = 2;
         object connectionGuard = new object();
         bool connected = false;
-        NamedPipeClientStream pipeStream = new NamedPipeClientStream(".", PipesCommon.CarDvrPipeName, PipeDirection.InOut);
-        //, maxPipeInstances, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
+        NamedPipeClientStream pipeStream = null;
 
-  
+		void CreateClientPipe()
+		{
+			pipeStream = new NamedPipeClientStream(".", PipesCommon.CarDvrPipeName, PipeDirection.InOut);
+			pipeStream.Connect(10000);
+		}
+
         /// <summary>
         /// This thread should always check availability of the pipe and should check that CarDVR works fine
         /// </summary>
         void PipeReadingThread()
         {
-            //while (true)
+			byte[] result = new byte[1024];
+
+            while (true)
             {
-                if (pipeStream.CanRead)
-                {
-                    byte[] result = new byte[100];
+				try
+				{
+					if (pipeStream.CanRead)
+					{
+						int realCount = pipeStream.Read(result, 0, result.Length);
 
-                    int realCount = pipeStream.Read(result, 0, result.Length);
+						if (result[0] == (byte)Packets.Ident.BasicInformation)
+						{
+							Packets.BasicInformation basicInformation = new Packets.BasicInformation
+							(
+								true,
+								120,
+								30
+							);
 
-                    result[0] = 1;
-                    result[1] = 2;
-                    result[2] = 3;
-                    result[3] = 4;
-                    result[4] = 5;
-
-                    pipeStream.Write(result, 0, 5);
-                    
-                }
-
-                Thread.Sleep(10000);
+							byte[] data = basicInformation.toBytes();
+							pipeStream.Write(data, 0, data.Length);
+						}
+					}
+					Thread.Sleep(1000);
+				}
+				catch (Exception e)
+				{
+					try
+					{
+						pipeStream.Close();
+						CreateClientPipe();
+					}
+					catch (Exception ee)
+					{
+						// ERROR
+					}
+				}                
             }
 
         }
@@ -50,7 +72,7 @@ namespace CarDvrPipes
         {
             try
             {
-                pipeStream.Connect(1000);
+				CreateClientPipe();
                 clientPipeThread = new Thread(PipeReadingThread);
                 clientPipeThread.Start();                 
             }
@@ -63,7 +85,7 @@ namespace CarDvrPipes
 
         public void Stop()
         {
-            clientPipeThread.Interrupt();
+            clientPipeThread.Abort();
             clientPipeThread.Join();
 
             pipeStream.Close();

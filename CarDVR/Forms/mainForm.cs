@@ -210,6 +210,7 @@ namespace CarDVR
 				StopRecording();
 				videoManager.Close();
 			}
+			pipe.Stop();
 		}
 
 		private void buttonStartStop_Click(object sender, EventArgs e)

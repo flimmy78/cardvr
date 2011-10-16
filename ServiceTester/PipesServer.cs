@@ -9,31 +9,35 @@ namespace CarDvrPipes
 {
     public class PipesServer
     {
+		public class PacketEventArgs : EventArgs
+		{
+			public PacketEventArgs(Packets.IPacket pkt)
+			{
+				packet = pkt;
+			}
+			public Packets.IPacket packet;
+		}
+		public delegate void PacketEventHandler(object sender, PacketEventArgs e);
+		public PacketEventHandler gotPacketEvent;
+
         const int readingTimeOut = 10000;
         const int maxPipeInstances = 2;
         
-        object connectionGuard = new object();
-        bool connected = false;
+        object stateGuard = new object();
+        //bool connected = false;
+		//bool broken = false;
 
-        NamedPipeServerStream pipeStream = new NamedPipeServerStream(PipesCommon.CarDvrPipeName, PipeDirection.InOut, maxPipeInstances, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
+        NamedPipeServerStream pipeStream = null; //new NamedPipeServerStream(PipesCommon.CarDvrPipeName, PipeDirection.InOut, maxPipeInstances, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
         
         Thread connectionThread = null;
         Thread workerThread = null;
+		Queue<byte[]> packetsToSend = new Queue<byte[]>();
 
-        ///// <summary>
-        ///// Callback, which says that pipe connection finished
-        ///// </summary>
-        //private void WaitConnectionCallback(IAsyncResult result)
-        //{
-        //    try
-        //    {
-        //        pipeStream.EndWaitForConnection(result);
-        //    }
-        //    catch (OperationCanceledException)
-        //    {
-        //        // LOG            	
-        //    }
-        //}
+
+		void CreatePipe()
+		{
+			pipeStream = new NamedPipeServerStream(PipesCommon.CarDvrPipeName, PipeDirection.InOut, maxPipeInstances, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
+		}
 
         /// <summary>
         /// This thread should try to connect to CarDVR all time
@@ -46,12 +50,11 @@ namespace CarDvrPipes
                 {
                     if (!pipeStream.IsConnected)
                         pipeStream.WaitForConnection();
-
                 }
                 catch (Exception e)
                 {
-                    pipeStream.WaitForConnection();
-                    /*pipeStream.BeginWaitForConnection(WaitConnectionCallback, null);*/
+					pipeStream.Close();
+					CreatePipe();
                 }
 
                 Thread.Sleep(5000);
@@ -61,7 +64,8 @@ namespace CarDvrPipes
         void PipeWorker()
         {
             int timeout = 0;
-            int position = 0;
+			byte[] informationRequest = new Packets.Request(Packets.Ident.BasicInformation).toBytes();
+			Packets.BasicInformation bi = new Packets.BasicInformation(false, 0, 0);
 
             while (true)
             {
@@ -70,28 +74,32 @@ namespace CarDvrPipes
                     while (!pipeStream.IsConnected)
                         Thread.Sleep(100);
 
-                    byte[] checkOkPacket = new byte[] { 1, 2, 3, 4, 5 };
-
-                    pipeStream.Write(checkOkPacket, 0, checkOkPacket.Length);
+					pipeStream.Write(informationRequest, 0, informationRequest.Length);
 
                     if (pipeStream.CanRead)
                     {
-                        byte[] result = new byte[100];
-                        int realCoont = pipeStream.Read(result, position, result.Length);
-                        position += realCoont;
+						byte[] result = new byte[bi.size()];
 
-                        if (realCoont >= 5)
+                        if (bi.size() == pipeStream.Read(result, 0, result.Length))
                         {
-                            if (result[0] == 1 && result[1] == 2 && result[2] == 3 && result[3] == 4 && result[4] == 5)
-                            {
-                                // everything is fine!
-                                timeout = 0;
+							if (result[0] == (byte)Packets.Ident.BasicInformation)
+							{
+								if (gotPacketEvent != null)
+									gotPacketEvent(this, new PacketEventArgs(new Packets.BasicInformation(result)));
+							}
 
-                                result[0] = 0;
+							//if (result[0] == (byte)Packets.Ident.BasicInformation)
+							//{
+							//    System.Media.SoundPlayer player = new System.Media.SoundPlayer();
 
-                                // wait for 10 secs
-                                Thread.Sleep(10000);
-                            }
+							//    player.SoundLocation = @"C:\Dev\cardvr\CarDVR\voice\test.wav";
+							//    player.Play();
+
+							//    // wait for 10 secs
+							//    Thread.Sleep(10000);
+							//}
+
+							Thread.Sleep(10000);
                         }
                     }
                     if (timeout >= readingTimeOut)
@@ -115,6 +123,8 @@ namespace CarDvrPipes
 
         public void Start()
         {
+			CreatePipe();
+
             connectionThread = new Thread(ConnectionThread);
             connectionThread.Start();
 
@@ -127,18 +137,18 @@ namespace CarDvrPipes
             if (connectionThread == null)
                 return;
 
-            connectionThread.Interrupt();
+            connectionThread.Abort();
             connectionThread.Join();
 
             connectionThread = null;
         }
 
-        public bool IsConnected()
-        {
-            lock (connectionGuard)
-            {
-                return connected;
-            }
-        }
+		//public bool IsConnected()
+		//{
+		//    lock (connectionGuard)
+		//    {
+		//        return connected;
+		//    }
+		//}
     }
 }
