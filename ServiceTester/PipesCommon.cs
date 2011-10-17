@@ -12,19 +12,39 @@ namespace CarDvrPipes
 
 	namespace Packets
 	{
-		public class Constants
+        public class PacketEventArgs : EventArgs
+        {
+            public PacketEventArgs(Packets.IPacket pkt)
+            {
+                packet = pkt;
+            }
+            public Packets.IPacket packet;
+        }
+        public delegate void PacketEventHandler(object sender, PacketEventArgs e);
+
+		public class Helper
 		{
 			public const int MaximalPossiblePacketLength = 1024;
+            public static int[] PacketsSizes = new int[] { 0, BasicInformation.Size };
+
+            public static bool isValidIdent(byte[] raw, int readBytes)
+            {
+                if (raw.Length == 0)
+                    return false;
+                
+                byte id = raw[0];
+                return (id > 0) && (id < (byte)Ident.Max) && (PacketsSizes[id] == readBytes);
+            }
 		}
 
 		public class Instance
 		{
-			public static IPacket Make(Ident id)
+			public static IPacket Make(Ident id, byte[] data)
 			{
 				switch (id)
 				{
 					case Ident.BasicInformation:
-						return new BasicInformation(false, 0, 0);
+                        return new BasicInformation(data);
 				}
 
 				return null;
@@ -39,7 +59,7 @@ namespace CarDvrPipes
 
 		public interface IPacket
 		{
-			int size();
+            int DynamicSizeOf();
 			byte[] toBytes();
 		}
 
@@ -50,10 +70,10 @@ namespace CarDvrPipes
 				id_ = id;
 			}
 
-			public int size()
-			{
-				return 1;
-			}
+            public int DynamicSizeOf()
+            {
+                return 1;
+            }
 
 			public byte[] toBytes()
 			{
@@ -71,26 +91,29 @@ namespace CarDvrPipes
 				speed_ = speed;
 				fps_ = fps;
 			}
-			public BasicInformation(byte[] raw)
+
+            public BasicInformation(byte[] data)
 			{
 				int index = 0;
-				isRecording_ = raw[index++] == 1 ? true : false;
-				speed_ = (int)raw[index++];
-				fps_ = (int)raw[index++];
+                isRecording_ = data[index++] == 1 ? true : false;
+                speed_ = (int)data[index++];
+                fps_ = (int)data[index++];
 			}
 
 			bool isRecording_;
 			int speed_;
 			int fps_;
 
-			public int size()
-			{
-				return 4;
-			}
+			public static int Size = 4;
+
+            public int DynamicSizeOf()
+            {
+                return Size;
+            }
 
 			public byte[] toBytes()
 			{
-				byte[] result = new byte[size()];
+				byte[] result = new byte[Size];
 
 				int index = 0;
 				result[index++] = (byte)Ident.BasicInformation;

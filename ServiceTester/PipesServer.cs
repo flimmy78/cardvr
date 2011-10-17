@@ -9,30 +9,30 @@ namespace CarDvrPipes
 {
     public class PipesServer
     {
-		public class PacketEventArgs : EventArgs
-		{
-			public PacketEventArgs(Packets.IPacket pkt)
-			{
-				packet = pkt;
-			}
-			public Packets.IPacket packet;
-		}
-		public delegate void PacketEventHandler(object sender, PacketEventArgs e);
-		public PacketEventHandler gotPacketEvent;
+		public Packets.PacketEventHandler gotPacketEvent;
 
-        const int readingTimeOut = 10000;
         const int maxPipeInstances = 2;
+        const int readingTimeOut = 10000;        // ms
+        const int clientAckTimeInterval = 10000; // ms
+        const int clientConnectedTimeInterval = 1000; // ms
         
-        object stateGuard = new object();
-        //bool connected = false;
-		//bool broken = false;
-
-        NamedPipeServerStream pipeStream = null; //new NamedPipeServerStream(PipesCommon.CarDvrPipeName, PipeDirection.InOut, maxPipeInstances, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
+        NamedPipeServerStream pipeStream = null;
         
         Thread connectionThread = null;
         Thread workerThread = null;
-		Queue<byte[]> packetsToSend = new Queue<byte[]>();
 
+        object queueGuard = new object();
+        Queue<Packets.IPacket> packetsToSend = new Queue<Packets.IPacket>();
+
+
+        public void AddPacketToQueue(Packets.IPacket packet)
+        {
+            lock (queueGuard)
+            {
+                packetsToSend.Enqueue(packet);
+            }
+            Monitor.Wait(packetsToSend);
+        }
 
 		void CreatePipe()
 		{
@@ -64,38 +64,34 @@ namespace CarDvrPipes
         void PipeWorker()
         {
             int timeout = 0;
-			byte[] informationRequest = new Packets.Request(Packets.Ident.BasicInformation).toBytes();
-			byte[] result = new byte[Packets.Constants.MaximalPossiblePacketLength];
-
-			int[] packetSizes = new int[(int)Packets.Ident.Max+1];
-			for (Packets.Ident packetType = Packets.Ident.BasicInformation; packetType != Packets.Ident.Max; packetType++)
-				packetSizes[(int)packetType] = Packets.Instance.Make(packetType).size();
+			//byte[] informationRequest = new Packets.Request(Packets.Ident.BasicInformation).toBytes();
+			byte[] result = new byte[Packets.Helper.MaximalPossiblePacketLength];
 
             while (true)
             {
                 try
                 {
-                    while (!pipeStream.IsConnected)
-                        Thread.Sleep(100);
+                    Monitor.Wait(packetsToSend);
 
-					pipeStream.Write(informationRequest, 0, informationRequest.Length);
+                    while (!pipeStream.IsConnected)
+                        Thread.Sleep(clientConnectedTimeInterval);
+
+                    Packets.IPacket packet = packetsToSend.Dequeue();
+                    byte[] rawpacket = packet.toBytes();
+                    pipeStream.Write(rawpacket, 0, rawpacket.Length);
 
                     if (pipeStream.CanRead)
                     {
 						int bytesAmount = pipeStream.Read(result, 0, result.Length);
+                        if (Packets.Helper.isValidIdent(result, bytesAmount))
+                        {
+                            if (gotPacketEvent != null)
+                                gotPacketEvent(this, new Packets.PacketEventArgs(new Packets.BasicInformation(result)));
 
-						for (Packets.Ident packetType = Packets.Ident.BasicInformation; packetType != Packets.Ident.Max; packetType++)
-						{
-							if (packetSizes[(int)packetType] == bytesAmount)
-							{
-								if (gotPacketEvent != null)
-									gotPacketEvent(this, new PacketEventArgs(new Packets.BasicInformation(result)));
+                            break;
+                        }
 
-								break;
-							}
-						}
-
-						Thread.Sleep(10000);
+                        //Thread.Sleep(clientAckTimeInterval);
                     }
                     if (timeout >= readingTimeOut)
                     {
@@ -138,12 +134,10 @@ namespace CarDvrPipes
             connectionThread = null;
         }
 
-		//public bool IsConnected()
-		//{
-		//    lock (connectionGuard)
-		//    {
-		//        return connected;
-		//    }
-		//}
+        public void WaitForFinish()
+        {
+            if (connectionThread != null)
+                connectionThread.Join();
+        }
     }
 }

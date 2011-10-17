@@ -25,7 +25,7 @@ namespace CarDvrPipes
         /// </summary>
         void PipeReadingThread()
         {
-			byte[] result = new byte[1024];
+			byte[] result = new byte[Packets.BasicInformation.Size];
 
             while (true)
             {
